@@ -16,13 +16,15 @@ public class TwoNumbers {
 	public ListNode add(ListNode a, ListNode b) {
 		ListNode c = new ListNode(0);
 		ListNode h = c;
+		ListNode p = null, pp = c;
 		
 		while ( a != null && b != null) {
 			int val = a.val + b.val + c.val;
 			c.val = val % 10;
 			
-			ListNode p = new ListNode(val / 10);
+			p = new ListNode(val / 10);
 			c.next = p;
+			pp = c;
 			
 			a = a.next;
 			b = b.next;
@@ -34,11 +36,16 @@ public class TwoNumbers {
 			int val = c.val + q.val;
 			c.val = val % 10;
 			
-			ListNode p = new ListNode(val / 10);
+			p = new ListNode(val / 10);
 			c.next = p;
+			pp = c;
 			
 			q = q.next;
 			c = p;
+		}
+		
+		if(p!=null && p.val == 0) {
+		    pp.next = null;
 		}
 		
 		return h;
