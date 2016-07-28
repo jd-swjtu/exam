@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RomanNumber {
-	List<String> results = new ArrayList<String>();
-
 
 	public static void main(String[] args) {
 		RomanNumber rn = new RomanNumber();
@@ -14,17 +12,33 @@ public class RomanNumber {
 
 		System.out.println(rn.isPalindrome(12121));
 
-		rn.generateParenthesis(4);
-		System.out.println(rn.results.size());
+		List<String> results = rn.generateParenthesis(4);
+		System.out.println(results.size());
+
 	}
 
 	public List<String> generateParenthesis(int n) {
 		List<String> results = new ArrayList<String>();
-		this.go(1, 0, n, "(");
+		this.go(1, 0, n, "(", results);
+		//this.ggo(n,  n, "", results);
 		return results;
 	}
 
-	public void go(int l, int r, int t, String s) {
+	public void ggo(int l, int r, String s, List<String> results) {
+		if(l == 0 && r == 0) {
+			System.out.println(s);
+			results.add(s);
+			return;
+		}
+
+		if(l > 0)
+			ggo(l-1, r, s + "(", results);
+
+		if(r>0 && l < r)
+			ggo(l, r-1, s + ")", results);
+	}
+
+	public void go(int l, int r, int t, String s,  List<String> results) {
 		if(r == t) {
 			System.out.println(s);
 			results.add(s);
@@ -33,16 +47,16 @@ public class RomanNumber {
 
 		if(r < l) {
 			if(l < t) {
-				go(l+1, r, t, s + "(");
-				go(l, r+1, t, s + ")");
+				go(l+1, r, t, s + "(", results);
+				go(l, r+1, t, s + ")", results);
 			} else {
-				go(l, r+1, t, s + ")");
+				go(l, r+1, t, s + ")", results);
 			}
 		} else {
 			if(l < t) {
-				go(l+1, r, t, s + "(");
+				go(l+1, r, t, s + "(", results);
 			} else {
-				go(l, r+1, t, s + ")");
+				go(l, r+1, t, s + ")", results);
 			}
 		}
 	}
