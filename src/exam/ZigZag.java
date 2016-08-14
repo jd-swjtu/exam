@@ -8,6 +8,12 @@ public class ZigZag {
 		System.out.println(new ZigZag().convert("", 1));
 		
 		System.out.println(new ZigZag().reverse(0));
+		
+		System.out.println("######");
+		int[] nums = new int[]{1,2,3};
+		for(int i=0; i<new ZigZag().removeDuplicates(nums); i++) {
+			System.out.println(nums[i]);
+		}
 	}
 
 	public String convert(String s, int numRows) {
@@ -46,4 +52,17 @@ public class ZigZag {
 		if(y>Integer.MAX_VALUE) return 0;
 		return (int)y*sign;
 	}
+	
+	public int removeDuplicates(int[] nums) {
+       int len = nums.length;
+       if(len < 2) return len;
+       
+       int k=1;
+       for(int i=1; i<len; i++) {
+    	   if(nums[i] - nums[i-1] != 0) {
+    		   nums[k++] = nums[i];
+    	   }
+       }
+       return k;
+    }
 }
