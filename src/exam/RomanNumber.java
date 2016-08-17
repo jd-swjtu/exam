@@ -1,9 +1,7 @@
 package exam;
 
-import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Queue;
 import java.util.Stack;
 
 public class RomanNumber {
@@ -20,69 +18,69 @@ public class RomanNumber {
 
 	}
 
-    public boolean isValid(String s) {
-        if(s == null || s.length() == 0) return true;
-        
-        if(s.length() % 2 != 0) return false;
-        
-        char[] cc = new char[s.length()];
-        int j = 0;
- 
-        for(int i=0; i<s.length(); i++) {
-        	char c = s.charAt(i);
-        	if(j == 0) {
-        	    if(c == '(' || c == '{' || c == '[') {
-        	        cc[j++] = c;
-        	    continue;
-        	    } else {
-        	        return false;
-        	    }
-        	}
-        	char h = cc[j-1];
-        	if(c == ')') {
-        		if(h == '(') j--;
-        	} else if (c == '}') {
-        		if(h == '{') j--;
-        	} else if(c == ']') {
-        		if(h == '[') j--;
-        	} else {
-        		cc[j++] = c;
-        	}
-        }
-        
-        return j == 0;
-    }
-    
-    public boolean isValid1(String s) {
-        Stack<Character> q = new Stack<Character>();
-        if(s == null || s.length() == 0) return true;
-        
-        if(s.length() % 2 != 0) return false;
- 
-        for(int i=0; i<s.length(); i++) {
-        	char c = s.charAt(i);
-        	if(q.isEmpty()) {
-        	    if(c == '(' || c == '{' || c == '[') {
-        	        q.push(c);
-        	    continue;
-        	    } else {
-        	        return false;
-        	    }
-        	}
-        	char h = q.peek();
-        	if(c == ')') {
-        		if(h == '(') q.pop();
-        	} else if (c == '}') {
-        		if(h == '{') q.pop();
-        	} else if(c == ']') {
-        		if(h == '[') q.pop();
-        	} else {
-        		q.push(c);
-        	}
-        }
-        
-        return q.isEmpty();
-    }
+	public boolean isValid(String s) {
+		if(s == null || s.length() == 0) return true;
+
+		if(s.length() % 2 != 0) return false;
+
+		char[] cc = new char[s.length()];
+		int j = 0;
+
+		for(int i=0; i<s.length(); i++) {
+			char c = s.charAt(i);
+			if(j == 0) {
+				if(c == '(' || c == '{' || c == '[') {
+					cc[j++] = c;
+					continue;
+				} else {
+					return false;
+				}
+			}
+			char h = cc[j-1];
+			if(c == ')') {
+				if(h == '(') j--;
+			} else if (c == '}') {
+				if(h == '{') j--;
+			} else if(c == ']') {
+				if(h == '[') j--;
+			} else {
+				cc[j++] = c;
+			}
+		}
+
+		return j == 0;
+	}
+
+	public boolean isValid1(String s) {
+		Stack<Character> q = new Stack<Character>();
+		if(s == null || s.length() == 0) return true;
+
+		if(s.length() % 2 != 0) return false;
+
+		for(int i=0; i<s.length(); i++) {
+			char c = s.charAt(i);
+			if(q.isEmpty()) {
+				if(c == '(' || c == '{' || c == '[') {
+					q.push(c);
+					continue;
+				} else {
+					return false;
+				}
+			}
+			char h = q.peek();
+			if(c == ')') {
+				if(h == '(') q.pop();
+			} else if (c == '}') {
+				if(h == '{') q.pop();
+			} else if(c == ']') {
+				if(h == '[') q.pop();
+			} else {
+				q.push(c);
+			}
+		}
+
+		return q.isEmpty();
+	}
 
 	public List<String> generateParenthesis(int n) {
 		List<String> results = new ArrayList<String>();
@@ -162,7 +160,7 @@ public class RomanNumber {
 
 		return v;
 	}
-	
+
 	public int romanToInt1(String s) {	
 		int[] vv = new int['X'+1];
 		vv['M'] = 1000;
@@ -172,23 +170,23 @@ public class RomanNumber {
 		vv['X'] = 10;
 		vv['V'] = 5;
 		vv['I'] = 1;
-		
+
 		if(s == null || s.length() == 0) return 0;
-		
+
 		char l = s.charAt(0);
 		int v = 0;
 		for(int i=1; i<s.length(); i++) {
 			char c = s.charAt(i);
-			
+
 			if(vv[l] < vv[c]) {
 				v -= vv[l];
 			} else {
 				v += vv[l];
 			}
-			
+
 			l = c;
 		}
-		
+
 		v += vv[l];
 
 		return v;
