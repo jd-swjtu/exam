@@ -11,13 +11,13 @@ public class ZigZag {
 		System.out.println(new ZigZag().convert("", 1));
 
 		System.out.println(new ZigZag().reverse(0));
-		
+
 		System.out.println("######");
 		int[] nums = new int[]{1,2,3};
 		for(int i=0; i<new ZigZag().removeDuplicates(nums); i++) {
 			System.out.println(nums[i]);
 		}
-		
+
 		System.out.println("######");
 		System.out.println(new ZigZag().isMatch("abcdd", "a.*d"));
 		System.out.println(new ZigZag().isMatch("aab", "c*a*b"));
@@ -66,55 +66,55 @@ public class ZigZag {
 		if(y>Integer.MAX_VALUE) return 0;
 		return (int)y*sign;
 	}
-	
+
 	//#26
 	public int removeDuplicates(int[] nums) {
-       int len = nums.length;
-       if(len < 2) return len;
-       
-       int k=1;
-       for(int i=1; i<len; i++) {
-    	   if(nums[i] - nums[i-1] != 0) {
-    		   nums[k++] = nums[i];
-    	   }
-       }
-       return k;
-    }
-	
+		int len = nums.length;
+		if(len < 2) return len;
+
+		int k=1;
+		for(int i=1; i<len; i++) {
+			if(nums[i] - nums[i-1] != 0) {
+				nums[k++] = nums[i];
+			}
+		}
+		return k;
+	}
+
 	//#10
 	public boolean isMatch(String s, String p) {
-        if(p == null || p.length() == 0) {
-        	if(s == null || s.length() == 0) return true;
-        	return false;
-        }
-        
-        if(p.length() < 2) {
-        	if(s == null || s.length() == 0) return false;
-        	if(p.charAt(0) == s.charAt(0) || p.charAt(0) == '.') {
-        		if(s.length() == 1) return true;
-        		return false;
-        	}
-        	return false;
-        }
-        
-        if(p.charAt(1) != '*') {
-        	if(p.charAt(0) == s.charAt(0) || p.charAt(0) == '.') {
-        		return isMatch(s.substring(1), p.substring(1));
-        	}
-        	return false;
-        }
-        
-        int start = 0;
-        while(p.charAt(0) == s.charAt(0) || p.charAt(0) == '.') {
-        	boolean r = isMatch(s, p.substring(2));
-    		while(!r && start < s.length()) {
-    			start++;
-    			r = isMatch(s.substring(start), p.substring(2));
-    		}
-    		return r;
-    	}
-        return isMatch(s, p.substring(2));
-    }
+		if(p == null || p.length() == 0) {
+			if(s == null || s.length() == 0) return true;
+			return false;
+		}
+
+		if(p.length() < 2) {
+			if(s == null || s.length() == 0) return false;
+			if(p.charAt(0) == s.charAt(0) || p.charAt(0) == '.') {
+				if(s.length() == 1) return true;
+				return false;
+			}
+			return false;
+		}
+
+		if(p.charAt(1) != '*') {
+			if(p.charAt(0) == s.charAt(0) || p.charAt(0) == '.') {
+				return isMatch(s.substring(1), p.substring(1));
+			}
+			return false;
+		}
+
+		int start = 0;
+		while(p.charAt(0) == s.charAt(0) || p.charAt(0) == '.') {
+			boolean r = isMatch(s, p.substring(2));
+			while(!r && start < s.length()) {
+				start++;
+				r = isMatch(s.substring(start), p.substring(2));
+			}
+			return r;
+		}
+		return isMatch(s, p.substring(2));
+	}
 
 	public List<String> letterCombinations(String digits) {
 		List<String> result = new ArrayList<String>();

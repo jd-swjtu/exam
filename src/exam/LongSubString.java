@@ -12,6 +12,8 @@ public class LongSubString {
 		for (String s : ss) {
 			System.out.println(new LongSubString().longString(s));
 		}
+		
+		System.out.println(new LongSubString().strStr("",""));
 	}
 
 
@@ -50,5 +52,22 @@ public class LongSubString {
 			}
 		}
 		return max;
+	}
+
+	//#28
+	public int strStr(String haystack, String needle) {
+		if(haystack == null || needle == null) return -1;
+		if(needle.length() > haystack.length()) return -1;
+		//if(needle.equals(haystack)) return 0;
+		
+		for(int i=0; i<=haystack.length() - needle.length(); i++) {
+			int j=0;
+			while(j<needle.length() && haystack.charAt(i+j) == needle.charAt(j)) {
+				j++;
+			}
+			if(j == needle.length()) return i;
+		}
+		
+		return -1;
 	}
 }
