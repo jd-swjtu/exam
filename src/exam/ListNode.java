@@ -8,8 +8,7 @@ public class ListNode {
 		int v = value % 10;
 		int m = value / 10;
 
-		ListNode header = new ListNode(v);
-		ListNode p = header;
+		ListNode p = new ListNode(v);
 
 		while( m > 0) {
 			value = m;
@@ -19,25 +18,44 @@ public class ListNode {
 			if( v == 0 && m == 0) break;
 
 			ListNode q = new ListNode(v);
+			q.next = p;
+			p = q;
+		}
+
+		return p;
+	}
+
+	public static ListNode create(String value) {
+		int len = value.length();
+		ListNode header = new ListNode(Integer.valueOf(value.charAt(0)) - '0');
+		ListNode p = header;
+
+		for(int i=1; i<len; i++) {
+			ListNode q = new ListNode(Integer.valueOf(value.charAt(i)) - '0');
 			p.next = q;
 			p = q;
 		}
 
 		return header;
 	}
-
-	public static ListNode create(String value) {
-		int len = value.length();
-		ListNode header = new ListNode(Integer.valueOf(value.charAt(len-1)) - '0');
-		ListNode p = header;
-
-		for(int i=len-1; i>0; i--) {
-			ListNode q = new ListNode(Integer.valueOf(value.charAt(i-1)) - '0');
-			p.next = q;
-			p = q;
+	
+	public ListNode reverse() {
+		ListNode q = null;
+		ListNode p = this;
+		
+		q = p;
+		p = p.next;
+		q.next = null;
+		
+		while(p != null) {
+			ListNode x = p;
+			p = p.next;
+			
+			x.next = q;
+			q = x;
 		}
-
-		return header;
+		
+		return q;
 	}
 
 	public ListNode(int v) {
@@ -56,8 +74,6 @@ public class ListNode {
 			v = v / 10;
 		}
 
-		sbf.reverse();
-
 		return sbf.toString();
 	}
 
@@ -72,6 +88,10 @@ public class ListNode {
 			i *= 10;
 		}
 		return v;
+	}
+	
+	public static void main(String[] args) {
+		System.out.println(ListNode.create(1234));
 	}
 } 
 

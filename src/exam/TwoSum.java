@@ -69,29 +69,7 @@ public class TwoSum {
 		return (int)(v*sign);
 	}
 	
-	//#24
-	public ListNode swapPairs(ListNode head) {
-		if(head == null) return null;
-
-		ListNode h = new ListNode(0);
-		h.next = head;
-
-		ListNode p = h;
-
-		while(p.next != null && p.next.next != null) {
-			ListNode q = p.next;
-			ListNode qq = p.next.next;
-
-			p.next = qq;
-			q.next = qq.next;
-			qq.next = q;
-
-			p = p.next.next;
-		}
-
-		return h.next;
-	}
-
+	
 	//#31 - 7 2 5 3 2 1
 	public void nextPermutation(int[] nums) {
 		boolean found = false;
