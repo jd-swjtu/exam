@@ -21,7 +21,51 @@ public class TwoSum {
 		new TwoSum().nextPermutation(a);
 		for(int i=0; i<a.length; i++)
 			System.out.print(a[i] + " ");
-		System.out.println();
+	}
+	
+	public boolean isVaild(char[][] board) {
+		int[] v = new int[9];
+		
+		for(int i=0; i<9; i++) {
+			for(int x=0; x<9; x++) v[x]=0;
+			for(int j=0; j<9; j++) {
+				char c= board[i][j];
+				if(c == '.') continue;
+				
+				int vv = c - '1';
+				if(v[vv] != 0) return false;
+				v[vv] = 1;
+			}
+		}
+		
+		for(int i=0; i<9; i++) {
+			for(int x=0; x<9; x++) v[x]=0;
+			for(int j=0; j<9; j++) {
+				char c= board[j][i];
+				if(c == '.') continue;
+				
+				int vv = c - '1';
+				if(v[vv] != 0) return false;
+				v[vv] = 1;
+			}
+		}
+		
+		for(int i=0; i<9; i++) {
+			for(int x=0; x<9; x++) v[x]=0;
+			for(int k=0; k<3; k++) {
+				
+				for(int l=0; l<3; l++) {
+					char c = board[3*(i/3)+k][3*(i%3) + l];
+					if(c == '.') continue;
+					
+					int vv = c - '1';
+					if(v[vv] != 0) return false;
+					v[vv] = 1;
+				}
+			}
+		}
+		
+		return true;
 	}
 
 	public int[] twoSum(int[] nums, int target) {
