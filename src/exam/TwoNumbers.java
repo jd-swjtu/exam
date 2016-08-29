@@ -3,15 +3,19 @@ package exam;
 public class TwoNumbers {
 	public static void main(String[] args) {
 		TwoNumbers tn = new TwoNumbers();
+		
+				int n1 = 280196;
+				int n2 = 923333395;
+		
+				System.out.println(ListNode.create("123333333333333335555555"));
+		
+				System.out.println(tn.add(ListNode.create(n1).reverse(), ListNode.create(n2).reverse()).reverse());
+				System.out.println(n1 + n2);
+			System.out.println(tn.removeNthFromEnd(ListNode.create("2134"), 2));
 
-		String n1 = "280196";
-		String n2 = "923333395";
+		System.out.println(tn.swapPairs(ListNode.create("123456")));
 
-		System.out.println(ListNode.create("123333333333333335555555"));
-
-		System.out.println(tn.add(ListNode.create(n1), ListNode.create(n2)));
-		System.out.println(n1 + n2);
-		System.out.println(tn.removeNthFromEnd(ListNode.create("213"), 2));
+		System.out.println(tn.reverseKGroup(ListNode.create("12"), 3));
 	}
 
 	public ListNode add(ListNode a, ListNode b) {
@@ -117,79 +121,83 @@ public class TwoNumbers {
 
 		return mergeTwoLists(left, right);
 	}
+
+	//#24
+	public ListNode swapPairs(ListNode head) {
+		if(head == null) return null;
+
+		ListNode h = new ListNode(0);
+		h.next = head;
+
+		ListNode p = h;
+
+		while(p.next != null && p.next.next != null) {
+			ListNode q = p.next;
+			ListNode qq = p.next.next;
+
+			p.next = qq;
+			q.next = qq.next;
+			qq.next = q;
+
+			p = p.next.next;
+		}
+
+		return h.next;
+	}
+
+	//#25	
+	public ListNode reverseKGroup(ListNode head, int k) {
+		if(head == null) return head;
+
+		ListNode p = head;
+		ListNode q = null;
+		ListNode h =  new ListNode(0);
+		h.next = head;
+
+		ListNode s = h;
+		ListNode e = null;
+
+		int i = 0;
+		while(i < k) {
+			if(p != null) {
+				if(q == null) {
+					q = p;
+					p = p.next;
+
+					q.next = null;
+					e = q;
+				} else {
+					ListNode x = p;
+					p = p.next;
+					x.next = q;
+					q = x;
+				}
+
+				i++;
+			} else {
+				break;
+			}
+
+			if(i == k) {
+				s.next = q;
+				s = e;
+				q = null;
+				i = 0;
+			}
+		}
+
+		if(i<k) {
+			if(s == h) {
+				s.next = null;
+			}
+			while(q != null) {
+				e = s.next;
+				s.next = q;
+				q = q.next;
+				s.next.next = e;
+			}
+		}
+
+		return h.next;
+	}
 }
-
-class ListNode {
-	public int val;
-	public ListNode next;
-
-	public static ListNode create(int value) {
-		int v = value % 10;
-		int m = value / 10;
-
-		ListNode header = new ListNode(v);
-		ListNode p = header;
-
-		while( m > 0) {
-			value = m;
-			v = value % 10;
-			m = value / 10;
-
-			if( v == 0 && m == 0) break;
-
-			ListNode q = new ListNode(v);
-			p.next = q;
-			p = q;
-		}
-
-		return header;
-	}
-
-	public static ListNode create(String value) {
-		int len = value.length();
-		ListNode header = new ListNode(Integer.valueOf(value.charAt(len-1)) - '0');
-		ListNode p = header;
-
-		for(int i=len-1; i>0; i--) {
-			ListNode q = new ListNode(Integer.valueOf(value.charAt(i-1)) - '0');
-			p.next = q;
-			p = q;
-		}
-
-		return header;
-	}
-
-	public ListNode(int v) {
-		this.val = v;
-	}
-
-	public String toString() {
-		ListNode p = this;
-		StringBuffer sbf = new StringBuffer();
-		int v = 0;
-		while(p != null) {
-			v += p.val;
-			sbf.append(p.val % 10);
-
-			p = p.next;
-			v = v / 10;
-		}
-
-		sbf.reverse();
-
-		return sbf.toString();
-	}
-
-	public int value() {
-		ListNode p = this;
-		int v = 0;
-		int i=1;
-		while(p != null) {
-			v += p.val * i;
-
-			p = p.next;
-			i *= 10;
-		}
-		return v;
-	}
-} 
