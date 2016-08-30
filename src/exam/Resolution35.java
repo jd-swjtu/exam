@@ -6,7 +6,7 @@ public class Resolution35 {
 		System.out.println(new Resolution35().searchInsert(new int[]{1,2,3,4,5,6,7}, 1));
 
 		//System.out.println(new Resolution35().search(new int[]{0,1,2,3,4,5,6}, 6, 0, 6));
-		
+
 		//int[] v = new Resolution35().searchRange(new int[]{1,2,2,4,5}, 2);
 		//System.out.println("[" + v[0] + "," + v[1] + "]");
 		/*System.out.println(new Resolution35().searchRound(new int[]{3,1}, 1, 0, 1));
@@ -14,8 +14,10 @@ public class Resolution35 {
 		for(int i=0; i<a.length; i++) {
 			System.out.println(new Resolution35().searchRound(a, a[i], 0, a.length - 1));
 		}*/
-		
+
 		//System.out.println(new Resolution35().searchRound(a, 1, 0, 4));
+		
+		System.out.println(new Resolution35().countAndSay(0));
 	}
 
 	@LeetCode(35)
@@ -55,13 +57,13 @@ public class Resolution35 {
 			if(nums[i] != target) break;
 			i--;;
 		}
-		
+
 		return new int[]{i+1, e};
 	}
 
 	public int search(int[] nums, int target, int s, int e) {
 		if(s > e) return -1;
-		
+
 		int mid = s + (e-s)/2;
 		if(nums[mid] == target) return mid;
 
@@ -71,14 +73,14 @@ public class Resolution35 {
 			return search(nums, target, mid+1, e);
 		}
 	}
-	
+
 	public int searchRound(int[] nums, int target, int s, int e) {
 		if(s > e) return -1;
-		
+
 		int mid = s + (e-s)/2;
 		if(nums[mid] == target) return mid;
 		if(s == e) return -1;
-		
+
 		if(nums[s] < nums[mid]) {
 			if(target >= nums[s] && target <=  nums[mid]) {
 				return searchRound(nums, target, s, mid);
@@ -93,44 +95,78 @@ public class Resolution35 {
 			}
 		}
 	}
-	
-	public int searchx(int[] A, int target) {
-        if (A == null || A.length == 0) {
-            return -1;
-        }
 
-        int start = 0;
-        int end = A.length - 1;
-        int mid;
-        
-        while (start + 1 < end) {
-            mid = start + (end - start) / 2;
-            if (A[mid] == target) {
-                return mid;
-            }
-            if (A[start] < A[mid]) {
-                // situation 1, red line
-                if (A[start] <= target && target <= A[mid]) {
-                    end = mid;
-                } else {
-                    start = mid;
-                }
-            } else {
-                // situation 2, green line
-                if (A[mid] <= target && target <= A[end]) {
-                    start = mid;
-                } else {
-                    end = mid;
-                }
-            }
-        } // while
-        
-        if (A[start] == target) {
-            return start;
-        }
-        if (A[end] == target) {
-            return end;
-        }
-        return -1;
-    }
+	public int searchx(int[] A, int target) {
+		if (A == null || A.length == 0) {
+			return -1;
+		}
+
+		int start = 0;
+		int end = A.length - 1;
+		int mid;
+
+		while (start + 1 < end) {
+			mid = start + (end - start) / 2;
+			if (A[mid] == target) {
+				return mid;
+			}
+			if (A[start] < A[mid]) {
+				// situation 1, red line
+				if (A[start] <= target && target <= A[mid]) {
+					end = mid;
+				} else {
+					start = mid;
+				}
+			} else {
+				// situation 2, green line
+				if (A[mid] <= target && target <= A[end]) {
+					start = mid;
+				} else {
+					end = mid;
+				}
+			}
+		} // while
+
+		if (A[start] == target) {
+			return start;
+		}
+		if (A[end] == target) {
+			return end;
+		}
+		return -1;
+	}
+
+	@LeetCode(38)
+	public String countAndSay(int n) {
+		if(n==0) return "";
+		String s = "1";
+		
+		while( n > 1) {
+			s = sayIt(s);
+			n--;
+		}
+		
+		return s;
+	}
+	
+	private String sayIt(String n) {
+		StringBuffer sbf = new StringBuffer();
+		
+		char cc = n.charAt(0);
+		int count = 1;
+		for(int i=1; i<n.length(); i++) {
+			char c = n.charAt(i);
+			
+			if(c == cc) {
+				count++;
+			} else {
+				sbf.append(String.valueOf(count)).append(cc);
+				
+				cc = c;
+				count = 1;
+			}
+		}
+		sbf.append(String.valueOf(count)).append(cc);
+		return sbf.toString();
+	}
 }
