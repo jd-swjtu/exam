@@ -1,5 +1,11 @@
 package exam;
 
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Deque;
+import java.util.List;
+
 public class Resolution35 {
 
 	public static void main(String[] args) {
@@ -29,6 +35,9 @@ public class Resolution35 {
 				{'0', '0', '0', '1', '1'}
 		};
 		System.out.println(new Resolution35().numIslands(grid));
+		
+		System.out.println(new Resolution35().combinationSum(new int[]{2,3,5}, 7));
+		System.out.println(new Resolution35().combinationSum(new int[]{6,8,12,5,9,3,4,11}, 31));
 	}
 
 	@LeetCode(35)
@@ -188,31 +197,69 @@ public class Resolution35 {
 		int cols = grid[0].length;
 
 		int count = 0;
+		int max = 0;
 		for(int i=0; i<rows; i++)
 			for(int j=0; j<cols; j++) {
 				char c = grid[i][j];
 				if(c == '1') {
 					count++;
 
-					search(grid, rows, cols, i, j);
+					int w = search(grid, rows, cols, i, j, 0);
+					if(w > max) max = w;
+					System.out.println("Island " + count + ": " + w);
 				}
 			}
 
-
+		System.out.println("Max Island:" + max);
 		return count;
 	}
 
-	private void search(char[][] grid, int r, int c, int x, int y) {
-		if(x<0 || y <0 || x >= r || y >= c) return;
+	private int search(char[][] grid, int r, int c, int x, int y, int w) {
+		if(x<0 || y <0 || x >= r || y >= c) return w;
 
 		char cc = grid[x][y];
 		if(cc == '1') {
 			grid[x][y] = '0';
+			w += 1;
 
-			search(grid, r, c, x-1, y);
-			search(grid, r, c, x+1, y);
-			search(grid, r, c, x, y+1);
-			search(grid, r, c, x, y-1);
+			w = search(grid, r, c, x-1, y, w);
+			w = search(grid, r, c, x+1, y, w);
+			w = search(grid, r, c, x, y+1, w);
+			w = search(grid, r, c, x, y-1, w);
+		}
+		return w;
+	}
+	
+	@LeetCode(39)
+	public List<List<Integer>> combinationSum(int[] candidates, int target) {
+		List<List<Integer>> results  = new ArrayList<List<Integer>>();
+		
+		Arrays.sort(candidates);
+		Deque<Integer> value = new ArrayDeque<Integer>();
+		solve(candidates, target, value, results, 0);
+
+		return results;
+	}
+
+	private void solve(int[] candidates, int target, Deque<Integer> value, List<List<Integer>> results, int start) {
+		if(target == 0 ) {
+			List<Integer> vv = new ArrayList<Integer>();
+			vv.addAll(value);
+			results.add(vv);
+			return;
+		}
+		
+		for(int k=start; k<candidates.length; k++) {
+			//if(k>start && candidates[k]==candidates[k-1]) continue;
+			
+			int c = candidates[k];
+			if(c <= target) {
+				int x = target - c;
+				
+				value.addLast(c);
+				solve(candidates, x, value, results, k);
+				value.removeLast();
+			}
 		}
 	}
 }
