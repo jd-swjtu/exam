@@ -16,8 +16,19 @@ public class Resolution35 {
 		}*/
 
 		//System.out.println(new Resolution35().searchRound(a, 1, 0, 4));
-		
+
 		System.out.println(new Resolution35().countAndSay(0));
+
+
+
+		char[][] grid = {
+				{'1', '1', '0', '0', '0'},
+				{'1', '1', '0', '0', '0'},
+				{'1', '1', '0', '0', '0'},
+				{'0', '0', '1', '0', '0'},
+				{'0', '0', '0', '1', '1'}
+		};
+		System.out.println(new Resolution35().numIslands(grid));
 	}
 
 	@LeetCode(35)
@@ -140,33 +151,68 @@ public class Resolution35 {
 	public String countAndSay(int n) {
 		if(n==0) return "";
 		String s = "1";
-		
+
 		while( n > 1) {
 			s = sayIt(s);
 			n--;
 		}
-		
+
 		return s;
 	}
-	
+
 	private String sayIt(String n) {
 		StringBuffer sbf = new StringBuffer();
-		
+
 		char cc = n.charAt(0);
 		int count = 1;
 		for(int i=1; i<n.length(); i++) {
 			char c = n.charAt(i);
-			
+
 			if(c == cc) {
 				count++;
 			} else {
 				sbf.append(String.valueOf(count)).append(cc);
-				
+
 				cc = c;
 				count = 1;
 			}
 		}
 		sbf.append(String.valueOf(count)).append(cc);
 		return sbf.toString();
+	}
+
+	@LeetCode(200)
+	public int numIslands(char[][] grid) {
+		int rows = grid.length;
+		if(rows == 0) return 0;
+		int cols = grid[0].length;
+
+		int count = 0;
+		for(int i=0; i<rows; i++)
+			for(int j=0; j<cols; j++) {
+				char c = grid[i][j];
+				if(c == '1') {
+					count++;
+
+					search(grid, rows, cols, i, j);
+				}
+			}
+
+
+		return count;
+	}
+
+	private void search(char[][] grid, int r, int c, int x, int y) {
+		if(x<0 || y <0 || x >= r || y >= c) return;
+
+		char cc = grid[x][y];
+		if(cc == '1') {
+			grid[x][y] = '0';
+
+			search(grid, r, c, x-1, y);
+			search(grid, r, c, x+1, y);
+			search(grid, r, c, x, y+1);
+			search(grid, r, c, x, y-1);
+		}
 	}
 }
