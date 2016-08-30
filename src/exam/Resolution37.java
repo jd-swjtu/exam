@@ -24,6 +24,7 @@ public class Resolution37 {
 				
 	}
 
+	@LeetCode(37)
     public void solveSudoku(char[][] board) {
     	System.out.println(solve(board, 0, 0));
 	}

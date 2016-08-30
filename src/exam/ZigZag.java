@@ -68,6 +68,7 @@ public class ZigZag {
 	}
 
 	//#26
+	@LeetCode(26)
 	public int removeDuplicates(int[] nums) {
 		int len = nums.length;
 		if(len < 2) return len;
@@ -82,6 +83,7 @@ public class ZigZag {
 	}
 
 	//#10
+	@LeetCode(10)
 	public boolean isMatch(String s, String p) {
 		if(p == null || p.length() == 0) {
 			if(s == null || s.length() == 0) return true;
@@ -137,6 +139,7 @@ public class ZigZag {
 	}
 
 	//#27
+	@LeetCode(27)
 	public int removeElement(int[] nums, int val) {
 		int len = nums.length;
 		int loc = 0;

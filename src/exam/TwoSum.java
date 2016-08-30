@@ -115,6 +115,7 @@ public class TwoSum {
 	
 	
 	//#31 - 7 2 5 3 2 1
+	@LeetCode(31)
 	public void nextPermutation(int[] nums) {
 		boolean found = false;
 		int v = 0;

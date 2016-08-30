@@ -55,6 +55,7 @@ public class LongSubString {
 	}
 
 	//#28
+	@LeetCode(28)
 	public int strStr(String haystack, String needle) {
 		if(haystack == null || needle == null) return -1;
 		if(needle.length() > haystack.length()) return -1;
