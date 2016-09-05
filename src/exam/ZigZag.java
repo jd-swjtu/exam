@@ -30,6 +30,19 @@ public class ZigZag {
 		new ZigZag().removeElement(new int[]{3, 2,2,3}, 3);
 	}
 
+	/*
+	 *The string "PAYPALISHIRING" is written in a zigzag pattern on a given number of rows like this: (you may want to display this pattern in a fixed font for better legibility)
+
+P   A   H   N
+A P L S I I G
+Y   I   R
+And then read line by line: "PAHNAPLSIIGYIR"
+Write the code that will take a string and make this conversion given a number of rows:
+
+string convert(string text, int nRows);
+convert("PAYPALISHIRING", 3) should return "PAHNAPLSIIGYIR".
+	 */
+	@LeetCode(6)
 	public String convert(String s, int numRows) {
 		if(numRows < 1) return "";
 		if(numRows == 1) return s;
@@ -52,6 +65,13 @@ public class ZigZag {
 		return sbf.toString();
 	}
 
+	/*
+	 *Reverse digits of an integer.
+
+Example1: x = 123, return 321
+Example2: x = -123, return -321
+	 */
+	@LeetCode(7)
 	public int reverse(int x) {
 		long y = 0;
 		int sign = (x>0)?1:(-1);

@@ -4,7 +4,7 @@ import java.util.ArrayDeque;
 import java.util.Queue;
 
 public class MostWater {
-	static int[] values = new int[]{1,2,3,4,5,6,7,8,9,10};
+	static int[] values = new int[]{1,2,3,4,5,6,7,8,9,10,9,8,7,6,5,4,3,2,1};
 	
 	public static void main(String[] args) {
 		System.out.println(new MostWater().maxArea(values));
@@ -42,6 +42,12 @@ public class MostWater {
 		return max;
 	}
 	
+	/*
+	 *Given n non-negative integers a1, a2, ..., an, where each represents a point at coordinate (i, ai). n vertical lines are drawn such that the two endpoints of line i is at (i, ai) and (i, 0). Find two lines, which together with x-axis forms a container, such that the container contains the most water.
+
+Note: You may not slant the container.
+	 */
+	@LeetCode(11)
 	public int maxArea2(int[] heights) {
 		int max = 0;
 		int s = 0;

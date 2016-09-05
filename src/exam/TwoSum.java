@@ -21,6 +21,8 @@ public class TwoSum {
 		new TwoSum().nextPermutation(a);
 		for(int i=0; i<a.length; i++)
 			System.out.print(a[i] + " ");
+		System.out.println();
+		System.out.println(new TwoSum().firstMissingPositive(new int[]{0,1,2,3}));
 	}
 	
 	public boolean isVaild(char[][] board) {
@@ -68,6 +70,18 @@ public class TwoSum {
 		return true;
 	}
 
+	/*
+Given an array of integers, return indices of the two numbers such that they add up to a specific target.
+
+You may assume that each input would have exactly one solution.
+
+Example:
+Given nums = [2, 7, 11, 15], target = 9,
+
+Because nums[0] + nums[1] = 2 + 7 = 9,
+return [0, 1].
+	 */
+	@LeetCode(1)
 	public int[] twoSum(int[] nums, int target) {
 		Map<Integer,Integer> mapping = new HashMap<Integer,Integer>();
 		for(int i=0; i<nums.length; i++) {
@@ -84,6 +98,14 @@ public class TwoSum {
 		return new int[]{0,0};
 	}
 
+	/*
+	 *Implement atoi to convert a string to an integer.
+
+Hint: Carefully consider all possible input cases. If you want a challenge, please do not see below and ask yourself what are the possible input cases.
+
+Notes: It is intended for this problem to be specified vaguely (ie, no given input specs). You are responsible to gather all the input requirements up front.
+	 */
+	@LeetCode(8)
 	public int atoi(String s) {
 		if (s == null || "".equals(s)) return 0;
 
@@ -159,5 +181,31 @@ public class TwoSum {
 				nums[l] = vv;
 			}
 		}
+	}
+	
+	/*
+	 *Given an unsorted integer array, find the first missing positive integer.
+
+For example,
+Given [1,2,0] return 3,
+and [3,4,-1,1] return 2.
+	 */
+	@LeetCode(41)
+	public int firstMissingPositive(int[] nums) {
+		for(int i=0; i<nums.length; i++) {
+			while(nums[i] != i+1) {
+				if(nums[i] <= 0 || nums[i] >= nums.length) break;
+				
+				if(nums[i] == nums[nums[i]-1]) break;
+				
+				int temp = nums[i];
+				nums[i] = nums[temp-1];
+				nums[temp-1] = temp;
+			}
+		}
+		for(int i=0; i<nums.length; i++) {
+			if(nums[i] != i+1) return i+1;
+		}
+		return nums.length+1;
 	}
 }

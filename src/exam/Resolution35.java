@@ -9,35 +9,35 @@ import java.util.List;
 public class Resolution35 {
 
 	public static void main(String[] args) {
-		System.out.println(new Resolution35().searchInsert(new int[]{1,2,3,4,5,6,7}, 1));
+		//System.out.println(new Resolution35().searchInsert(new int[]{1,2,3,4,5,6,7}, 1));
 
 		//System.out.println(new Resolution35().search(new int[]{0,1,2,3,4,5,6}, 6, 0, 6));
 
 		//int[] v = new Resolution35().searchRange(new int[]{1,2,2,4,5}, 2);
 		//System.out.println("[" + v[0] + "," + v[1] + "]");
-		/*System.out.println(new Resolution35().searchRound(new int[]{3,1}, 1, 0, 1));
-		int[] a = new int[]{3,1};
+		//System.out.println(new Resolution35().searchRound(new int[]{3,1}, 1, 0, 1));
+		int[] a = new int[]{1,3,1,1,1,1};
 		for(int i=0; i<a.length; i++) {
 			System.out.println(new Resolution35().searchRound(a, a[i], 0, a.length - 1));
-		}*/
+		}
 
 		//System.out.println(new Resolution35().searchRound(a, 1, 0, 4));
 
-		System.out.println(new Resolution35().countAndSay(0));
-
-
-
-		char[][] grid = {
-				{'1', '1', '0', '0', '0'},
-				{'1', '1', '0', '0', '0'},
-				{'1', '1', '0', '0', '0'},
-				{'0', '0', '1', '0', '0'},
-				{'0', '0', '0', '1', '1'}
-		};
-		System.out.println(new Resolution35().numIslands(grid));
-		
-		System.out.println(new Resolution35().combinationSum(new int[]{2,3,5}, 7));
-		System.out.println(new Resolution35().combinationSum(new int[]{6,8,12,5,9,3,4,11}, 31));
+//		System.out.println(new Resolution35().countAndSay(0));
+//
+//
+//
+//		char[][] grid = {
+//				{'1', '1', '0', '0', '0'},
+//				{'1', '1', '0', '0', '0'},
+//				{'1', '1', '0', '0', '0'},
+//				{'0', '0', '1', '0', '0'},
+//				{'0', '0', '0', '1', '1'}
+//		};
+//		System.out.println(new Resolution35().numIslands(grid));
+//		
+//		System.out.println(new Resolution35().combinationSum(new int[]{2,3,5}, 7));
+//		System.out.println(new Resolution35().combinationSum(new int[]{6,8,12,5,9,3,4,11}, 31));
 	}
 
 	@LeetCode(35)
@@ -99,11 +99,10 @@ public class Resolution35 {
 
 		int mid = s + (e-s)/2;
 		if(nums[mid] == target) return mid;
-		if(s == e) return -1;
-
-		if(nums[s] < nums[mid]) {
-			if(target >= nums[s] && target <=  nums[mid]) {
-				return searchRound(nums, target, s, mid);
+		
+		if(nums[s] <= nums[mid]) {
+			if(target >= nums[s] && target <  nums[mid]) {
+				return searchRound(nums, target, s, mid-1);
 			} else {
 				return searchRound(nums, target, mid+1, e);
 			}
@@ -111,10 +110,37 @@ public class Resolution35 {
 			if(target > nums[mid] && target <= nums[e]) {
 				return searchRound(nums, target, mid+1, e);
 			} else {
-				return searchRound(nums, target, s, mid);
+				return searchRound(nums, target, s, mid-1);
 			}
 		}
 	}
+	
+	public int searchRoundRep(int[] nums, int target, int s, int e) {
+		if(s > e) return -1;
+
+		int mid = s + (e-s)/2;
+		if(nums[mid] == target) return mid;
+		
+		if(nums[s] < nums[mid]) {
+			if(target >= nums[s] && target <  nums[mid]) {
+				return searchRound(nums, target, s, mid-1);
+			} else {
+				return searchRound(nums, target, mid+1, e);
+			}
+		} else if (nums[s] > nums[mid]){
+			if(target > nums[mid] && target <= nums[e]) {
+				return searchRound(nums, target, mid+1, e);
+			} else {
+				return searchRound(nums, target, s, mid-1);
+			}
+		} else {
+			int r = searchRound(nums, target, mid+1, e);
+			if(r == -1)
+				return searchRound(nums, target, s, mid-1);
+			return r;
+		}
+	}
+
 
 	public int searchx(int[] A, int target) {
 		if (A == null || A.length == 0) {

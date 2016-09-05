@@ -10,6 +10,7 @@ public class Main {
 	public static void main(String[] args) throws Exception {
 		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
 		Enumeration<URL> resources = classLoader.getResources("exam/");
+		int count = 0;
 		while (resources.hasMoreElements()) {
 			URL resource = resources.nextElement();
 			File dir = new File(resource.getFile());
@@ -19,10 +20,11 @@ public class Main {
 					LeetCode lc = m.getAnnotation(LeetCode.class);
 					if(lc != null) {
 						System.out.println("#" + lc.value() + " - " + klazz.getName() + " - " + m.getName());
+						count++;
 					}
 				}
 			}
 		}
+		System.out.println("Total @LeetCode = " + count);
 	}
-
 }
