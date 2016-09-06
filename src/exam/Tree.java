@@ -296,8 +296,8 @@ public class Tree {
 
 		return results;
 	}
-	
-	@LeetCode(102)
+
+	@LeetCode(103)
 	public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
 		List<List<Integer>> results = new ArrayList<List<Integer>>();
 		Deque<TreeNode> q = new ArrayDeque<TreeNode>();
@@ -331,6 +331,203 @@ public class Tree {
 		return results;
 	}
 
+	@LeetCode(104)
+	public int maxDepth(TreeNode root) {
+		maxLevels = 0;
+		tranversalxx(root, 0);
+		return maxLevels;
+	}
+	private int maxLevels = 0;
+
+	private void tranversalxx(TreeNode node, int max) {
+		if(node != null) {
+			tranversalxx(node.left, max + 1);
+			if(max+1 > maxLevels) {
+				maxLevels = max + 1;
+			}
+			tranversalxx(node.right, max + 1);
+		}
+	}
+
+	//Low efficiency
+	@LeetCode(107)
+	public List<List<Integer>> levelOrderBottomx(TreeNode root) {
+		List<List<Integer>> results = levelOrder(root);
+		int size = results.size();
+		for(int i=0; i<size/2; i++) {
+			List<Integer> r = results.get(i);
+			results.set(i, results.get(size-1-i));
+			results.set(size-1-i, r);
+		}
+		return results;
+	}
+
+	@LeetCode(107)
+	public List<List<Integer>> levelOrderBottom(TreeNode root) {
+		List<List<Integer>> results = new ArrayList<List<Integer>>();
+		Queue<TreeNode> q = new ArrayDeque<TreeNode>();
+		if(root!=null) q.add(root);
+		else
+			return results;
+		int w = 1;
+
+		List<Integer> r = new ArrayList<Integer>();
+		while(q.size() > 0) {
+			TreeNode p = q.poll();
+			r.add(p.val);
+
+			if(p.left != null) q.add(p.left);
+			if(p.right != null) q.add(p.right);
+
+			if(r.size() == w) {
+				w = q.size();
+				results.add(0, r);
+				r = new ArrayList<Integer>();
+			}
+		}
+
+		return results;
+	}
+
+	@LeetCode(105)
+	public TreeNode buildTree(int[] preorder, int[] inorder) {
+		TreeNode root = new TreeNode(0);
+		buildTree(preorder, 0, preorder.length-1, inorder, 0, inorder.length-1, root, true);
+		return root.left;
+	}
+
+	private void buildTree(int[] preorder, int ps, int pe, int[] inorder, int is, int ie, TreeNode root, boolean isLeft) {
+		if(ps > pe) return;
+
+		int v = preorder[ps];
+
+		//Find it in inorder
+		int idx = -1;
+		for(int i=is; i<=ie; i++) {
+			if(inorder[i] == v) {
+				idx = i;
+				break;
+			}
+		}
+		if(idx == -1) return;
+
+		//left: is - idx-1
+		//right: idx + 1, ie
+		//left len = idx - is
+		int leftlen = idx - is;
+		int rightlen = ie - idx;
+		TreeNode node = new TreeNode(v);
+		if(isLeft) {
+			root.left = node;
+		} else {
+			root.right = node;
+		}
+		if(leftlen != 0)
+			buildTree(preorder, ps+1, ps + leftlen, inorder, is, idx-1, node, true);
+
+		if(rightlen != 0)
+			buildTree(preorder, ps+1 + leftlen, pe, inorder, idx+1, ie, node, false);
+	}
+	
+	
+	@LeetCode(105)
+	public TreeNode buildTreePost( int[] inorder, int[] postorder) {
+		TreeNode root = new TreeNode(0);
+		for(int i=0; i<postorder.length/2; i++) {
+			int t = postorder[i];
+			postorder[i] = postorder[postorder.length-1-i];
+			postorder[postorder.length-1-i] = t;
+		}
+		buildTreex(postorder, 0, postorder.length-1, inorder, 0, inorder.length-1, root, true);
+		return root.left;
+	}
+	
+	private void buildTreex(int[] postorder, int ps, int pe, int[] inorder, int is, int ie, TreeNode root, boolean isLeft) {
+		if(ps > pe) return;
+
+		int v = postorder[ps];
+
+		//Find it in inorder
+		int idx = -1;
+		for(int i=is; i<=ie; i++) {
+			if(inorder[i] == v) {
+				idx = i;
+				break;
+			}
+		}
+		if(idx == -1) return;
+
+		//left: is - idx-1
+		//right: idx + 1, ie
+		//left len = idx - is
+		int leftlen = idx - is;
+		int rightlen = ie - idx;
+		TreeNode node = new TreeNode(v);
+		if(isLeft) {
+			root.left = node;
+		} else {
+			root.right = node;
+		}
+		if(leftlen != 0)
+			buildTreex(postorder, ps+1+rightlen, pe, inorder, is, idx-1, node, true);
+
+		if(rightlen != 0)
+			buildTreex(postorder, ps+1, pe + rightlen, inorder, idx+1, ie, node, false);
+	}
+	
+	@LeetCode(108)
+	public TreeNode sortedArrayToBST(int[] nums) {
+		TreeNode _root = new TreeNode(0);
+		sortedArrayToBST(nums, 0, nums.length-1, _root, true);
+		return _root.left;
+	}
+
+	private void sortedArrayToBST(int[] nums, int s, int e, TreeNode p, boolean isLeft) {
+		if(s>e) return;
+		int m = (s + e)/2;
+
+		TreeNode node = new TreeNode(nums[m]);
+		if(isLeft) p.left = node;
+		else p.right = node;
+
+		sortedArrayToBST(nums, s, m-1, node, true);
+		sortedArrayToBST(nums, m+1, e, node, false);
+	}
+	
+	public TreeNode sortedArrayToBSTx(int[] nums) {
+
+		
+		int levels = 0;
+		int len = nums.length;
+		while(len > 0) {
+			levels++;
+			len /= 2;
+		}
+		len = nums.length;
+		
+		List<TreeNode> nodes = new ArrayList<TreeNode>();
+		for(int i=0; i<len; i++) {
+			nodes.add(new TreeNode(nums[i]));
+		}
+		
+		int w = 1;
+		for(int i=0; i<levels; i++) {
+			int start = w - 1;
+			w *= 2;
+			int space = w * 2;
+			
+			for(int k=start; k<len; k += space) {
+				
+			}
+		}
+		
+
+		TreeNode _root = new TreeNode(0);
+		
+		
+		return _root.left;
+	}
+
 	public static void main(String[] args) {
 		Tree t = new Tree();
 		/*List<TreeNode> trees = t.generateTrees(3);
@@ -338,13 +535,20 @@ public class Tree {
 			System.out.println(t.inorderTraversal(t.deserialize(t.serialize(tree))));
 		}
 		System.out.println(trees.size() + " " + t.calBST(1, 4));*/
-		List<Integer> nodes = new ArrayList<Integer>();
+		/*List<Integer> nodes = new ArrayList<Integer>();
 		nodes.add(15);nodes.add(5);nodes.add(10);//nodes.add(null);nodes.add(null);nodes.add(6);nodes.add(20);
 		TreeNode node = t.deserialize(nodes);
 		//	System.out.println(t.isValidBST(node));
 		System.out.println(t.inorderTraversal(node));
 		t.recoverTree(node);
-		System.out.println(t.inorderTraversal(node));
+		System.out.println(t.inorderTraversal(node));*/
+
+		//System.out.println(t.inorderTraversal(t.buildTree(new int[]{4, 2,1,3,6,5,7}, new int[]{1,2,3,4,5,6,7})));
+		
+		//System.out.println(t.inorderTraversal(t.buildTreePost(new int[]{1,2,3,4,5,6,7}, new int[]{1,3,2,5,7,6,4})));
+		
+		//System.out.println(t.inorderTraversal(t.buildTreePost(new int[]{1,2,3,4,5}, new int[]{2,3,1,5,4})));
+		System.out.println(t.inorderTraversal(t.sortedArrayToBSTx(new int[]{1,2,3,4})));
 	}
 }
 
