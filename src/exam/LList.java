@@ -36,6 +36,38 @@ public class LList {
 		System.out.println(minStack.getMin());
 		System.out.println(minStack.peekMax());
 
+		System.out.println(l.rotateRight(ListNode.create("12"), 3));
+
+	}
+
+	@LeetCode(61)
+	public ListNode rotateRight(ListNode head, int k) {
+		if(head == null) {
+			return null;
+		}
+
+		ListNode p = head;
+		int len = 0;
+		while(p.next != null) {
+			p = p.next;
+			len++;
+		}
+		len += 1;
+
+		k = k%len;
+		if(k == 0) return head;
+
+		p.next = head;
+		int t = len - k - 1;
+		p = head;
+		while(t>0) {
+			p = p.next;
+			t--;
+		}
+
+		ListNode q = p.next;
+		p.next = null;
+		return q;
 	}
 
 	public boolean hasCycle(ListNode head) {
@@ -185,7 +217,7 @@ class MinStack {
 		NNode next;
 		int val;
 		int min;
-		
+
 		NNode max;
 
 		NNode(int v){val = v; min = v; max = this;}
@@ -209,7 +241,7 @@ class MinStack {
 				node.min = node.next.min;
 			}
 		}
-		
+
 		if(node.next != null) {
 			if(node.next.max.val > x) {
 				node.max = node.next.max;
@@ -228,11 +260,11 @@ class MinStack {
 	public int getMin() {
 		return top.next.min;
 	}
-	
+
 	public int peekMax() {
 		return top.next.max.val;
 	}
-	
+
 
 	public void popMax() {
 		NNode p = top.next.max;
@@ -246,7 +278,7 @@ class MinStack {
 			}
 		}
 		q.next = q.next.next;
-		
+
 		p = top.next;
 		while(p != q.next) {
 			if(p.min > q.next.min) {
@@ -255,10 +287,10 @@ class MinStack {
 			if(p.max.val < q.next.max.val) {
 				p.max = q.next.max;
 			}
-			
+
 			p = p.next;
 		}
-		
+
 		//TODO: update max, min - reverse order
 	}
 }
