@@ -27,6 +27,7 @@ public class ListNode {
 
 	public static ListNode create(String value) {
 		int len = value.length();
+		if(len == 0) return null;
 		ListNode header = new ListNode(Integer.valueOf(value.charAt(0)) - '0');
 		ListNode p = header;
 

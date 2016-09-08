@@ -1,5 +1,8 @@
 package exam;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class LList {
 
 	public static void main(String[] args) {
@@ -38,6 +41,101 @@ public class LList {
 
 		System.out.println(l.rotateRight(ListNode.create("12"), 3));
 
+		System.out.println("==83==");
+		System.out.println(l.deleteDuplicates(ListNode.create("112233333344")));
+		System.out.println("==82==");
+		System.out.println(l.deleteDuplicatesAll(ListNode.create("")));
+		System.out.println("==143==");
+		ListNode nn = ListNode.create("");
+		l.reorderList(nn);
+		System.out.println(nn);
+	}
+
+	@LeetCode(143)
+	public void reorderList(ListNode head) {
+		if(head == null) return;
+		List<ListNode> nodes = new ArrayList<ListNode>();
+		ListNode p = head;
+		while(p != null) {
+			nodes.add(p);
+			p = p.next;
+		}
+		System.out.println("Size:" + nodes.size());
+		nodes.get((nodes.size()+1)/2-1).next = null;
+		p=head;
+		for(int i=0; i<nodes.size()/2; i+=1) {
+			ListNode q = nodes.get(nodes.size() - i - 1);
+			q.next = p.next;
+			p.next = q;
+			p = q.next;
+		}
+	}
+
+	//@LeetCode(86)
+	public ListNode partition(ListNode head, int x) {
+		if(head == null) return null;
+		
+		ListNode tail = head;
+		while(tail.next != null) {
+			tail = tail.next;
+		}
+		
+		ListNode t = tail.next;
+		ListNode p = head;
+		return null;
+	}
+
+	@LeetCode(83)
+	public ListNode deleteDuplicates(ListNode head) {
+		if(head == null) return null;
+
+		int v = head.val;
+		ListNode p = head;
+		while(p.next != null) {
+			int cv = p.next.val;
+			if(cv == v) {
+				p.next = p.next.next;
+			} else {
+				p = p.next;
+				v = cv;
+			}
+		}
+
+		return head;
+	}
+
+	//Low efficiency
+	@LeetCode(82)
+	public ListNode deleteDuplicatesAll(ListNode head) {
+		if(head == null) return null;
+
+		ListNode dummy = new ListNode(0);
+		dummy.next = head;
+		
+		ListNode p = dummy;
+		int v = head.val;
+		boolean removed = false;
+		while(p.next.next != null) {
+			int cv = p.next.next.val;
+			if(cv == v) {
+				p.next.next = p.next.next.next;
+				removed = true;
+			} else {
+				if(removed) {
+					p.next = p.next.next;
+					removed=false;
+					if(p.next == null) break;
+				} else {
+					p = p.next;
+				}
+				v = cv;
+			}
+		}
+		if(removed) {
+			p.next = null;
+		}
+
+		return dummy.next;
 	}
 
 	@LeetCode(61)
