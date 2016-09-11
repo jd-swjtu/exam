@@ -14,6 +14,7 @@ public class LongSubString {
 		}
 		
 		System.out.println(new LongSubString().strStr("",""));
+		System.out.println(new LongSubString().longestPalindrome("ccc"));
 	}
 
 /*
@@ -67,6 +68,41 @@ Subscribe to see which companies asked this question
 		return max;
 	}
 
+	@LeetCode(value=5, c="a")
+	public String longestPalindrome(String s) {
+		if(s == null) return "";
+		if(s.length() == 1) return s;
+		
+		int max = 0;
+		String result = "";
+		int len = s.length();
+		for(int i=0; i<len; i++) {
+			int count = 1;
+			while(i-count>=0 && i+count <len && s.charAt(i-count) == s.charAt(i+count)) {
+				count++;
+			}
+			count -= 1;
+			
+			if(2 * count + 1 > max) {
+				max = count * 2 +1;
+				result = s.substring(i-count, i+count+1);
+			}
+			
+			//other
+			count = 1;
+			while(1 + i-count>=0 && i+count <len && s.charAt(1 + i-count) == s.charAt(i+count)) {
+				count++;
+			}
+			count -= 1;
+			
+			if(2 *count > max) {
+				max = count * 2;
+				result = s.substring(1 + i-count, i+count+1);
+			}
+		}
+		return result;
+	}
+	
 	//#28
 	@LeetCode(28)
 	public int strStr(String haystack, String needle) {

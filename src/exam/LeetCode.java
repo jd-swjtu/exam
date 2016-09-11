@@ -10,4 +10,5 @@ import java.lang.annotation.Target;
 @Target(METHOD)
 public @interface LeetCode {
 	public int value();
+	public String c() default "";
 }

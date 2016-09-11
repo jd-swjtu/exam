@@ -4,6 +4,10 @@ import java.io.File;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 
 public class Main {
 
@@ -11,6 +15,7 @@ public class Main {
 		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
 		Enumeration<URL> resources = classLoader.getResources("exam/");
 		int count = 0;
+		Map<Integer,String> questions = new HashMap<Integer, String>();
 		while (resources.hasMoreElements()) {
 			URL resource = resources.nextElement();
 			File dir = new File(resource.getFile());
@@ -19,12 +24,17 @@ public class Main {
 				for(Method m: klazz.getMethods()) {
 					LeetCode lc = m.getAnnotation(LeetCode.class);
 					if(lc != null) {
-						System.out.println("#" + lc.value() + " - " + klazz.getName() + " - " + m.getName());
+						questions.put(lc.value(), String.format("#%03d - %1s - %20s - %s", lc.value(), lc.c(), klazz.getName(), m.getName()));
+						
 						count++;
 					}
 				}
 			}
 		}
 		System.out.println("Total @LeetCode = " + count);
+		Set<Integer> keys = new TreeSet<Integer>(questions.keySet());
+		for(Integer key: keys) {
+			System.out.println(questions.get(key));
+		}
 	}
 }

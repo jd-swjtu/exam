@@ -1,7 +1,12 @@
 package exam;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+
+import exam.LRUCacheX.Item;
 
 public class LList {
 
@@ -49,6 +54,51 @@ public class LList {
 		ListNode nn = ListNode.create("");
 		l.reorderList(nn);
 		System.out.println(nn);
+
+		System.out.println("==146==");
+		LRUCache lru = new LRUCache(2);
+		/*lru.set(2, 1);
+		lru.set(1, 1);
+		System.out.println(lru.get(2));
+		lru.set(4,1);
+		System.out.println(lru.get(1));
+		System.out.println(lru.get(2));*/
+
+		/*System.out.println(lru.get(2));
+		lru.set(2,6);
+		lru.peek();
+		System.out.println(lru.get(1));
+		lru.set(1,5);
+		lru.peek();
+		lru.set(1,2);
+		lru.peek();
+		System.out.println(lru.get(1));
+		lru.peek();
+		System.out.println(lru.get(2));*/
+
+		lru = new LRUCache(3);
+		lru.set(1,1); 
+		lru.set(2,2); 
+		lru.set(3,3);
+		lru.set(4,4);
+		lru.get(4);
+		lru.get(3);
+		lru.get(2);
+		lru.get(1);
+		lru.set(5,5);
+		lru.peek();
+		System.out.println(lru.get(1));
+		lru.peek();
+		System.out.println(lru.get(2));
+		lru.peek();
+		System.out.println(lru.get(3));
+		lru.peek();
+		System.out.println(lru.get(4));
+		lru.peek();
+		System.out.println(lru.get(5));
+
+		ListNode ln = ListNode.create("123456");
+		System.out.println(ln + " - " + ln.reverse());
 	}
 
 	@LeetCode(143)
@@ -74,12 +124,12 @@ public class LList {
 	//@LeetCode(86)
 	public ListNode partition(ListNode head, int x) {
 		if(head == null) return null;
-		
+
 		ListNode tail = head;
 		while(tail.next != null) {
 			tail = tail.next;
 		}
-		
+
 		ListNode t = tail.next;
 		ListNode p = head;
 		return null;
@@ -111,7 +161,7 @@ public class LList {
 
 		ListNode dummy = new ListNode(0);
 		dummy.next = head;
-		
+
 		ListNode p = dummy;
 		int v = head.val;
 		boolean removed = false;
@@ -449,5 +499,148 @@ class MinStackx {
 
 	public int getMin() {
 		return root.left.val;
+	}
+}
+
+
+class LRUCache {
+	private int counter = 0;
+	private int capacity = 0;
+
+	private Map<Integer,Integer> items = new HashMap<Integer,Integer>();
+	private LinkedList<Integer> list = new LinkedList<Integer>();
+
+	public LRUCache(int capacity) {
+		this.capacity = capacity;
+	}
+
+	public void peek() {
+		//System.out.println("#:");
+	}
+	public int get(int key) {
+		if(items.keySet().contains(key)) {
+			list.removeFirstOccurrence(key);
+			list.addLast(key);
+			return items.get(key).intValue();
+		}
+		return -1;
+	}
+
+	@LeetCode(value=146, c="a")
+	public void set(int key, int value) {
+		if(items.keySet().contains(key)) {
+			list.remove(key);
+			list.addLast(key);
+
+			items.put(key, value);
+		} else {
+			if(counter >= capacity) {
+				int oldkey = list.removeFirst();
+				list.add(key);
+				items.remove(oldkey);
+				items.put(key, value);
+			} else {
+				counter++;
+				list.add(key);
+				items.put(key, value);
+			}
+		}
+	}
+}
+
+class LRUCacheX {
+	private int counter = 0;
+	private int capacity = 0;
+
+	class Item {
+		int value;
+		int key;
+
+		Item next;
+		Item prev;
+
+		public Item(int k, int v) {
+			value = v;
+			key = k;
+		}
+	}
+
+	private Map<Integer,Item> items = new HashMap<Integer,Item>();
+	private Item header = new Item(0,0);
+
+	public LRUCacheX(int capacity) {
+		this.capacity = capacity;
+		header.next = header;
+		header.prev = header;
+	}
+
+	public void peek() {
+		System.out.print("#:");
+		Item p = header.next;
+		while(p != null && p != header) {
+			System.out.print(" " + p.key + "-" + p.value);
+			p = p.next;
+		}
+		System.out.println();
+	}
+	public int get(int key) {
+		if(items.keySet().contains(key)) {
+			Item item = items.get(key);
+			set(key,item.value);
+
+			return item.value;
+		}
+		return -1;
+	}
+
+	@LeetCode(value=146, c="a")
+	public void set(int key, int value) {
+		if(items.keySet().contains(key)) {
+			Item item = items.get(key);
+
+			//Remove
+			Item q = item.next;
+			Item p = item.prev;
+			p.next = q;
+			if(q != null) q.prev = p;
+
+			//Insert
+			item.value = value;
+			q = header.next;
+			item.next = q;
+			item.prev = header;
+
+			header.next = item;
+			q.prev = item;
+		} else {
+			if(counter >= capacity) {
+				Item q = header.prev;
+				items.remove(q.key);
+
+				q.prev.next = header;
+				header.prev = q.prev;
+
+				//update q
+				q.key = key;
+				q.value = value;
+				header.next.prev = q;
+				q.next = header.next;
+				header.next = q;
+				q.prev = header;
+
+				items.put(key, q);
+			} else {
+				counter++;
+				Item item = new Item(key, value);
+				items.put(key, item);
+
+				Item q = header.next;
+				item.next = q;
+				item.prev = header;
+
+				header.next = item;
+				q.prev = item;
+			}
+		}
 	}
 }

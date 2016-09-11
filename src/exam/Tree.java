@@ -90,19 +90,19 @@ public class Tree {
 		}
 	}
 
+	@LeetCode(98)
 	public boolean isValidBST(TreeNode root) {
 		return tranversalx(root);
 	}
 	private long vv = Long.MIN_VALUE;
 	private boolean tranversalx(TreeNode node) {
-		boolean result = true;
 		if(node != null) {
-			result &= tranversalx(node.left);
+			if(!tranversalx(node.left)) return false;
 			if(node.val <= vv) return false;
 			else vv = node.val;
-			result &= tranversalx(node.right);
+			if(!tranversalx(node.right)) return false;
 		}
-		return result;
+		return true;
 	}
 
 
@@ -527,6 +527,26 @@ public class Tree {
 		
 		return _root.left;
 	}
+	
+	@LeetCode(value=236, c="a")
+	public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+		if(root==null)
+			return null;
+
+		if(root==p || root==q)
+			return root;
+
+		TreeNode l = lowestCommonAncestor(root.left, p, q);
+		TreeNode r = lowestCommonAncestor(root.right, p, q);
+
+		if(l!=null&&r!=null){
+			return root;
+		}else if(l==null&&r==null){
+			return null;
+		}else{
+			return l==null?r:l;
+		}
+	}
 
 	public static void main(String[] args) {
 		Tree t = new Tree();
@@ -535,11 +555,11 @@ public class Tree {
 			System.out.println(t.inorderTraversal(t.deserialize(t.serialize(tree))));
 		}
 		System.out.println(trees.size() + " " + t.calBST(1, 4));*/
-		/*List<Integer> nodes = new ArrayList<Integer>();
-		nodes.add(15);nodes.add(5);nodes.add(10);//nodes.add(null);nodes.add(null);nodes.add(6);nodes.add(20);
+		List<Integer> nodes = new ArrayList<Integer>();
+		nodes.add(10);nodes.add(5);nodes.add(15);//nodes.add(null);nodes.add(null);nodes.add(6);nodes.add(20);
 		TreeNode node = t.deserialize(nodes);
-		//	System.out.println(t.isValidBST(node));
-		System.out.println(t.inorderTraversal(node));
+			System.out.println(t.isValidBST(node));
+		/*System.out.println(t.inorderTraversal(node));
 		t.recoverTree(node);
 		System.out.println(t.inorderTraversal(node));*/
 
@@ -548,7 +568,7 @@ public class Tree {
 		//System.out.println(t.inorderTraversal(t.buildTreePost(new int[]{1,2,3,4,5,6,7}, new int[]{1,3,2,5,7,6,4})));
 		
 		//System.out.println(t.inorderTraversal(t.buildTreePost(new int[]{1,2,3,4,5}, new int[]{2,3,1,5,4})));
-		System.out.println(t.inorderTraversal(t.sortedArrayToBSTx(new int[]{1,2,3,4})));
+		//System.out.println(t.inorderTraversal(t.sortedArrayToBSTx(new int[]{1,2,3,4})));
 	}
 }
 

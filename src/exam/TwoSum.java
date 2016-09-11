@@ -81,7 +81,7 @@ Given nums = [2, 7, 11, 15], target = 9,
 Because nums[0] + nums[1] = 2 + 7 = 9,
 return [0, 1].
 	 */
-	@LeetCode(1)
+	@LeetCode(value=1, c="a")
 	public int[] twoSum(int[] nums, int target) {
 		Map<Integer,Integer> mapping = new HashMap<Integer,Integer>();
 		for(int i=0; i<nums.length; i++) {
