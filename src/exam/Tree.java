@@ -34,7 +34,7 @@ public class Tree {
 		}
 	}
 
-	private TreeNode genTree(TreeNode root, int v) {
+	public TreeNode genTree(TreeNode root, int v) {
 		TreeNode node = new TreeNode(v);
 		if(root.val < v) {
 			if(root.right == null) {
@@ -47,7 +47,7 @@ public class Tree {
 		return node;
 	}
 
-	private TreeNode clone(TreeNode root) {
+	public TreeNode clone(TreeNode root) {
 		if(root != null) {
 			TreeNode _root = new TreeNode(root.val);
 			copy(root.left, _root, true);
@@ -94,6 +94,11 @@ public class Tree {
 	public boolean isValidBST(TreeNode root) {
 		return tranversalx(root);
 	}
+	public boolean isValidBSTx(TreeNode root) {
+		if(root == null) return true;
+		return tranversalx(root, root.left, root.right);
+	}
+	
 	private long vv = Long.MIN_VALUE;
 	private boolean tranversalx(TreeNode node) {
 		if(node != null) {
@@ -103,6 +108,19 @@ public class Tree {
 			if(!tranversalx(node.right)) return false;
 		}
 		return true;
+	}
+	
+	private boolean tranversalx(TreeNode node, TreeNode left, TreeNode right) {
+		boolean result = true;
+		if(left != null) {
+			result &= left.val < node.val && tranversalx(left, left.left, left.right);
+		}
+		
+		if(right != null) {
+			result &= right.val > node.val && tranversalx(right, right.left, right.right);
+		}
+		
+		return result;
 	}
 
 
@@ -547,6 +565,30 @@ public class Tree {
 			return l==null?r:l;
 		}
 	}
+	
+	@LeetCode(value=235, c="a")
+	public TreeNode lowestCommonAncestorBST(TreeNode root, TreeNode p, TreeNode q) {
+        if(p.val < q.val)
+          return lowestCommonAncestorX(root, p, q);
+         else
+         return lowestCommonAncestorX(root, q, p);
+    }
+    
+    public TreeNode lowestCommonAncestorX(TreeNode root, TreeNode p, TreeNode q) {
+        if(root == null) return null;
+        
+        if(root==p || root==q)
+			return root;
+        
+        if(p.val < root.val && q.val > root.val) 
+        	return root;
+        else if(p.val < root.val && q.val < root.val) 
+        	return lowestCommonAncestorX(root.left, p, q);
+        else if(p.val > root.val && q.val > root.val) 
+        	return lowestCommonAncestorX(root.right, p, q);
+        else 
+        	return null;
+    }
 
 	public static void main(String[] args) {
 		Tree t = new Tree();
@@ -556,9 +598,11 @@ public class Tree {
 		}
 		System.out.println(trees.size() + " " + t.calBST(1, 4));*/
 		List<Integer> nodes = new ArrayList<Integer>();
-		nodes.add(10);nodes.add(5);nodes.add(15);//nodes.add(null);nodes.add(null);nodes.add(6);nodes.add(20);
+		nodes.add(104);nodes.add(5);nodes.add(15);//nodes.add(null);nodes.add(null);nodes.add(6);nodes.add(20);
 		TreeNode node = t.deserialize(nodes);
 			System.out.println(t.isValidBST(node));
+			
+			System.out.println(t.isValidBSTx(node));
 		/*System.out.println(t.inorderTraversal(node));
 		t.recoverTree(node);
 		System.out.println(t.inorderTraversal(node));*/

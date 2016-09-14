@@ -138,6 +138,7 @@ Example2: x = -123, return -321
 		return isMatch(s, p.substring(2));
 	}
 
+	@LeetCode(value=17, c="a")
 	public List<String> letterCombinations(String digits) {
 		List<String> result = new ArrayList<String>();
 		String[] dict = new String[]{"+", " ", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};

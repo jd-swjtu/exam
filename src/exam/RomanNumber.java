@@ -18,6 +18,7 @@ public class RomanNumber {
 
 	}
 
+	@LeetCode(value=20, c="a")
 	public boolean isValid(String s) {
 		if(s == null || s.length() == 0) return true;
 

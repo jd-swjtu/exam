@@ -28,16 +28,16 @@ public class ListNode {
 	public static ListNode create(String value) {
 		int len = value.length();
 		if(len == 0) return null;
-		ListNode header = new ListNode(Integer.valueOf(value.charAt(0)) - '0');
+		ListNode header = new ListNode(0);
 		ListNode p = header;
 
-		for(int i=1; i<len; i++) {
+		for(int i=0; i<len; i++) {
 			ListNode q = new ListNode(Integer.valueOf(value.charAt(i)) - '0');
 			p.next = q;
 			p = q;
 		}
 
-		return header;
+		return header.next;
 	}
 	
 	public ListNode reverse() {

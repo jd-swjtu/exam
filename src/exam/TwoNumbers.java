@@ -4,22 +4,22 @@ public class TwoNumbers {
 	public static void main(String[] args) {
 		TwoNumbers tn = new TwoNumbers();
 		
-			/*	int n1 = 280196;
-				int n2 = 923333395;
+				int n1 = 28;
+				int n2 = 925;
 		
-				System.out.println(ListNode.create("123333333333333335555555"));
+				//System.out.println(ListNode.create("123333333333333335555555"));
 		
 				System.out.println(tn.add(ListNode.create(n1).reverse(), ListNode.create(n2).reverse()).reverse());
 				System.out.println(n1 + n2);
-			System.out.println(tn.removeNthFromEnd(ListNode.create("2134"), 2));
+			/*System.out.println(tn.removeNthFromEnd(ListNode.create("2134"), 2));
 
 		System.out.println(tn.swapPairs(ListNode.create("123456")));
 
 		System.out.println(tn.reverseKGroup(ListNode.create("12"), 3));*/
 		System.out.println(tn.multiply("99", "99"));
 		
-		System.out.println(tn.isMatch("babbbbaabababaabbababaababaabbaabababbaaababbababaaaaaabbabaaaabababbabbababbbaaaababbbabbbbbbbbbbaabbb",
-				"b**bb**a**bba*b**a*bbb**aba***babbb*aa****aabb*bbb***a"));
+		//System.out.println(tn.isMatch("babbbbaabababaabbababaababaabbaabababbaaababbababaaaaaabbabaaaabababbabbababbbaaaababbbabbbbbbbbbbaabbb",
+		//		"b**bb**a**bba*b**a*bbb**aba***babbb*aa****aabb*bbb***a"));
 		/*System.out.println(tn.isMatch("a","aa") == false);
 		System.out.println(tn.isMatch("aa","a") == false);
 		System.out.println(tn.isMatch("aa","aa") == true);
@@ -29,9 +29,36 @@ public class TwoNumbers {
 		System.out.println(tn.isMatch("ab", "?*") == true);
 		System.out.println(tn.isMatch("aab", "c*a*b") == false);
 		System.out.println(tn.isMatch("aab", "a*a*b") == true);*/
-		
+		int[][] a = new int[][]{
+			{1,2,3,4,6},
+			{2,3,4,5,7},
+			{1,0,2,4,8},
+			{4,2,1,5,9},
+			{4,2,1,5,9}
+		};
+		tn.rotate(a);
+		for(int i=0; i<a.length; i++) {
+			for(int j=0; j<a.length; j++)
+				System.out.print(" " + a[i][j]);
+			System.out.println();
+		}
 	}
 
+	@LeetCode(value=48, c="a")
+	public void rotate(int[][] matrix) {
+		int len = matrix.length;
+
+		for(int i=0; i<len/2; i++) {
+			for(int j=0; j<(len+1)/2; j++) {
+				int t = matrix[i][j];
+				matrix[i][j] = matrix[len-1-j][i];
+				matrix[len-1-j][i] = matrix[len-1-i][len-1-j];
+				matrix[len-1-i][len-1-j] = matrix[j][len-1-i] ;
+				matrix[j][len-1-i] = t;
+			}
+		}
+	}
+	
 	/*
 	 *You are given two linked lists representing two non-negative numbers. The digits are stored in reverse order and each of their nodes contain a single digit. Add the two numbers and return it as a linked list.
 
@@ -42,7 +69,7 @@ Output: 7 -> 0 -> 8
 	public ListNode add(ListNode a, ListNode b) {
 		ListNode c = new ListNode(0);
 		ListNode h = c;
-		ListNode p = null, pp = c;
+		ListNode p = null;//, pp = c;
 
 		while ( a != null && b != null) {
 			int val = a.val + b.val + c.val;
@@ -50,7 +77,7 @@ Output: 7 -> 0 -> 8
 
 			p = new ListNode(val / 10);
 			c.next = p;
-			pp = c;
+			//pp = c;
 
 			a = a.next;
 			b = b.next;
@@ -64,15 +91,15 @@ Output: 7 -> 0 -> 8
 
 			p = new ListNode(val / 10);
 			c.next = p;
-			pp = c;
+			//pp = c;
 
 			q = q.next;
 			c = p;
 		}
 
-		if(p!=null && p.val == 0) {
+		/*if(p!=null && p.val == 0) {
 			pp.next = null;
-		}
+		}*/
 
 		return h;
 	}
@@ -359,4 +386,5 @@ Output: 7 -> 0 -> 8
 			return r;
 		}
 	}
+	
 }

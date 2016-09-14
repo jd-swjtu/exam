@@ -15,8 +15,33 @@ public class LongSubString {
 		
 		System.out.println(new LongSubString().strStr("",""));
 		System.out.println(new LongSubString().longestPalindrome("ccc"));
+		
+		System.out.println(new LongSubString().isAnagram("aacc", "ccac"));
+		Set<String> wordDict = new HashSet<String>();
+		wordDict.add("leet");
+		wordDict.add("code");
+		System.out.println(new LongSubString().wordBreak("leetcode", wordDict));
+		
 	}
 
+	@LeetCode(value=242, c="a")
+	public boolean isAnagram(String s, String t) {
+        if(s == null && t == null) return true;
+        if(s == null || t == null) return false;
+        if(s.length() != t.length()) return false;
+        
+        int[][] v = new int[2][26];
+        int len = s.length();
+        for(int i=0; i<len; i++) {
+            v[0][s.charAt(i) - 'a']++;
+            v[1][t.charAt(i) - 'a']++;
+        }
+        
+        for(int i=0; i<26; i++) {
+        	if (v[0][i] != v[1][i]) return false;
+        }
+        return true;
+    }
 /*
  Given a string, find the length of the longest substring without repeating characters.
 
@@ -119,5 +144,51 @@ Subscribe to see which companies asked this question
 		}
 		
 		return -1;
+	}
+	
+	/*Given a string s and a dictionary of words dict, determine if s can be segmented into a space-separated sequence of one or more dictionary words.
+
+	For example, given
+	s = "leetcode",
+	dict = ["leet", "code"].
+
+	Return true because "leetcode" can be segmented as "leet code".*/
+	@LeetCode(value=139, c="a")
+	public boolean wordBreak(String s, Set<String> wordDict) {
+		boolean[] dp = new boolean[s.length() + 1];
+		dp[0] = true;
+		for(int i=0; i<s.length(); i++) {
+			for(int j=i; j>=0; j--) {
+				if(dp[j] && wordDict.contains(s.substring(j,  i+1))) {
+					dp[i+1] = true;
+					break;
+				}
+			}
+		}
+		
+		return dp[s.length()];
+	}
+
+	//low performance
+	private boolean wordBreak(String str, int s, int e, Set<String> wordDict) {
+		if(s == e) return true;
+		for(int i=s+1; i<=e; i++) {
+			String ss = str.substring(s, i);
+			if(wordDict.contains(ss)) {
+				if(wordBreak(str, i, e, wordDict)) return true;
+			}
+		}
+		return false;
+	}
+	
+	private boolean wordBreak2(String str, int s, int e, Set<String> wordDict) {
+		if(s == 0) return true;
+		for(int i=e-1; i>=s; i--) {
+			String ss = str.substring(i, e);
+			if(wordDict.contains(ss)) {
+				if(wordBreak2(str, 0, i, wordDict)) return true;
+			}
+		}
+		return false;
 	}
 }

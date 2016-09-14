@@ -1,12 +1,12 @@
 package exam;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Deque;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-
-import exam.LRUCacheX.Item;
 
 public class LList {
 
@@ -99,6 +99,81 @@ public class LList {
 
 		ListNode ln = ListNode.create("123456");
 		System.out.println(ln + " - " + ln.reverse());
+
+		System.out.println(l.searchMatrix(new int[][]{
+			{1,   4,  6, 11, 15},
+			{2,   5,  8, 12, 19},
+			{3,   6,  9, 16, 22},
+			{10, 13, 14, 17, 24},
+			{18, 21, 23, 26, 30}
+		}, 6));
+	}
+
+	@LeetCode(value=240, c="a")
+	public int searchMatrix(int[][] matrix, int target) {
+		// check corner case
+		if (matrix == null || matrix.length == 0) {
+			return 0;
+		}
+		if (matrix[0] == null || matrix[0].length == 0) {
+			return 0;
+		}
+
+		// from bottom left to top right
+		int n = matrix.length;
+		int m = matrix[0].length;
+		int x = n - 1;
+		int y = 0;
+		int count = 0;
+
+		while (x >= 0 && y < m) {
+			System.out.println("x,y=" + x + ":" + y);
+			if (matrix[x][y] < target) {
+				y++;
+			} else if (matrix[x][y] > target) {
+				x--;
+			} else {
+				count++;
+				x--;
+				y++;
+			}
+
+		}
+		return count;
+	}
+
+	void inQueue(Deque<Integer> deque, int num) {
+		while (!deque.isEmpty() && deque.peekLast() < num) {
+			deque.pollLast();
+		}
+		deque.offer(num);
+	}
+
+	void outQueue(Deque<Integer> deque, int num) {
+		if (deque.peekFirst() == num) {
+			deque.pollFirst();
+		}
+	}
+
+	@LeetCode(value=239, c="a")
+	public ArrayList<Integer> maxSlidingWindow(int[] nums, int k) {
+		// write your code here
+		ArrayList<Integer> ans = new ArrayList<Integer>();
+		Deque<Integer> deque = new ArrayDeque<Integer>();
+		if (nums.length == 0) {
+			return ans;
+		}
+		for (int i = 0; i < k - 1; i++) {
+			inQueue(deque, nums[i]);
+		}
+
+		for(int i = k - 1; i < nums.length; i++) {
+			inQueue(deque, nums[i]);
+			ans.add(deque.peekFirst());
+			outQueue(deque, nums[i - k + 1]);
+		}
+		return ans;
+
 	}
 
 	@LeetCode(143)
@@ -218,6 +293,7 @@ public class LList {
 		return q;
 	}
 
+	@LeetCode(value=141, c="a")
 	public boolean hasCycle(ListNode head) {
 		if(head == null) return false;
 
@@ -344,6 +420,7 @@ public class LList {
 		return newHead;
 	}
 
+	@LeetCode(value=138, c="a")
 	public RandomListNode copyRandomList(RandomListNode head) {
 		if (head == null) {
 			return null;
@@ -360,6 +437,7 @@ class RandomListNode {
 	RandomListNode(int x) { this.label = x; }
 }
 
+
 class MinStack {
 	class NNode {
 		NNode next;
@@ -372,12 +450,13 @@ class MinStack {
 	}
 
 	private NNode top;
-
+	
 	/** initialize your data structure here. */
 	public MinStack() {
 		top = new NNode(0);
 	}
 
+	@LeetCode(value=155, c="a")
 	public void push(int x) {
 		NNode node = new NNode(x);
 
