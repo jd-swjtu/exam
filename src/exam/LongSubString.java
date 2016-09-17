@@ -16,7 +16,7 @@ public class LongSubString {
 		System.out.println(new LongSubString().strStr("",""));
 		System.out.println(new LongSubString().longestPalindrome("ccc"));
 		
-		System.out.println(new LongSubString().isAnagram("aacc", "ccac"));
+		System.out.println(new LongSubString().isAnagram("aacc", "ccaa"));
 		Set<String> wordDict = new HashSet<String>();
 		wordDict.add("leet");
 		wordDict.add("code");
@@ -30,15 +30,15 @@ public class LongSubString {
         if(s == null || t == null) return false;
         if(s.length() != t.length()) return false;
         
-        int[][] v = new int[2][26];
+        int[] v = new int[26];
         int len = s.length();
         for(int i=0; i<len; i++) {
-            v[0][s.charAt(i) - 'a']++;
-            v[1][t.charAt(i) - 'a']++;
+            v[s.charAt(i) - 'a']++;
+            v[t.charAt(i) - 'a']--;
         }
         
         for(int i=0; i<26; i++) {
-        	if (v[0][i] != v[1][i]) return false;
+        	if (v[i] != 0) return false;
         }
         return true;
     }
@@ -55,7 +55,7 @@ Given "pwwkew", the answer is "wke", with the length of 3. Note that the answer 
 
 Subscribe to see which companies asked this question
  */
-	@LeetCode(3)
+	@LeetCode(value=3, c="a")
 	public int longString(String ss) {
 		System.out.println("####" + ss);
 		Set<Character> s = new HashSet<Character>();

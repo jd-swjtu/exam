@@ -40,6 +40,7 @@ public class ListNode {
 		return header.next;
 	}
 	
+	@LeetCode(value=206, c="a")
 	public ListNode reverse() {
 		ListNode q = null;
 		ListNode p = this;

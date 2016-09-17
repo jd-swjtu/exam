@@ -1,6 +1,9 @@
 package exam;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class TwoSum {
@@ -16,57 +19,59 @@ public class TwoSum {
 		System.out.println(new TwoSum().atoi("2147483648"));*/
 
 		System.out.println(new TwoSum().atoi("9223372036854775809"));
-		
+
 		int[] a = new int[]{ 1, 12, 34, 56, 23, 12};//7, 2, 5, 3, 2, 1}; //{5,4,3,2,1};// {1,2,3,4,5}; //
 		new TwoSum().nextPermutation(a);
 		for(int i=0; i<a.length; i++)
 			System.out.print(a[i] + " ");
 		System.out.println();
 		System.out.println(new TwoSum().firstMissingPositive(new int[]{0,1,2,3}));
+		System.out.println("=========");
+		new TwoSum().threeSum(new int[]{-1, 0, 1, 2, -1, -4});
 	}
-	
+
 	public boolean isVaild(char[][] board) {
 		int[] v = new int[9];
-		
+
 		for(int i=0; i<9; i++) {
 			for(int x=0; x<9; x++) v[x]=0;
 			for(int j=0; j<9; j++) {
 				char c= board[i][j];
 				if(c == '.') continue;
-				
+
 				int vv = c - '1';
 				if(v[vv] != 0) return false;
 				v[vv] = 1;
 			}
 		}
-		
+
 		for(int i=0; i<9; i++) {
 			for(int x=0; x<9; x++) v[x]=0;
 			for(int j=0; j<9; j++) {
 				char c= board[j][i];
 				if(c == '.') continue;
-				
+
 				int vv = c - '1';
 				if(v[vv] != 0) return false;
 				v[vv] = 1;
 			}
 		}
-		
+
 		for(int i=0; i<9; i++) {
 			for(int x=0; x<9; x++) v[x]=0;
 			for(int k=0; k<3; k++) {
-				
+
 				for(int l=0; l<3; l++) {
 					char c = board[3*(i/3)+k][3*(i%3) + l];
 					if(c == '.') continue;
-					
+
 					int vv = c - '1';
 					if(v[vv] != 0) return false;
 					v[vv] = 1;
 				}
 			}
 		}
-		
+
 		return true;
 	}
 
@@ -134,8 +139,8 @@ Notes: It is intended for this problem to be specified vaguely (ie, no given inp
 
 		return (int)(v*sign);
 	}
-	
-	
+
+
 	//#31 - 7 2 5 3 2 1
 	@LeetCode(31)
 	public void nextPermutation(int[] nums) {
@@ -149,7 +154,7 @@ Notes: It is intended for this problem to be specified vaguely (ie, no given inp
 				break;
 			}
 		}
-		
+
 		if(found) {
 			int j = 0;
 			int vv = Integer.MAX_VALUE;
@@ -182,7 +187,7 @@ Notes: It is intended for this problem to be specified vaguely (ie, no given inp
 			}
 		}
 	}
-	
+
 	/*
 	 *Given an unsorted integer array, find the first missing positive integer.
 
@@ -195,9 +200,9 @@ and [3,4,-1,1] return 2.
 		for(int i=0; i<nums.length; i++) {
 			while(nums[i] != i+1) {
 				if(nums[i] <= 0 || nums[i] >= nums.length) break;
-				
+
 				if(nums[i] == nums[nums[i]-1]) break;
-				
+
 				int temp = nums[i];
 				nums[i] = nums[temp-1];
 				nums[temp-1] = temp;
@@ -207,5 +212,46 @@ and [3,4,-1,1] return 2.
 			if(nums[i] != i+1) return i+1;
 		}
 		return nums.length+1;
+	}
+
+	@LeetCode(value=15, c="a")
+	public List<List<Integer>> threeSum(int[] nums) {
+		List<List<Integer>> results = new ArrayList<List<Integer>>();
+		Arrays.sort(nums);
+
+		for(int i=0; i<nums.length - 2; i++) {
+			if(i != 0 && nums[i] == nums[i-1]) continue;
+			int s = i+1;
+			int e = nums.length - 1;
+
+			while(s<e) {
+				int v = nums[i] + nums[s] + nums[e];
+				if(v == 0) {
+					ArrayList<Integer> tmp = new ArrayList<Integer>();
+					tmp.add(nums[i]);
+					tmp.add(nums[s]);
+					tmp.add(nums[e]);
+					results.add(tmp);
+
+					System.out.println(String.format("%d %d %d\n", nums[i], nums[s], nums[e]));
+					s++;
+					e--;
+
+					while (s < e && nums[s] == nums[s - 1]) { 
+						s++;
+					}
+					while (s < e && nums[e] == nums[e + 1]) {
+						e--;
+					}
+				} else {
+					if(v>0) {
+						e--;
+					} else {
+						s++;
+					}
+				}
+			}
+		}
+		return results;
 	}
 }

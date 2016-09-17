@@ -4,6 +4,7 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
@@ -17,7 +18,7 @@ public class Graph {
 
 		System.out.println(UndirectedGraphNode.serialize(UndirectedGraphNode.deserialize("0,1,2#1,2#2,2").clone()));
 		
-		System.out.println("------------" + g.ladderLength(new String[]{
+		System.out.println("------------" + g.wordLadder(//endWord, others)g.ladderLength(new String[]{
 //				"hot",
 //				"dog",
 //				"dot"}));
@@ -60,7 +61,7 @@ public class Graph {
 		"woe","our","ado","sin","mad","ray","hon","roy","dip","hen","iva","lug","asp","hui","yak","bay","poi","yep","bun","try","lad","elm","nat","wyo","gym","dug","toe","dee","wig","sly","rip","geo","cog","pas","zen","odd","nan","lay","pod","fit","hem","joy","bum","rio","yon","dec","leg","put","sue","dim","pet","yaw","nub","bit","bur","sid","sun","oil","red","doc","moe","caw","eel","dix","cub","end","gem","off","yew","hug","pop","tub","sgt","lid","pun","ton","sol","din","yup","jab","pea","bug","gag","mil","jig","hub","low","did","tin","get","gte","sox","lei","mig","fig","lon","use","ban","flo","nov","jut","bag","mir","sty","lap","two",
 		
 		"ant","net","tux","ode","stu","mug","cad","nap","gun","fop","tot","sow","sal","sic","ted","wot","del","imp","cob","way","ann","tan","mci","job","wet","err","him","all","pad","hah","hie","aim","ike","jed","ego","mac","baa","min","com","ill","was","cab","ago","ina","big","ilk","gal","tap","duh","ola","ran","lab","top","gob","hot","ora","tia","kip","han","met","hut","she","sac","fed","goo","tee","ell","not","act","gil","rut","ala","ape","rig","cid","god","duo","lin","aid","gel","awl","lag","elf","liz","ref","aha","fib","oho","tho","her","nor","ace","adz","fun","ned","coo","win","tao","coy","van","man","pit","guy","foe","hid","mai","sup","jay","hob","mow","jot","are","pol","arc","lax","aft","alb","len","air","pug","pox","vow","got","meg","zoe","amp","ale","bud","gee","pin","dun","pat","ten","mob"
-	}));
+	));
 		/*
 				"kiss",
 				"tusk",
@@ -75,6 +76,66 @@ public class Graph {
 			return node.clone();
 		return null;
 	}
+	
+	public int wordLadder(String beginWord, String endWord, String... others) {
+		Set<String> dict = new HashSet<String>();
+		for(String s: others) dict.add(s);
+		dict.add(endWord);
+		
+		HashSet<String> hash = new HashSet<String>();
+		
+
+        Queue<String> queue = new LinkedList<String>();
+        queue.offer(beginWord);
+        hash.add(beginWord);
+        
+        int length = 1;
+        while(!queue.isEmpty()) {
+            length++;
+            int size = queue.size();
+            for (int i = 0; i < size; i++) {
+                String word = queue.poll();
+                for (String nextWord: getNextWords(word, dict)) {
+                    if (hash.contains(nextWord)) {
+                        continue;
+                    }
+                    if (nextWord.equals(endWord)) {
+                        return length;
+                    }
+                    
+                    hash.add(nextWord);
+                    queue.offer(nextWord);
+                }
+            }
+        }
+		
+		return 0;
+	}
+	
+	private String replace(String s, int index, char c) {
+        char[] chars = s.toCharArray();
+        chars[index] = c;
+        return new String(chars);
+    }
+    
+    // get connections with given word.
+    // for example, given word = 'hot', dict = {'hot', 'hit', 'hog'}
+    // it will return ['hit', 'hog']
+    private ArrayList<String> getNextWords(String word, Set<String> dict) {
+        ArrayList<String> nextWords = new ArrayList<String>();
+        for (char c = 'a'; c <= 'z'; c++) {
+            for (int i = 0; i < word.length(); i++) {
+                if (c == word.charAt(i)) {
+                    continue;
+                }
+                String nextWord = replace(word, i, c);
+                if (dict.contains(nextWord)) {
+                    nextWords.add(nextWord);
+                }
+            }
+        }
+        return nextWords;
+    }
 	
 	public int ladderLength(String beginWord, String endWord, Set<String> wordList) {
 		wordList.add(beginWord);
