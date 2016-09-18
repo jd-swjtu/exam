@@ -107,7 +107,48 @@ public class LList {
 			{10, 13, 14, 17, 24},
 			{18, 21, 23, 26, 30}
 		}, 6));
+		
+		System.out.println(l.isPalindrome(ListNode.create("1121")));
 	}
+	
+	@LeetCode(234)
+    public boolean isPalindrome(ListNode head) {
+        if(head == null) return true;
+        int len = 0;
+        ListNode p = head;
+        while(p!=null) {
+            len++;
+            p=p.next;
+        }
+        if(len == 1) return false;
+        
+        int go = (len+1)/2;
+        p = head;
+        while(go > 0) {
+            p = p.next;
+            go--;
+        }
+        
+        ListNode q = p;
+        p = p.next;
+        q.next = null;
+        while(p != null) {
+            ListNode e = p;
+            p = p.next;
+            
+            e.next = q;
+            q = e;
+        }
+        
+        p = head;
+        while(q != null && p.val == q.val) {
+            p = p.next;
+            q = q.next;
+        }
+        
+        if(q != null) return false;
+        return true;
+    }
 
 	@LeetCode(value=240, c="a")
 	public int searchMatrix(int[][] matrix, int target) {
