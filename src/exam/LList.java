@@ -120,7 +120,7 @@ public class LList {
             len++;
             p=p.next;
         }
-        if(len == 1) return false;
+        if(len == 1) return true;
         
         int go = (len+1)/2;
         p = head;

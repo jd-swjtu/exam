@@ -28,7 +28,29 @@ public class TwoSum {
 		System.out.println(new TwoSum().firstMissingPositive(new int[]{0,1,2,3}));
 		System.out.println("=========");
 		new TwoSum().threeSum(new int[]{-1, 0, 1, 2, -1, -4});
+		new TwoSum().productExceptSelf(new int[]{1,2,3,4,5});
 	}
+
+	@LeetCode(238)
+public int[] productExceptSelf(int[] nums) {
+       int len = nums.length;
+       int[] res = new int[len];
+       
+       res[0] = 1;
+       for (int i = 1; i < len; i++) {
+       res[i] = res[i - 1] * nums[i - 1];
+       }
+       /*int right = 1;
+       for (int i = len - 1; i >= 0; i--) {
+       res[i] *= right;
+       right *= nums[i];
+       }*/
+       
+       for(int i=0; i<len; i++)
+    	   System.out.println(res[i]);
+       
+       return res;
+    }
 
 	public boolean isVaild(char[][] board) {
 		int[] v = new int[9];
