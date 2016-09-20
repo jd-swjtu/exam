@@ -28,6 +28,106 @@ public class TwoSum {
 		System.out.println(new TwoSum().firstMissingPositive(new int[]{0,1,2,3}));
 		System.out.println("=========");
 		new TwoSum().threeSum(new int[]{-1, 0, 1, 2, -1, -4});
+		//System.out.println(new TwoSum().maxSubArray1(new int[]{-2,1,-3,4,-1,2,1,-5,4}));
+		System.out.println(new TwoSum().maxSubArray2(new int[]{-2,-1,4,-1,2,-1,-5}));
+		
+		System.out.println("#121");
+		System.out.println(new TwoSum().maxProfit(new int[]{7, 1, 5, 3, 6, 4}));
+		System.out.println(new TwoSum().maxProfit(new int[]{7, 1, 7, 5, 6, 4}));
+		System.out.println(new TwoSum().maxProfit(new int[]{2,1,2,1,0,1,2}));
+		System.out.println(new TwoSum().maxProfit1(new int[]{2,1,2,1,0,1,2}));
+	}
+
+	@LeetCode(121)
+	public int maxProfit(int[] prices) {
+		if(prices.length < 2) return 0;
+		
+		int profit = 0;
+		int max = 0;
+		int min = 0;
+		if(prices[0]>prices[1]) {
+			min = max = prices[1];
+		} else {
+			min = prices[0];
+			max = prices[1];
+			profit = max - min;
+		}
+		for(int i=2; i<prices.length; i++) {
+			if(prices[i] > max) {
+				max = prices[i];
+			}
+			if(prices[i] < min) {
+				min = max = prices[i];
+			}
+			
+			profit = Math.max(profit, max - min);
+		}
+		return profit;
+	}
+	
+	@LeetCode(121)
+	public int maxProfit1(int[] prices) {
+		if(prices.length < 2) return 0;
+		
+		int profit = 0;
+		int min = prices[0];
+		
+		for(int i=1; i<prices.length; i++) {
+			int v = prices[i] - min;
+			if(v > profit) profit =v ;
+			
+			min = Math.min(prices[i], min);
+		}
+		return profit;
+	}
+
+	public int maxSubArray2(int[] A) {  
+		if(A==null || A.length==0)  
+			return 0;  
+		int global = A[0];  
+		int local = A[0];  
+		for(int i=1;i<A.length;i++)  
+		{  
+			local = Math.max(A[i],local+A[i]);  
+			global = Math.max(local,global);  
+		}  
+		return global;  
+	}  
+
+	public int maxSubArray1(int[] A) {
+		if (A == null || A.length == 0){
+			return 0;
+		}
+
+		int max = Integer.MIN_VALUE, sum = 0;
+		for (int i = 0; i < A.length; i++) {
+			sum += A[i];
+			max = Math.max(max, sum);
+			System.out.println("#" + max + " : " + sum);
+			sum = Math.max(sum, 0);
+		}
+
+		return max;
+	}
+
+	public int maxSubArray(int[] nums) {
+		int l = nums.length;
+		int[][] r = new int[l][l];
+
+		int max = Integer.MIN_VALUE;
+		for(int i=0; i<l; i++) {
+			r[i][i] = nums[i];
+			if(r[i][i] > max) max = r[i][i];
+			for(int j=i+1; j<l; j++) {
+				r[i][j] = r[i][j-1] + nums[j];
+
+				if(r[i][j] > max) {
+					max = r[i][j];
+				}
+			}
+		}
+
+		return max;
 	}
 
 	public boolean isVaild(char[][] board) {
