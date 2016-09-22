@@ -14,9 +14,9 @@ public class Graph {
 
 	public static void main(String[] args) {
 		Graph g = new Graph();
-		System.out.println(UndirectedGraphNode.serialize(UndirectedGraphNode.deserialize("0,1,2#1,2#2,2")));
+		//System.out.println(UndirectedGraphNode.serialize(UndirectedGraphNode.deserialize("0,1,2#1,2#2,2")));
 
-		System.out.println(UndirectedGraphNode.serialize(UndirectedGraphNode.deserialize("0,1,2#1,2#2,2").clone()));
+		//System.out.println(UndirectedGraphNode.serialize(UndirectedGraphNode.deserialize("0,1,2#1,2#2,2").clone()));
 		
 		System.out.println("------------" + g.wordLadder(//endWord, others)g.ladderLength(new String[]{
 //				"hot",
@@ -69,6 +69,51 @@ public class Graph {
 						
 						
 				//"a", "c", "b"})); //"hit", "cog", "hot", "dot", "dog", "lot", "log"}));
+		
+		g.getIndirectNode(UndirectedGraphNode.deserialize("0,1,2,3,11#1,0,4,5#2,0,5,6,9#3,0,9,8#4,1,10#5,1,2,10#6,2,7#7,6,9,11#8,3#9,2,3,7#10,4,5,11#11,7,10,0"));
+	}
+	
+	public List<UndirectedGraphNode> getIndirectNode(UndirectedGraphNode node) {
+		List<UndirectedGraphNode> nodes = new ArrayList<UndirectedGraphNode>();
+		Set<UndirectedGraphNode> accessed = new HashSet<UndirectedGraphNode>();
+		Set<UndirectedGraphNode> directNodes = new HashSet<UndirectedGraphNode>();
+		
+		Queue<UndirectedGraphNode> q = new LinkedList<UndirectedGraphNode>();
+		q.offer(node);
+		accessed.add(node);
+		directNodes.add(node);
+		int nr = 1;
+		int level = 0;
+		
+		while(q.size() > 0) {
+			UndirectedGraphNode n = q.poll();
+			
+			System.out.println("#A: " + n.label);
+			if(level !=1 && !directNodes.contains(n)) nodes.add(n);
+			nr--;
+			
+			for(UndirectedGraphNode nn: n.neighbors) {
+				if(!accessed.contains(nn)) {
+					q.offer(nn);
+					accessed.add(nn);
+					System.out.println("Add: " + nn.label);
+				}
+				
+				if(nn.equals(node)) directNodes.add(nn);
+			}
+			
+			if(nr == 0) {
+				nr = q.size();
+				level++;
+			}
+		}
+		
+		System.out.print("Social nodes: [");
+		for(UndirectedGraphNode n: nodes) {
+			System.out.print(" " + n.label);
+		}
+		System.out.println("]");
+		return nodes;
 	}
 
 	public UndirectedGraphNode cloneGraph(UndirectedGraphNode node) {
