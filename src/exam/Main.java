@@ -20,6 +20,7 @@ public class Main {
 			URL resource = resources.nextElement();
 			File dir = new File(resource.getFile());
 			for(File file: dir.listFiles()) {
+				if(!file.getName().endsWith(".class")) continue;
 				Class<?> klazz = Class.forName("exam." + file.getName().substring(0, file.getName().length() - 6));
 				for(Method m: klazz.getMethods()) {
 					LeetCode lc = m.getAnnotation(LeetCode.class);

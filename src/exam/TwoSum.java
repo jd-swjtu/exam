@@ -18,10 +18,11 @@ public class TwoSum {
 		System.out.println(new TwoSum().atoi("-2147483648"));
 		System.out.println(new TwoSum().atoi("2147483648"));*/
 
-		System.out.println(new TwoSum().atoi("9223372036854775809"));
+		//System.out.println(new TwoSum().atoi("9223372036854775809"));
 
 		int[] a = new int[]{ 1, 12, 34, 56, 23, 12};//7, 2, 5, 3, 2, 1}; //{5,4,3,2,1};// {1,2,3,4,5}; //
-		new TwoSum().nextPermutation(a);
+		//new TwoSum().nextPermutation(a);
+		new TwoSum().quicksort(a, 0, a.length-1);
 		for(int i=0; i<a.length; i++)
 			System.out.print(a[i] + " ");
 		System.out.println();
@@ -36,6 +37,9 @@ public class TwoSum {
 		System.out.println(new TwoSum().maxProfit(new int[]{7, 1, 7, 5, 6, 4}));
 		System.out.println(new TwoSum().maxProfit(new int[]{2,1,2,1,0,1,2}));
 		System.out.println(new TwoSum().maxProfit1(new int[]{2,1,2,1,0,1,2}));
+		
+		System.out.println(new TwoSum().wordPatternII("aabb", "xyzxyzabcabc"));
+		new TwoSum().quicksort(new int[]{5,4,3,2,1,9,8,7,6}, 0, 8);
 	}
 
 	@LeetCode(121)
@@ -375,4 +379,95 @@ and [3,4,-1,1] return 2.
 		}
 		return results;
 	}
+	
+	public void quicksort(int[] a, int l, int r) {
+		int s = split(a, l, r);
+		if(l < s -1)
+			quicksort(a, l, s-1);
+		if(s < r)
+			quicksort(a, s, r);
+	}
+	
+	public int split(int[] a, int s, int e) {
+		int m = (s+e)/2;
+		while(s<=e) {
+			while(a[s] < a[m])
+				s++;
+			
+			while(a[e] > a[m])
+				e--;
+			if(s<=e) {
+				int tmp = a[s];
+				a[s] = a[e];
+				a[e] = tmp;
+				
+				s++;
+				e--;
+			}
+		}
+		return s;
+	}
+	
+	@LeetCode(290)
+	public boolean wordPattern(String pattern, String str) {
+        if(pattern == null) return false;
+        if(str == null) return false;
+        
+        int len = pattern.length();
+        String[] strs = str.split(" ");
+        
+        if(len != strs.length) return false;
+        
+        Map<Character,String> mapping = new HashMap<Character,String>();
+        for(int i=0; i<len; i++) {
+            char c = pattern.charAt(i);
+            String s = strs[i];
+            
+            String ss = mapping.get(c);
+            if(ss == null) {
+                if(mapping.values().contains(s)) return false;
+                mapping.put(c, s);
+            } else {
+                if(!ss.equals(s)) return false;
+            }
+        }
+        return true;
+    }
+	
+	@LeetCode(291)
+	public boolean wordPatternII(String pattern, String str) {
+        if(pattern == null) return false;
+        if(str == null) return false;
+      
+        Map<Character,String> mapping = new HashMap<Character,String>();
+        return wordPatternHelper(pattern, 0, str, 0, mapping);
+	}
+	
+	private boolean wordPatternHelper(String pattern, int i, String str, int j, Map<Character,String> mapping) {
+        if(i==pattern.length() && j == str.length()) {
+        	System.out.println(mapping);
+        	return true;
+        }
+        if(i>=pattern.length() || j >= str.length()) return false;
+        
+        char c = pattern.charAt(i);
+        for(int k=j+1; k<=str.length(); k++) {
+            String s = str.substring(j, k);
+            
+            String ss = mapping.get(c);
+            if(ss == null) {
+                if(!mapping.values().contains(s)) {
+                	mapping.put(c, s);
+                	
+                	if(wordPatternHelper(pattern, i+1, str, k, mapping)) return true;
+                	mapping.remove(c);
+                }
+            } else {
+                if(ss.equals(s)) {
+                	if(wordPatternHelper(pattern, i+1, str, k, mapping)) return true;
+                }
+            }
+        }
+        return false;
+    }
 }

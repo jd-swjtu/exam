@@ -73,7 +73,43 @@ public class Graph {
 		g.getIndirectNode(UndirectedGraphNode.deserialize("0,1,2,3,11#1,0,4,5#2,0,5,6,9#3,0,9,8#4,1,10#5,1,2,10#6,2,7#7,6,9,11#8,3#9,2,3,7#10,4,5,11#11,7,10,0"));
 	}
 	
+	//Social relationship
 	public List<UndirectedGraphNode> getIndirectNode(UndirectedGraphNode node) {
+		List<UndirectedGraphNode> nodes = new ArrayList<UndirectedGraphNode>();
+		Set<UndirectedGraphNode> accessed = new HashSet<UndirectedGraphNode>();
+		Set<UndirectedGraphNode> directNodes = new HashSet<UndirectedGraphNode>();
+		
+		Queue<UndirectedGraphNode> q = new LinkedList<UndirectedGraphNode>();
+		q.offer(node);
+		accessed.add(node);
+		directNodes.add(node);
+		for(UndirectedGraphNode nn: node.neighbors) {
+			directNodes.add(nn);
+		}
+		
+		while(q.size() > 0) {
+			int nr = q.size();
+			
+			for(int i=0; i<nr; i++) {
+				UndirectedGraphNode n = q.poll();
+				System.out.println("#A: " + n.label);
+				if(!directNodes.contains(n)) nodes.add(n);
+				
+				for(UndirectedGraphNode nn: n.neighbors) {
+					if(!accessed.contains(nn)) {
+						q.offer(nn);
+						accessed.add(nn);
+						System.out.println("Add: " + nn.label);
+					}
+				}
+			}
+		}
+		
+		System.out.print("Social nodes: " + nodes);
+		return nodes;
+	}
+	
+	public List<UndirectedGraphNode> getIndirectNodeX(UndirectedGraphNode node) {
 		List<UndirectedGraphNode> nodes = new ArrayList<UndirectedGraphNode>();
 		Set<UndirectedGraphNode> accessed = new HashSet<UndirectedGraphNode>();
 		Set<UndirectedGraphNode> directNodes = new HashSet<UndirectedGraphNode>();

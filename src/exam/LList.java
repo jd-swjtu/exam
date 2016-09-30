@@ -4,7 +4,6 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -86,15 +85,10 @@ public class LList {
 		lru.get(2);
 		lru.get(1);
 		lru.set(5,5);
-		lru.peek();
 		System.out.println(lru.get(1));
-		lru.peek();
 		System.out.println(lru.get(2));
-		lru.peek();
 		System.out.println(lru.get(3));
-		lru.peek();
 		System.out.println(lru.get(4));
-		lru.peek();
 		System.out.println(lru.get(5));
 
 		ListNode ln = ListNode.create("123456");
@@ -623,50 +617,6 @@ class MinStackx {
 }
 
 
-class LRUCache {
-	private int counter = 0;
-	private int capacity = 0;
-
-	private Map<Integer,Integer> items = new HashMap<Integer,Integer>();
-	private LinkedList<Integer> list = new LinkedList<Integer>();
-
-	public LRUCache(int capacity) {
-		this.capacity = capacity;
-	}
-
-	public void peek() {
-		//System.out.println("#:");
-	}
-	public int get(int key) {
-		if(items.keySet().contains(key)) {
-			list.removeFirstOccurrence(key);
-			list.addLast(key);
-			return items.get(key).intValue();
-		}
-		return -1;
-	}
-
-	@LeetCode(value=146, c="a")
-	public void set(int key, int value) {
-		if(items.keySet().contains(key)) {
-			list.remove(key);
-			list.addLast(key);
-
-			items.put(key, value);
-		} else {
-			if(counter >= capacity) {
-				int oldkey = list.removeFirst();
-				list.add(key);
-				items.remove(oldkey);
-				items.put(key, value);
-			} else {
-				counter++;
-				list.add(key);
-				items.put(key, value);
-			}
-		}
-	}
-}
 
 class LRUCacheX {
 	private int counter = 0;
