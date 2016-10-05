@@ -5,6 +5,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 
 public class TwoSum {
 	public static void main(String[] args) {
@@ -39,7 +41,48 @@ public class TwoSum {
 		System.out.println(new TwoSum().maxProfit1(new int[]{2,1,2,1,0,1,2}));
 		
 		System.out.println(new TwoSum().wordPatternII("aabb", "xyzxyzabcabc"));
+		System.out.println("Quick Sort");
 		new TwoSum().quicksort(new int[]{5,4,3,2,1,9,8,7,6}, 0, 8);
+		
+		TwoSum ts = new TwoSum();
+		ts.add(1);ts.add(3);ts.add(5);
+		System.out.println(ts.find(4));
+		System.out.println(ts.find(7));
+		
+		System.out.println(ts.minCost(new int[][]{
+			{10,20,30},
+			{20,30,10},
+			{30,20,10},
+			{10,20,30},
+			{20,30,10},
+			{30,20,10}
+		}));
+		
+		System.out.println(ts.numWays(4, 4));
+		System.out.println(ts.numWaysx(4, 4));
+	}
+	
+	private Map<Integer,Boolean> numbers = new HashMap<Integer,Boolean>();
+	public void add(int v) {
+		if(numbers.keySet().contains(v)) {
+			numbers.put(v, Boolean.TRUE);
+		} else {
+			numbers.put(v, Boolean.FALSE);
+		}
+	}
+	@LeetCode(170)
+	public boolean find(int target) {
+		for(Integer v: numbers.keySet()) {
+			int vv = target - v.intValue();
+			if(vv == v.intValue()) {
+				if(numbers.get(v)) return true;
+				continue;
+			} else {
+				if(numbers.containsKey(vv)) return true;
+				continue;
+			}
+		}
+		return false;
 	}
 
 	@LeetCode(121)
@@ -390,6 +433,13 @@ and [3,4,-1,1] return 2.
 	
 	public int split(int[] a, int s, int e) {
 		int m = (s+e)/2;
+		int ss = s; int ee = e;
+		System.out.println("@@: " + s + " " + e);
+		System.out.print("#@:");
+		for(int i=s; i<=e; i++)
+			System.out.print(" " + a[i]);
+		System.out.print("\n##: " + m + "=" + a[m]);
+		
 		while(s<=e) {
 			while(a[s] < a[m])
 				s++;
@@ -405,6 +455,11 @@ and [3,4,-1,1] return 2.
 				e--;
 			}
 		}
+		
+		for(int i=ss; i<=ee; i++)
+			System.out.print(" " + a[i]);
+		System.out.println(": " + s + " " + e);
+		
 		return s;
 	}
 	
@@ -470,4 +525,90 @@ and [3,4,-1,1] return 2.
         }
         return false;
     }
+	
+	@LeetCode(167)
+	public int[] twoSumII(int[] numbers, int target) {
+        if(numbers.length < 2) return new int[]{0,0};
+        
+        int s = 0;
+        int e = numbers.length - 1;
+        while(s < e) {
+            int v = numbers[s] + numbers[e] - target;
+            if(v == 0) {
+                return new int[]{s+1, e+1};
+            } else if(v > 0) {
+                e--;
+            } else {
+                s++;
+            }
+        }
+        return new int[]{0,0};
+    }
+	
+	public int numWays(int n, int k) {
+        int dp[] = {0, k , k*k, 0};
+        if(n <= 2){
+            return dp[n];
+        }
+        for(int i = 2; i < n; i++){
+            dp[3] = (k - 1) * (dp[1] + dp[2]);
+            dp[1] = dp[2];
+            dp[2] = dp[3];
+        }
+        return dp[3];
+    }
+	
+	public int numWaysx(int n, int k) {
+        int dp[] = new int[n<2?3:n+1];
+        dp[0] = 0;
+        dp[1] = k;
+        dp[2] = k * k;
+        
+        if(n <= 2){
+            return dp[n];
+        }
+        for(int i = 3; i <= n; i++){
+            dp[i] = (k - 1) * (dp[i-2] + dp[i-1]);
+        }
+        return dp[n];
+    }
+	
+	public int minCostx(int[][] costs) {
+        if(costs != null && costs.length == 0) return 0;
+        for(int i = 1; i < costs.length; i++){
+            costs[i][0] = costs[i][0] + Math.min(costs[i - 1][1], costs[i - 1][2]);
+            costs[i][1] = costs[i][1] + Math.min(costs[i - 1][0], costs[i - 1][2]);
+            costs[i][2] = costs[i][2] + Math.min(costs[i - 1][0], costs[i - 1][1]);
+        }
+        return Math.min(costs[costs.length - 1][0], Math.min(costs[costs.length - 1][1], costs[costs.length - 1][2]));
+    }
+	
+	private int minCostValue = Integer.MAX_VALUE;
+	@LeetCode(256)
+	public int minCost(int[][] costs) {
+		minCost(costs, 0, 0, 0);
+		minCost(costs, 0, 1, 0);
+		minCost(costs, 0, 2, 0);
+		return minCostValue;
+	}
+	
+	private void minCost(int[][] costs, int i, int j, int w) {
+		if(w>= minCostValue) return;
+		if(i == costs.length) {
+			if(w < minCostValue) {
+				minCostValue = w;
+			}
+			return;
+		}
+		if(j == 0) {
+			minCost(costs, i+1, 1, w + costs[i][1]);
+			minCost(costs, i+1, 2, w + costs[i][2]);
+		} else if(j == 1) {
+			minCost(costs, i+1, 0, w + costs[i][0]);
+			minCost(costs, i+1, 2, w + costs[i][2]);
+		} else {
+			minCost(costs, i+1, 1, w + costs[i][1]);
+			minCost(costs, i+1, 0, w + costs[i][0]);
+		}
+	}
 }

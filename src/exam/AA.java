@@ -35,8 +35,13 @@ public class AA {
 		
 		System.out.println(aa.threeSum(new int[]{-1, 0, 1, 2, -1, -4}));
 		
-		System.out.println(aa.subsets(new int[]{1,2,3}));
+		System.out.println(aa.subsets(new int[]{1,2,3,4}));
 		System.out.println(aa.firstNonRepeatedChar("leetcodel"));
+		
+		System.out.println(aa.combine(4, 3));
+		
+		System.out.println(aa.isIsomorphic("ab", "aa"));
+		System.out.println(aa.isIsomorphic("aa", "ab"));
 	}
 
 	/**
@@ -424,8 +429,7 @@ You may assume that each input would have exactly one solution.
 		for(int i=0; i<nums.length; i++) {
 			int len = sets.size();
 			for(int j=0; j<len; j++) {
-				List<Integer> n = new ArrayList<Integer>();
-				n.addAll(sets.get(j));
+				List<Integer> n = new ArrayList<Integer>(sets.get(j));
 				n.add(nums[i]);
 				
 				sets.add(n);
@@ -458,6 +462,47 @@ You may assume that each input would have exactly one solution.
 		if(min == Integer.MAX_VALUE)
 			return -1;
 		return min-1;
+	}
+	
+	public List<List<Integer>> combine(int n, int k) {
+		if(k == 0 || k>n) return new ArrayList<List<Integer>>();
+		if(k == 1) {
+			List<List<Integer>> nResults = new ArrayList<List<Integer>>();
+			for(int i=1; i<=n; i++) {
+				List<Integer> item = new ArrayList<Integer>();
+				item.add(i);
+				nResults.add(item);
+			}
+			return nResults;
+		}
+		
+		List<List<Integer>> nResults = combine(n-1, k-1);
+		for(List<Integer> x: nResults) {
+			x.add(n);
+		}
+		nResults.addAll(combine(n-1, k));
+		
+		return nResults;
+	}
+	
+	@LeetCode(205)
+	public boolean isIsomorphic(String s, String t) {
+		int[] a = new int[256];
+		int[] b = new int[256];
+
+		for(int i=0; i<s.length(); i++) {
+			char c1 = s.charAt(i);
+			char c2 = t.charAt(i);
+
+			if(a[c1] != 0) {
+				if(a[c1] != c2) return false;
+			} else {
+				if(b[c2] != 0) return false;
+				a[c1] = c2;
+				b[c2] = c1;
+			}
+		}
+		return true;
 	}
 }
 
