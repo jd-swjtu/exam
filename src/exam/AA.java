@@ -42,6 +42,21 @@ public class AA {
 		
 		System.out.println(aa.isIsomorphic("ab", "aa"));
 		System.out.println(aa.isIsomorphic("aa", "ab"));
+		
+		List<Long> results = new ArrayList<Long>();
+		aa.split(5, results);
+		System.out.println(results + "\n" + results.size());
+		
+		int count = 0;
+		for(int i=1; i<=2; i++)
+			count += sum_dig.countRec(i, 3);
+		System.out.println(count);
+		System.out.println(sum_dig.countRec(2, 2));
+		
+		//System.out.println(aa.grayCode(3));
+		aa.convertNumber(1234);
+		
+		aa.convertNumber(23204);
 	}
 
 	/**
@@ -504,6 +519,95 @@ You may assume that each input would have exactly one solution.
 		}
 		return true;
 	}
+	
+	public void split(int n, List<Long> results) {
+		if(n == 1) {
+			results.add(1L);
+			return;
+		}
+		
+		List<Long> tmp = new ArrayList<Long>();
+		split(n-1, tmp);
+		for(Long s: tmp) {
+			System.out.println("#"+s);
+			results.add(s*10 + 1);
+			results.add(s + 1);
+			//int v = Integer.parseInt(s.substring(s.length()-1));
+			//if(v < 9)
+			//	results.add(s.substring(0,  s.length()-1) + String.valueOf(v + 1));
+		}
+	}
+	
+public List<Integer> grayCode(int n) {
+        List<Integer> results = new ArrayList<Integer>();
+        results.add(0);
+       // results.add(1);
+         int v = 0;
+        	v = grayCode(v, n, results);
+        
+        return results;
+    }
+
+private int grayCode(int v, int n, List<Integer> results) {
+	if(n < 2) {
+	for(int i=0; i<n; i++) {
+		v =  0x1 << i ^ v;
+		
+		results.add(v);
+	}
+	
+	for(int i=0; i<n-1; i++) {
+		v =  0x1 << i ^ v;
+		
+		results.add(v);
+	}
+	} else {
+		grayCode(v, n-1, results);
+	}
+	
+	return v;
+}
+
+private int revertBit(int num, int n) {
+	return (num >> n) & 0x1 << n ^ num;
+}
+
+public String convertNumber(int n) {
+	StringBuffer sbf = new StringBuffer();
+	
+	if(n/1000 > 0) {
+		sbf.append(this.convert3digits(n/1000)).append(" thousand ");
+	}
+	
+	sbf.append(this.convert3digits((n%1000)));
+	
+	System.out.println(sbf.toString());
+	return sbf.toString();
+}
+
+private String convert3digits(int n) {
+	StringBuffer sbf = new StringBuffer();
+
+	int v = n % 1000;
+
+	while (v > 0) {
+		if ( v / 100 > 0) {
+			sbf.append(v/100).append(" hundred ");
+			v = v % 100;
+		} else if(v / 10 > 1 ) {
+			sbf.append(v/10).append(" tens ");
+
+			v = v % 10;
+		} else {
+			sbf.append(v);
+			v = 0;
+		}
+	}
+
+	
+	return sbf.toString();
+}
+
 }
 
 
@@ -546,3 +650,52 @@ class LRUCache {
 		}
 	}
 }
+
+class sum_dig
+{
+    // Recursive function to count 'n' digit numbers
+    // with sum of digits as 'sum'. This function
+    // considers leading 0's also as digits, that is
+    // why not directly called
+    static int countRec(int n, int sum)
+    {
+        // Base case
+        if (n == 0)
+           return sum == 0 ?1:0;
+      
+        // Initialize answer
+        int ans = 0;
+      
+        // Traverse through every digit and count
+        // numbers beginning with it using recursion
+        for (int i=0; i<=9; i++)
+           if (sum-i >= 0)
+              ans += countRec(n-1, sum-i);
+      
+        return ans;
+    }
+      
+    // This is mainly a wrapper over countRec. It
+    // explicitly handles leading digit and calls
+    // countRec() for remaining digits.
+    static int finalCount(int n, int sum)
+    {
+        // Initialize final answer
+        int ans = 0;
+      
+        // Traverse through every digit from 1 to
+        // 9 and count numbers beginning with it
+        for (int i = 1; i <= 9; i++)
+          if (sum-i >= 0)
+             ans += countRec(n-1, sum-i);
+      
+        return ans;
+    }
+ 
+    /* Driver program to test above function */
+    public static void main (String args[])
+    {
+          int n = 2, sum = 5;
+          System.out.println(finalCount(n, sum));
+    }
+}/* This code is contributed by Rajat Mishra */

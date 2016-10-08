@@ -58,8 +58,8 @@ public class TwoSum {
 			{30,20,10}
 		}));
 		
-		System.out.println(ts.numWays(4, 4));
-		System.out.println(ts.numWaysx(4, 4));
+		System.out.println(ts.numWays(3, 2));
+		System.out.println(ts.numWaysx(3, 2));
 	}
 	
 	private Map<Integer,Boolean> numbers = new HashMap<Integer,Boolean>();
@@ -600,15 +600,7 @@ and [3,4,-1,1] return 2.
 			}
 			return;
 		}
-		if(j == 0) {
-			minCost(costs, i+1, 1, w + costs[i][1]);
-			minCost(costs, i+1, 2, w + costs[i][2]);
-		} else if(j == 1) {
-			minCost(costs, i+1, 0, w + costs[i][0]);
-			minCost(costs, i+1, 2, w + costs[i][2]);
-		} else {
-			minCost(costs, i+1, 1, w + costs[i][1]);
-			minCost(costs, i+1, 0, w + costs[i][0]);
-		}
+		minCost(costs, i+1, (j+1)%3, w + costs[i][(j+1)%3]);
+		minCost(costs, i+1, (j+2)%3, w + costs[i][(j+2)%3]);
 	}
 }
