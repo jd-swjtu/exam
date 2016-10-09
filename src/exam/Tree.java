@@ -655,6 +655,26 @@ public class Tree {
         else 
         	return null;
     }
+    
+    public int constructAE(char[] order, TreeNode root, int s, boolean isLeft) {
+    	char c = order[s];
+    	
+    	TreeNode tmp = new TreeNode(c);
+    	if( c == '+' || c == '-' || c == '*' || c == '/') {
+    		if(isLeft) {
+    			root.left = tmp;
+    		} else {
+    			root.right = tmp;
+    		}
+    		
+    		return constructAE(order, tmp, constructAE(order, tmp, s+1, false), true);
+    	} else {
+    		if(isLeft) root.left = tmp;
+    		else root.right = tmp;
+    		
+    		return s+1;
+    	}
+    }
 
 	public static void main(String[] args) {
 		Tree t = new Tree();
@@ -663,15 +683,15 @@ public class Tree {
 			System.out.println(t.inorderTraversal(t.deserialize(t.serialize(tree))));
 		}
 		System.out.println(trees.size() + " " + t.calBST(1, 4));*/
-		List<Integer> nodes = new ArrayList<Integer>();
-		nodes.add(104);nodes.add(5);nodes.add(15);nodes.add(null);nodes.add(null);nodes.add(6);nodes.add(20);
-		TreeNode node = t.deserialize(nodes);
+		//List<Integer> nodes = new ArrayList<Integer>();
+		//nodes.add(104);nodes.add(5);nodes.add(15);nodes.add(null);nodes.add(null);nodes.add(6);nodes.add(20);
+		//TreeNode node = t.deserialize(nodes);
 			//System.out.println(t.isValidBST(node));
 			
 			//System.out.println(t.isValidBSTx(node));
-		System.out.println(t.inorderTraversal(node));
-		System.out.println(t.inorderTraversalx(node));
-		System.out.println(t.inorderTraversaly(node));
+		//System.out.println(t.inorderTraversal(node));
+		//System.out.println(t.inorderTraversalx(node));
+		//System.out.println(t.inorderTraversaly(node));
 		/*t.recoverTree(node);
 		System.out.println(t.inorderTraversal(node));*/
 
@@ -682,7 +702,14 @@ public class Tree {
 		//System.out.println(t.inorderTraversal(t.buildTreePost(new int[]{1,2,3,4,5}, new int[]{2,3,1,5,4})));
 		//System.out.println(t.inorderTraversal(t.sortedArrayToBSTx(new int[]{1,2,3,4})));
 		
-		System.out.println(TreeNode.deserialize("1,2,null,null,3,4").serialize());
+		//System.out.println(TreeNode.deserialize("1,2,null,null,3,4").serialize());
+		
+		TreeNode root = new TreeNode(0);
+		String s = "-*g*fe+ba";
+		t.constructAE(s.toCharArray(), root, 0, true);
+		for(Integer i: t.inorderTraversal(root.left)) {
+			System.out.print(String.valueOf((char)i.intValue()) + " ");
+		}
 	}
 }
 
