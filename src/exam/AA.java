@@ -19,7 +19,7 @@ public class AA {
 		AA aa = new AA();
 
 		System.out.println(aa.addTwoNumbers(ListNode.create("1999"), ListNode.create("222")));
-		
+
 		char[][] grid = {
 				{'1', '1', '0', '0', '0'},
 				{'1', '1', '0', '0', '0'},
@@ -29,34 +29,39 @@ public class AA {
 		};
 		System.out.println(aa.numIslands_2(grid));
 		//System.out.println(aa.numIslands(grid));
-		
+
 		System.out.println(aa.longestPalindrome("bb"));
 		System.out.println(aa.isValid("(([{}()[]]))"));
-		
+
 		System.out.println(aa.threeSum(new int[]{-1, 0, 1, 2, -1, -4}));
-		
+
 		System.out.println(aa.subsets(new int[]{1,2,3,4}));
 		System.out.println(aa.firstNonRepeatedChar("leetcodel"));
-		
+
 		System.out.println(aa.combine(4, 3));
-		
+
 		System.out.println(aa.isIsomorphic("ab", "aa"));
 		System.out.println(aa.isIsomorphic("aa", "ab"));
-		
+
 		List<Long> results = new ArrayList<Long>();
 		aa.split(5, results);
 		System.out.println(results + "\n" + results.size());
-		
+
 		int count = 0;
 		for(int i=1; i<=2; i++)
 			count += sum_dig.countRec(i, 3);
 		System.out.println(count);
 		System.out.println(sum_dig.countRec(2, 2));
-		
-		//System.out.println(aa.grayCode(3));
+
+		System.out.println(aa.grayCode(1));
+		System.out.println(aa.grayCode(2));
+		System.out.println(aa.grayCode(3));
+		System.out.println(aa.grayCode(4));
+		System.out.println(aa.grayCode(5));
+
 		aa.convertNumber(1234);
-		
 		aa.convertNumber(23204);
+		aa.convertNumber(113423204);
 	}
 
 	/**
@@ -82,7 +87,7 @@ You may assume that each input would have exactly one solution.
 
 		return new int[]{0,0};
 	}
-	
+
 	public int numIslands_2(char[][] grid) {
 		int rows = grid.length;
 		if(rows == 0) return 0;
@@ -98,7 +103,7 @@ You may assume that each input would have exactly one solution.
 				if((j>0 && grid[i][j-1] == c) || (i>0 && grid[i-1][j] == c) || (i==0 && j==0)) {
 					cur++;
 				} else {
-						cur = 1;
+					cur = 1;
 				}
 				if(cur == 1) {
 					count++;
@@ -108,7 +113,7 @@ You may assume that each input would have exactly one solution.
 				}
 				System.out.println(max + " " + cur + " " + count);
 			}
-		
+
 		System.out.println("Count: " + count);
 		return max;
 	}
@@ -258,7 +263,7 @@ You may assume that each input would have exactly one solution.
 		chars[index] = c;
 		return new String(chars);
 	}
-	
+
 	public ListNode reverseList(ListNode head) {
 		if(head == null) return null;
 
@@ -272,16 +277,16 @@ You may assume that each input would have exactly one solution.
 		}
 		return head;
 	}
-	
+
 	public String longestPalindrome(String s) {
 		if (s.isEmpty()) {
 			return null;
 		}
-	 
+
 		if (s.length() == 1) {
 			return s;
 		}
-	 
+
 		String longest = s.substring(0, 1);
 		for (int i = 0; i < s.length(); i++) {
 			// get longest palindrome with center of i
@@ -289,17 +294,17 @@ You may assume that each input would have exactly one solution.
 			if (tmp.length() > longest.length()) {
 				longest = tmp;
 			}
-	 
+
 			// get longest palindrome with center of i, i+1
 			tmp = helper(s, i, i + 1);
 			if (tmp.length() > longest.length()) {
 				longest = tmp;
 			}
 		}
-	 
+
 		return longest;
 	}
-	 
+
 	// Given a center, either one letter or two letter, 
 	// Find longest palindrome
 	public String helper(String s, int begin, int end) {
@@ -309,7 +314,7 @@ You may assume that each input would have exactly one solution.
 		}
 		return s.substring(begin + 1, end);
 	}
-	
+
 	@LeetCode(value=17, c="a")
 	public List<String> letterCombinations(String digits) {
 		List<String> result = new ArrayList<String>();
@@ -330,12 +335,12 @@ You may assume that each input would have exactly one solution.
 			generateString(result, dict, numbers, s + dict[num].charAt(i), idx+1);
 		}
 	}
-	
+
 	@LeetCode(value=20, c="a")
 	public boolean isValid(String s) {
 		Stack<Character> q = new Stack<Character>();
 		if(s == null || s.length() == 0) return true;
-		
+
 		Map<Character,Character> mapping = new HashMap<Character,Character>();
 		mapping.put('{', '}');
 		mapping.put('[', ']');
@@ -363,16 +368,16 @@ You may assume that each input would have exactly one solution.
 
 		return q.isEmpty();
 	}
-	
+
 	public List<List<Integer>> threeSum(int[] nums) {
 		List<List<Integer>> results = new ArrayList<List<Integer>>();
 		Arrays.sort(nums);
-		
+
 		for(int i=0; i<nums.length - 2; i++) {
 			if(i != 0 && nums[i] == nums[i-1]) continue;
 			int s =  i+1;
 			int e = nums.length - 1;
-			
+
 			while(s < e) {
 				int v = nums[i] + nums[s] + nums[e];
 				if(v == 0) {
@@ -381,10 +386,10 @@ You may assume that each input would have exactly one solution.
 					result.add(nums[s]);
 					result.add(nums[e]);
 					results.add(result);
-					
+
 					s++;
 					e--;
-					
+
 					while (s < e && nums[s] == nums[s - 1]) { 
 						s++;
 					}
@@ -402,7 +407,7 @@ You may assume that each input would have exactly one solution.
 		}
 		return results;
 	}
-	
+
 	@LeetCode(value=239, c="a")
 	public ArrayList<Integer> maxSlidingWindow(int[] nums, int k) {
 		// write your code here
@@ -422,7 +427,7 @@ You may assume that each input would have exactly one solution.
 		}
 		return ans;
 	}
-	
+
 	void inQueue(Deque<Integer> deque, int num) {
 		while (!deque.isEmpty() && deque.peekLast() < num) {
 			deque.pollLast();
@@ -435,30 +440,30 @@ You may assume that each input would have exactly one solution.
 			deque.pollFirst();
 		}
 	}
-	
+
 	@LeetCode(78)
 	public List<List<Integer>> subsets(int[] nums) {
 		List<List<Integer>> sets = new ArrayList<List<Integer>>();
 		sets.add(new ArrayList<Integer>());
-		
+
 		for(int i=0; i<nums.length; i++) {
 			int len = sets.size();
 			for(int j=0; j<len; j++) {
 				List<Integer> n = new ArrayList<Integer>(sets.get(j));
 				n.add(nums[i]);
-				
+
 				sets.add(n);
 			}
 		}
-		
+
 		return sets;
 	}
-	
+
 	@LeetCode(387)
 	public int firstNonRepeatedChar(String str) {
 		if(str == null || str.length() == 0) return -1;
 		if(str.length() == 1) return 0;
-		
+
 		int[] m = new int[26];
 		for(int i=0; i<str.length(); i++) {
 			int v = str.charAt(i) - 'a';
@@ -468,7 +473,7 @@ You may assume that each input would have exactly one solution.
 				m[v] = i+1;
 			}
 		}
-		
+
 		int min = Integer.MAX_VALUE;
 		for(int i=0; i<26; i++) {
 			if(m[i] >0 && m[i] < min)
@@ -478,7 +483,7 @@ You may assume that each input would have exactly one solution.
 			return -1;
 		return min-1;
 	}
-	
+
 	public List<List<Integer>> combine(int n, int k) {
 		if(k == 0 || k>n) return new ArrayList<List<Integer>>();
 		if(k == 1) {
@@ -490,16 +495,16 @@ You may assume that each input would have exactly one solution.
 			}
 			return nResults;
 		}
-		
+
 		List<List<Integer>> nResults = combine(n-1, k-1);
 		for(List<Integer> x: nResults) {
 			x.add(n);
 		}
 		nResults.addAll(combine(n-1, k));
-		
+
 		return nResults;
 	}
-	
+
 	@LeetCode(205)
 	public boolean isIsomorphic(String s, String t) {
 		int[] a = new int[256];
@@ -519,13 +524,13 @@ You may assume that each input would have exactly one solution.
 		}
 		return true;
 	}
-	
+
 	public void split(int n, List<Long> results) {
 		if(n == 1) {
 			results.add(1L);
 			return;
 		}
-		
+
 		List<Long> tmp = new ArrayList<Long>();
 		split(n-1, tmp);
 		for(Long s: tmp) {
@@ -537,76 +542,75 @@ You may assume that each input would have exactly one solution.
 			//	results.add(s.substring(0,  s.length()-1) + String.valueOf(v + 1));
 		}
 	}
-	
-public List<Integer> grayCode(int n) {
-        List<Integer> results = new ArrayList<Integer>();
-        results.add(0);
-       // results.add(1);
-         int v = 0;
-        	v = grayCode(v, n, results);
-        
-        return results;
-    }
 
-private int grayCode(int v, int n, List<Integer> results) {
-	if(n < 2) {
-	for(int i=0; i<n; i++) {
-		v =  0x1 << i ^ v;
-		
-		results.add(v);
-	}
-	
-	for(int i=0; i<n-1; i++) {
-		v =  0x1 << i ^ v;
-		
-		results.add(v);
-	}
-	} else {
-		grayCode(v, n-1, results);
-	}
-	
-	return v;
-}
-
-private int revertBit(int num, int n) {
-	return (num >> n) & 0x1 << n ^ num;
-}
-
-public String convertNumber(int n) {
-	StringBuffer sbf = new StringBuffer();
-	
-	if(n/1000 > 0) {
-		sbf.append(this.convert3digits(n/1000)).append(" thousand ");
-	}
-	
-	sbf.append(this.convert3digits((n%1000)));
-	
-	System.out.println(sbf.toString());
-	return sbf.toString();
-}
-
-private String convert3digits(int n) {
-	StringBuffer sbf = new StringBuffer();
-
-	int v = n % 1000;
-
-	while (v > 0) {
-		if ( v / 100 > 0) {
-			sbf.append(v/100).append(" hundred ");
-			v = v % 100;
-		} else if(v / 10 > 1 ) {
-			sbf.append(v/10).append(" tens ");
-
-			v = v % 10;
-		} else {
-			sbf.append(v);
-			v = 0;
+	public List<Integer> grayCode(int n) {
+		List<Integer> results = new ArrayList<Integer>();
+		boolean first = true;
+		int v = 0;
+		for(int i=1; i<=n; i++) {
+			v = grayCode(v, first?i:i-1, results);
+			v = 0x1 << i ^ v;
+			first=false;
 		}
+
+		return results;
 	}
 
-	
-	return sbf.toString();
-}
+	private int grayCode(int v, int n, List<Integer> results) {
+		results.add(v);
+		for(int i=0; i<n; i++) {
+			v =  0x1 << i ^ v;
+			results.add(v);
+		}
+
+		for(int i=0; i<n-1; i++) {
+			v =  0x1 << i ^ v;
+			results.add(v);
+		}
+
+		return v;
+	}
+
+	public String convertNumber(int n) {
+		StringBuffer sbf = new StringBuffer();
+
+		if(n/1000/1000 > 0) {
+			sbf.append(this.convert3digits(n/1000/1000)).append(" million ");
+			n = n/1000;
+		}
+		
+		if(n/1000 > 0) {
+			sbf.append(this.convert3digits(n/1000)).append(" thousand ");
+		}
+
+		sbf.append(this.convert3digits((n%1000)));
+
+		System.out.println(sbf.toString());
+		return sbf.toString();
+	}
+
+	private String convert3digits(int n) {
+		StringBuffer sbf = new StringBuffer();
+
+		int v = n % 1000;
+
+		while (v > 0) {
+			if ( v / 100 > 0) {
+				sbf.append(v/100).append(" hundred ");
+				v = v % 100;
+			} else if(v / 10 > 1 ) {
+				sbf.append(v/10).append(" tens ");
+
+				v = v % 10;
+			} else {
+				sbf.append(v);
+				v = 0;
+			}
+		}
+
+
+		return sbf.toString();
+	}
 
 }
 
@@ -653,49 +657,49 @@ class LRUCache {
 
 class sum_dig
 {
-    // Recursive function to count 'n' digit numbers
-    // with sum of digits as 'sum'. This function
-    // considers leading 0's also as digits, that is
-    // why not directly called
-    static int countRec(int n, int sum)
-    {
-        // Base case
-        if (n == 0)
-           return sum == 0 ?1:0;
-      
-        // Initialize answer
-        int ans = 0;
-      
-        // Traverse through every digit and count
-        // numbers beginning with it using recursion
-        for (int i=0; i<=9; i++)
-           if (sum-i >= 0)
-              ans += countRec(n-1, sum-i);
-      
-        return ans;
-    }
-      
-    // This is mainly a wrapper over countRec. It
-    // explicitly handles leading digit and calls
-    // countRec() for remaining digits.
-    static int finalCount(int n, int sum)
-    {
-        // Initialize final answer
-        int ans = 0;
-      
-        // Traverse through every digit from 1 to
-        // 9 and count numbers beginning with it
-        for (int i = 1; i <= 9; i++)
-          if (sum-i >= 0)
-             ans += countRec(n-1, sum-i);
-      
-        return ans;
-    }
- 
-    /* Driver program to test above function */
-    public static void main (String args[])
-    {
-          int n = 2, sum = 5;
-          System.out.println(finalCount(n, sum));
-    }
+	// Recursive function to count 'n' digit numbers
+	// with sum of digits as 'sum'. This function
+	// considers leading 0's also as digits, that is
+	// why not directly called
+	static int countRec(int n, int sum)
+	{
+		// Base case
+		if (n == 0)
+			return sum == 0 ?1:0;
+
+		// Initialize answer
+		int ans = 0;
+
+		// Traverse through every digit and count
+		// numbers beginning with it using recursion
+		for (int i=0; i<=9; i++)
+			if (sum-i >= 0)
+				ans += countRec(n-1, sum-i);
+
+		return ans;
+	}
+
+	// This is mainly a wrapper over countRec. It
+	// explicitly handles leading digit and calls
+	// countRec() for remaining digits.
+	static int finalCount(int n, int sum)
+	{
+		// Initialize final answer
+		int ans = 0;
+
+		// Traverse through every digit from 1 to
+		// 9 and count numbers beginning with it
+		for (int i = 1; i <= 9; i++)
+			if (sum-i >= 0)
+				ans += countRec(n-1, sum-i);
+
+		return ans;
+	}
+
+	/* Driver program to test above function */
+	public static void main (String args[])
+	{
+		int n = 2, sum = 5;
+		System.out.println(finalCount(n, sum));
+	}
 }/* This code is contributed by Rajat Mishra */
