@@ -675,6 +675,22 @@ public class Tree {
     		return s+1;
     	}
     }
+    
+    public TreeNode constructAE(String postOrder) {
+    	LinkedList<TreeNode> stack = new LinkedList<TreeNode>();
+    	for(char c: postOrder.toCharArray()) {
+    		TreeNode tmp = new TreeNode(c);
+    		if( c == '+' || c == '-' || c == '*' || c == '/') {
+    			TreeNode r = stack.pop();
+    			TreeNode l = stack.pop();
+    			
+    			tmp.left = l;
+    			tmp.right = r;
+    		}
+    		stack.push(tmp);
+    	}
+    	return stack.pop();
+    }
 
 	public static void main(String[] args) {
 		Tree t = new Tree();
@@ -708,6 +724,10 @@ public class Tree {
 		String s = "-*g*fe+ba";
 		t.constructAE(s.toCharArray(), root, 0, true);
 		for(Integer i: t.inorderTraversal(root.left)) {
+			System.out.print(String.valueOf((char)i.intValue()) + " ");
+		}
+		System.out.println();
+		for(Integer i: t.inorderTraversal(t.constructAE("ab+ef*g*-"))) {
 			System.out.print(String.valueOf((char)i.intValue()) + " ");
 		}
 	}
