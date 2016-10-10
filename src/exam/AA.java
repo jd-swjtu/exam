@@ -62,6 +62,8 @@ public class AA {
 		aa.convertNumber(1234);
 		aa.convertNumber(23204);
 		aa.convertNumber(113423204);
+		
+		System.out.println(aa.countPrimes(7));
 	}
 
 	/**
@@ -607,6 +609,26 @@ You may assume that each input would have exactly one solution.
 		return sbf.toString();
 	}
 
+	public int countPrimes(int n) {
+		if(n < 2) return 0;
+		
+		int rep = (int)Math.sqrt(n) + 1;
+		boolean[] values = new boolean[n+1];
+		
+		for(int i=2; i<=rep; i++) {
+			if(!values[i])
+				for(int j=2*i; j<=n; j+=i) {
+					values[j] = true;
+				}
+		}
+		
+		int count = 0;
+		for(int i=2; i<n; i++) {
+			if(!values[i]) count++;
+		}
+		
+		return count;
+	}
 }
 
 

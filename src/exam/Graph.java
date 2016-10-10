@@ -193,6 +193,41 @@ public class Graph {
 		return 0;
 	}
 	
+	public int wordLadderII(String beginWord, String endWord, String... others) {
+		Set<String> dict = new HashSet<String>();
+		for(String s: others) dict.add(s);
+		dict.add(endWord);
+		
+		HashSet<String> hash = new HashSet<String>();
+		
+
+        Queue<String> queue = new LinkedList<String>();
+        queue.offer(beginWord);
+        hash.add(beginWord);
+        
+        int length = 1;
+        while(!queue.isEmpty()) {
+            length++;
+            int size = queue.size();
+            for (int i = 0; i < size; i++) {
+                String word = queue.poll();
+                for (String nextWord: getNextWords(word, dict)) {
+                    if (hash.contains(nextWord)) {
+                        continue;
+                    }
+                    if (nextWord.equals(endWord)) {
+                        return length;
+                    }
+                    
+                    hash.add(nextWord);
+                    queue.offer(nextWord);
+                }
+            }
+        }
+		
+		return 0;
+	}
+	
 	private String replace(String s, int index, char c) {
         char[] chars = s.toCharArray();
         chars[index] = c;
