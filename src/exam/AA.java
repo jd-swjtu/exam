@@ -545,30 +545,20 @@ You may assume that each input would have exactly one solution.
 
 	public List<Integer> grayCode(int n) {
 		List<Integer> results = new ArrayList<Integer>();
-		boolean first = true;
-		int v = 0;
-		for(int i=1; i<=n; i++) {
-			v = grayCode(v, first?i:i-1, results);
-			v = 0x1 << i ^ v;
-			first=false;
+		if(n == 0) return results;
+		
+		results.add(0); results.add(1);
+		if(n == 1) return results;
+		
+		for(int i=1; i<n; i++) {
+			int len = results.size();
+			int base = 0x1 << i;
+			for(int j=len-1; j>=0; j--) {
+				results.add(results.get(j) + base);
+			}
 		}
 
 		return results;
-	}
-
-	private int grayCode(int v, int n, List<Integer> results) {
-		results.add(v);
-		for(int i=0; i<n; i++) {
-			v =  0x1 << i ^ v;
-			results.add(v);
-		}
-
-		for(int i=0; i<n-1; i++) {
-			v =  0x1 << i ^ v;
-			results.add(v);
-		}
-
-		return v;
 	}
 
 	public String convertNumber(int n) {
@@ -576,7 +566,7 @@ You may assume that each input would have exactly one solution.
 
 		if(n/1000/1000 > 0) {
 			sbf.append(this.convert3digits(n/1000/1000)).append(" million ");
-			n = n/1000;
+			n = n%1000000;
 		}
 		
 		if(n/1000 > 0) {
@@ -590,6 +580,11 @@ You may assume that each input would have exactly one solution.
 	}
 
 	private String convert3digits(int n) {
+		String[]  mapping = new String[]{"0",
+			"one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten",
+			"eleven", "twelve", "thirteen", "fourteen", "fiften", "sixteen", "seventeen", "eighteen", "nineteen", "0",
+			"twenty", "thirty", "fourty", "fifty", "sixty", "seventy", "eighty", "ninety"
+		};
 		StringBuffer sbf = new StringBuffer();
 
 		int v = n % 1000;
@@ -599,11 +594,11 @@ You may assume that each input would have exactly one solution.
 				sbf.append(v/100).append(" hundred ");
 				v = v % 100;
 			} else if(v / 10 > 1 ) {
-				sbf.append(v/10).append(" tens ");
+				sbf.append(mapping[19 + v/10]).append(" ");
 
 				v = v % 10;
 			} else {
-				sbf.append(v);
+				sbf.append(mapping[v]);
 				v = 0;
 			}
 		}
