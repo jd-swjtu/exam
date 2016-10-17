@@ -35,7 +35,9 @@ public class AA {
 
 		System.out.println(aa.threeSum(new int[]{-1, 0, 1, 2, -1, -4}));
 
+		System.out.println("SubSets");
 		System.out.println(aa.subsets(new int[]{1,2,3,4}));
+		System.out.println(aa.subsets2(new int[]{1,2,3,4}));
 		System.out.println(aa.firstNonRepeatedChar("leetcodel"));
 
 		System.out.println(aa.combine(4, 3));
@@ -53,10 +55,10 @@ public class AA {
 		System.out.println(count);
 		System.out.println(sum_dig.countRec(2, 2));
 
-		System.out.println(aa.grayCode(1));
+		/*System.out.println(aa.grayCode(1));
 		System.out.println(aa.grayCode(2));
 		System.out.println(aa.grayCode(3));
-		System.out.println(aa.grayCode(4));
+		System.out.println(aa.grayCode(4));*/
 		System.out.println(aa.grayCode(5));
 
 		aa.convertNumber(1234);
@@ -64,6 +66,9 @@ public class AA {
 		aa.convertNumber(113423204);
 		
 		System.out.println(aa.countPrimes(7));
+		
+		System.out.println(aa.permute(new int[]{1,2,3,4}));
+		System.out.println(aa.permuteUnique(new int[]{1,1,2,2}));
 	}
 
 	/**
@@ -170,9 +175,9 @@ You may assume that each input would have exactly one solution.
 			int v = l1.val + l2.val + c;
 			ListNode tmp = new ListNode(v%10);
 			c = v / 10;
-
-			tmp.next = p.next;
+			
 			p.next = tmp;
+			p = tmp;
 
 			l1 = l1.next;
 			l2 = l2.next;
@@ -184,8 +189,9 @@ You may assume that each input would have exactly one solution.
 			ListNode tmp = new ListNode(v%10);
 			c = v / 10;
 
-			tmp.next = p.next;
 			p.next = tmp;
+			p = tmp;
+			
 			q = q.next;
 		}
 
@@ -442,6 +448,62 @@ You may assume that each input would have exactly one solution.
 			deque.pollFirst();
 		}
 	}
+	
+	@LeetCode(46)
+public List<List<Integer>> permute(int[] nums) {
+        int n = nums.length;
+        List<List<Integer>> results = new ArrayList<List<Integer>>();
+        results.add(new ArrayList<Integer>());
+        for(int i=0; i<n; i++){
+        	premute(nums[i], results);
+        }
+        return results;
+    }
+	
+	public void premute(int num, List<List<Integer>> results) {
+		int size = results.size();
+		for(int i = 0; i<size; i++) {
+			List<Integer> result = results.get(i);
+			int k = result.size();
+			for(int j=0; j<k; j++) {
+				List<Integer> tmp = new ArrayList<Integer>(result);
+				tmp.add(j, num);
+				results.add(tmp);
+			}
+			result.add(num);
+		}
+	}
+	
+	@LeetCode(47)
+public List<List<Integer>> permuteUnique(int[] nums) {
+        List<List<Integer>> results = new ArrayList<List<Integer>>();
+        Arrays.sort(nums);
+        boolean[] visited = new boolean[nums.length];
+        List<Integer> tmp = new ArrayList<Integer>();
+        	premuteII(nums, tmp, visited, results);
+        return results;
+    }
+
+	public void premuteII(int[] nums, List<Integer> tmp, boolean[] visited, List<List<Integer>> results) {
+		//if(i!=0 && nums[i] == nums[i-1]) return;
+		if(tmp.size() == nums.length) {
+			results.add(new ArrayList<Integer>(tmp));
+			return;
+		}
+		
+		
+		
+		for(int j=0; j<nums.length; j++) {
+			if(visited[j]) continue;
+			if(j!=0 && nums[j] == nums[j-1] && !visited[j-1]) continue;
+			
+			tmp.add(nums[j]);
+			visited[j] = true;
+			premuteII(nums, tmp, visited, results);
+			visited[j] = false;
+			tmp.remove(tmp.size() - 1);
+		}
+	}
 
 	@LeetCode(78)
 	public List<List<Integer>> subsets(int[] nums) {
@@ -459,6 +521,23 @@ You may assume that each input would have exactly one solution.
 		}
 
 		return sets;
+	}
+	
+	public List<List<Integer>> subsets2(int[] nums) {
+		List<List<Integer>> sets = new ArrayList<List<Integer>>();
+		List<Integer> tmp = new ArrayList<Integer>();
+		sets.add(tmp);
+		subsets(nums, 0, tmp, sets);
+		return sets;
+	}
+	
+	public void subsets(int[] nums, int start, List<Integer> tmp, List<List<Integer>> results) {
+		for(int i=start; i<nums.length; i++) {
+			tmp.add(nums[i]);
+			results.add(new ArrayList<Integer>(tmp));
+			subsets(nums, i+1, tmp, results);
+			tmp.remove(tmp.size() - 1);
+		}
 	}
 
 	@LeetCode(387)
@@ -613,11 +692,11 @@ You may assume that each input would have exactly one solution.
 		if(n < 2) return 0;
 		
 		int rep = (int)Math.sqrt(n) + 1;
-		boolean[] values = new boolean[n+1];
+		boolean[] values = new boolean[n];
 		
 		for(int i=2; i<=rep; i++) {
 			if(!values[i])
-				for(int j=2*i; j<=n; j+=i) {
+				for(int j=2*i; j<n; j+=i) {
 					values[j] = true;
 				}
 		}

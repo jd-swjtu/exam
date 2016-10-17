@@ -5,7 +5,12 @@ import java.util.ArrayList;
 import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Queue;
+import java.util.Stack;
+import java.util.TreeMap;
+
+import exam.Utils.Pair;
 
 public class Tree {
 
@@ -692,6 +697,77 @@ public class Tree {
     	return stack.pop();
     }
 
+    public TreeNode upsideDownBinaryTree2(TreeNode root) {
+    	if(root == null) return null;
+    	Stack<TreeNode> nodes = new Stack<TreeNode>();
+    	while(root.left != null) {
+    		nodes.push(root);
+    		root = root.left;
+    	}
+    	TreeNode p = root;
+    	while(!nodes.isEmpty()) {
+    		TreeNode q = nodes.pop();
+    		if(q.right != null) p.left = q.right;
+    		p.right = q;
+
+    		p = q;
+    		p.left = null;
+    		p.right = null;
+    	}
+    	p.left = null;
+    	p.right = null;
+    	return root;
+    }
+    
+    public TreeNode upsideDownBinaryTree(TreeNode root) {
+    	if(root == null) return null;
+    	
+    	TreeNode p, parent = null, r = null;
+    	while(root != null) {
+    		p = new TreeNode(root.val);
+    		
+    		if(parent != null) {
+    			p.left = parent.right;
+    		}
+    		p.right = r;
+    		r = p;
+    		
+    		parent = root;
+    		root = root.left;
+    	}
+    	
+    	
+    	return r;
+    }
+    
+    public List<TreeNode> bottomView(TreeNode root) {
+    	Map<Integer, TreeNode> values = new TreeMap<Integer,TreeNode>();
+    	Queue<Pair<Integer,TreeNode>> queue = new LinkedList<Pair<Integer,TreeNode>>();
+    	if(root != null) {
+    		queue.offer(new Pair<Integer,TreeNode>(0, root));
+    	}
+    	
+    	while(!queue.isEmpty()) {
+    		Pair<Integer,TreeNode> p = queue.poll();
+    		values.put(p.t1, p.t2);
+    		
+    		if(p.t2.left != null) {
+        		queue.offer(new Pair<Integer,TreeNode>(p.t1-1, p.t2.left));
+    		}
+    		
+    		if(p.t2.left != null) {
+        		queue.offer(new Pair<Integer,TreeNode>(p.t1+1, p.t2.right));
+    		}
+    	}
+    	
+    	List<TreeNode> results = new ArrayList<TreeNode>();
+    	for(Integer k: values.keySet()) {
+    		results.add(values.get(k));
+    	}
+    	
+    	return results;
+    }
+
 	public static void main(String[] args) {
 		Tree t = new Tree();
 		/*List<TreeNode> trees = t.generateTrees(3);
@@ -730,6 +806,10 @@ public class Tree {
 		for(Integer i: t.inorderTraversal(t.constructAE("ab+ef*g*-"))) {
 			System.out.print(String.valueOf((char)i.intValue()) + " ");
 		}
+		System.out.println();
+		
+		System.out.println(t.upsideDownBinaryTree(TreeNode.deserialize("1,2,null,3")).serialize());
+		System.out.println(t.bottomView(TreeNode.deserialize("1,2,3,4,5,6,7")));
 	}
 }
 
@@ -739,6 +819,8 @@ class TreeNode {
 	TreeNode left;
 	TreeNode right;
 	TreeNode(int x) { val = x; }
+	
+	public String toString() { return String.valueOf(val); }
 	
 	public static TreeNode deserialize(String str) {
 		String[] strs = str.split(",");

@@ -4,27 +4,6 @@ public class ListNode {
 	public int val;
 	public ListNode next;
 
-	public static ListNode create(int value) {
-		int v = value % 10;
-		int m = value / 10;
-
-		ListNode p = new ListNode(v);
-
-		while( m > 0) {
-			value = m;
-			v = value % 10;
-			m = value / 10;
-
-			if( v == 0 && m == 0) break;
-
-			ListNode q = new ListNode(v);
-			q.next = p;
-			p = q;
-		}
-
-		return p;
-	}
-
 	public static ListNode create(String value) {
 		int len = value.length();
 		if(len == 0) return null;
@@ -33,8 +12,9 @@ public class ListNode {
 
 		for(int i=0; i<len; i++) {
 			ListNode q = new ListNode(Integer.valueOf(value.charAt(i)) - '0');
+			
+			q.next = p.next;
 			p.next = q;
-			p = q;
 		}
 
 		return header.next;
@@ -67,13 +47,10 @@ public class ListNode {
 	public String toString() {
 		ListNode p = this;
 		StringBuffer sbf = new StringBuffer();
-		int v = 0;
 		while(p != null) {
-			v += p.val;
-			sbf.append(p.val % 10);
-
+			sbf.insert(0, p.val);
+			
 			p = p.next;
-			v = v / 10;
 		}
 
 		return sbf.toString();
@@ -93,7 +70,7 @@ public class ListNode {
 	}
 	
 	public static void main(String[] args) {
-		System.out.println(ListNode.create(1234));
+		System.out.println(ListNode.create("1234"));
 	}
 } 
 

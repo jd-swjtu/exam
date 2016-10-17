@@ -9,7 +9,7 @@ public class TwoNumbers {
 		
 				//System.out.println(ListNode.create("123333333333333335555555"));
 		
-				System.out.println(tn.add(ListNode.create(n1).reverse(), ListNode.create(n2).reverse()).reverse());
+				System.out.println(tn.add(ListNode.create("28").reverse(), ListNode.create("925").reverse()).reverse());
 				System.out.println(n1 + n2);
 			/*System.out.println(tn.removeNthFromEnd(ListNode.create("2134"), 2));
 

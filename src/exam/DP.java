@@ -11,6 +11,8 @@ public class DP {
 		System.out.println(dp.longIncresingSub(new int[]{5,1,2,3,2,4,1}));
 		
 		System.out.println(dp.numDecodings("100"));
+		
+		System.out.println(dp.maxCoins(new int[]{2,5,6,4,5,1,2}));
 	}
 
 	public int minStepsR(int n) {
@@ -80,5 +82,26 @@ public class DP {
             return false;  
         int code = Integer.parseInt(s);  
         return code>=1 && code<=26;  
+    }
+    
+    public int maxCoins(int[] coins) {
+    	int n = coins.length;
+    	if(n<1) return 0;
+    	//int[] dp = new int[n+1];
+    	
+    	//dp[0] = 0;
+    	//dp[1] = coins[0];
+    	int pprev = 0;
+    	int prev = coins[0];
+    	int cur = prev;
+    	
+    	for(int i=1; i<n; i++) {
+    		cur = Math.max(prev, pprev + coins[i]);
+    		pprev = prev;
+    		prev = cur;
+    	}
+    	
+    	//return dp[n];
+    	return cur;
     }
 }

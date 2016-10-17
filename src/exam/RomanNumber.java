@@ -3,6 +3,8 @@ package exam;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class RomanNumber {
 
@@ -15,6 +17,14 @@ public class RomanNumber {
 
 		List<String> results = rn.generateParenthesis(4);
 		System.out.println(results.size());
+		
+		System.out.println(rn.isNumber("0"));
+		System.out.println(rn.isNumber("0.1"));
+		System.out.println(rn.isNumber(".1e2"));
+		System.out.println(rn.isNumber("abc"));
+		System.out.println(rn.isNumber("1 a"));
+		System.out.println(rn.isNumber("2e10"));
+		System.out.println(rn.isNumber("01"));
 
 	}
 
@@ -127,6 +137,13 @@ public class RomanNumber {
 		}
 	}
 
+	public boolean isNumber(String str) {
+		Pattern pat = Pattern.compile("^\\s*[+-]?(\\d+\\.?|.\\d+|\\d+\\.\\d+)(e[+-]?([1-9]\\d*))?\\s*$");
+		
+		Matcher m = pat.matcher(str);
+		return m.find();
+	}
+	
 	/*
 	Determine whether an integer is a palindrome. Do this without extra space.
 	 */
