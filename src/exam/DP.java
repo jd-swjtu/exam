@@ -13,6 +13,8 @@ public class DP {
 		System.out.println(dp.numDecodings("100"));
 		
 		System.out.println(dp.maxCoins(new int[]{2,5,6,4,5,1,2}));
+		
+		dp.direction(new int[][]{{0,0}, {1,1}}, new int[][]{{0,2}, {0,-2}, {-2,0}});
 	}
 
 	public int minStepsR(int n) {
@@ -97,11 +99,33 @@ public class DP {
     	
     	for(int i=1; i<n; i++) {
     		cur = Math.max(prev, pprev + coins[i]);
+    		//dp[i+1] = Math.max(dp[i], dp[i-1]+coins[i]);
     		pprev = prev;
     		prev = cur;
     	}
     	
     	//return dp[n];
     	return cur;
+    }
+    
+    public void direction(int[][] tanks, int[][] objects) {
+    	for(int[] tank: tanks) {
+    		System.out.print("(" + tank[0] + ", " + tank[1] + ") ");
+    		for(int[] obj: objects) {
+    			int cx = obj[0] - tank[0];
+    			int cy = obj[1] - tank[1];
+    			if(cx==0 && cy == 0) System.out.println("E");
+    			
+    			if(cx == 0) {
+    				if(cy > 0) System.out.print("N");
+    				else System.out.print("S");
+    			} else
+    			if(cy == 0) {
+    				if(cx > 0) System.out.println("E");
+    				else System.out.print("W");
+    			}
+    		}
+    		System.out.println();
+    	}
     }
 }
