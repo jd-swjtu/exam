@@ -1,5 +1,7 @@
 package exam;
 
+import exams.utils.ListNode;
+
 public class TwoNumbers {
 	public static void main(String[] args) {
 		TwoNumbers tn = new TwoNumbers();

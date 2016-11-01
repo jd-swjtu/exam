@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import exams.utils.ListNode;
+
 public class LList {
 
 	public static void main(String[] args) {

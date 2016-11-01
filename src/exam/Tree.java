@@ -14,6 +14,38 @@ import exam.Utils.Pair;
 
 public class Tree {
 
+	@LeetCode(226)
+	public TreeNode invertTree(TreeNode root) {
+		if(root == null) return null;
+
+		TreeNode n = root.left;
+		root.left = invertTree(root.right);
+		root.right = invertTree(n);
+
+		return root;
+	}
+	
+	public TreeNode invertTree2(TreeNode root) {
+		if(root == null) return null;
+
+		Queue<TreeNode> q = new LinkedList<>();
+		q.offer(root);
+		while(!q.isEmpty()) {
+			TreeNode n = q.poll();
+			TreeNode l = n.left;
+			
+			n.left = n.right;
+			if(n.right != null) {
+				q.offer(n.right);
+			}
+			
+			n.right = l;
+			if(l != null) {
+				q.offer(l);
+			}
+		}
+		return root;
+	}
 
 
 	/**
@@ -810,6 +842,9 @@ public class Tree {
 		
 		System.out.println(t.upsideDownBinaryTree(TreeNode.deserialize("1,2,null,3")).serialize());
 		System.out.println(t.bottomView(TreeNode.deserialize("1,2,3,4,5,6,7")));
+		
+		System.out.println("InvertTree:" + t.invertTree(TreeNode.deserialize("4,2,7,1,3,6,9")).serialize());
+		System.out.println("InvertTree:" + t.invertTree2(TreeNode.deserialize("4,2,7,1,3,6,9")).serialize());
 	}
 }
 

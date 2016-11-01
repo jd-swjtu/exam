@@ -1,4 +1,6 @@
-package exam;
+package exams.utils;
+
+import exam.LeetCode;
 
 public class ListNode {
 	public int val;
@@ -24,10 +26,6 @@ public class ListNode {
 	public ListNode reverse() {
 		ListNode q = null;
 		ListNode p = this;
-		
-		q = p;
-		p = p.next;
-		q.next = null;
 		
 		while(p != null) {
 			ListNode x = p;
@@ -70,7 +68,7 @@ public class ListNode {
 	}
 	
 	public static void main(String[] args) {
-		System.out.println(ListNode.create("1234"));
+		System.out.println(ListNode.create("1234").reverse());
 	}
 } 
 
