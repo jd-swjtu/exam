@@ -92,3 +92,34 @@
 186	Reverse Words in a String II 	28.9%	Medium	
 396	Rotate Function	29.2%	Easy	
 438	Find All Anagrams in a String	34.7%	Easy
+
+[AP]
+237	Delete Node in a Linked List	45.0%	Easy	
+240	Search a 2D Matrix II	37.2%	Medium	
+238	Product of Array Except Self	46.0%	Medium	
+206	Reverse Linked List	42.7%	Easy	
+42	Trapping Rain Water	34.6%	Hard	
+1	Two Sum	28.3%	Easy	
+48	Rotate Image	36.6%	Medium	
+215	Kth Largest Element in an Array	36.5%	Medium	
+102	Binary Tree Level Order Traversal	36.0%	Easy	
+191	Number of 1 Bits	38.2%	Easy	
+149	Max Points on a Line	15.3%	Hard	
+4	Median of Two Sorted Arrays	20.4%	Hard	
+36	Valid Sudoku	33.2%	Easy	
+221	Maximal Square	26.3%	Medium	
+70	Climbing Stairs	38.2%	Easy	
+207	Course Schedule	29.7%	Medium	
+165	Compare Version Numbers	18.9%	Easy	
+104	Maximum Depth of Binary Tree	50.2%	Easy	
+257	Binary Tree Paths	33.4%	Easy	
+69	Sqrt(x)	26.5%	Medium	
+21	Merge Two Sorted Lists	37.4%	Easy	
+7	Reverse Integer	23.7%	Easy	
+190	Reverse Bits	29.5%	Easy	
+28	Implement strStr()	26.5%	Easy	
+151	Reverse Words in a String	15.7%	Medium	
+118	Pascal's Triangle	36.0%	Easy	
+284	Peeking Iterator	34.8%	Medium	
+236	Lowest Common Ancestor of a Binary Tree	29.2%	Medium	
+383	Ransom Note	45.4%	Easy
