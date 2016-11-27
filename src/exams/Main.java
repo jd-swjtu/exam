@@ -45,7 +45,8 @@ public class Main {
 			if(f.isDirectory()) {
 				for(File ff: f.listFiles()) {
 					if(ff.getName().startsWith("N")) {
-						questions.put(ff.getName().substring(1, ff.getName().indexOf(".")), "exams." + f.getName() + "." + ff.getName());
+						questions.put(String.valueOf(Integer.valueOf(ff.getName().substring(1, ff.getName().indexOf(".")))),
+								"exams." + f.getName() + "." + ff.getName());
 					}
 				}
 			}

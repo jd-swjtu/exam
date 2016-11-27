@@ -33,6 +33,26 @@ return the root of the binary tree [4,5,2,#,#,3,1].
 	public TreeNode upsideDownBinaryTree(TreeNode root) {
     	if(root == null) return null;
     	
+    	TreeNode p = null, r = null;
+    	while(root != null) {
+    		TreeNode pp = root;
+    		TreeNode rr = root.right;
+    		root = root.left;
+    		
+    		pp.right = p;
+    		pp.left = r;
+    		
+    		p = pp;
+    		r = rr;
+    	}
+    	
+    	
+    	return p;
+    }
+	
+	public TreeNode upsideDownBinaryTreex(TreeNode root) {
+    	if(root == null) return null;
+    	
     	TreeNode p, parent = null, r = null;
     	while(root != null) {
     		p = new TreeNode(root.val);

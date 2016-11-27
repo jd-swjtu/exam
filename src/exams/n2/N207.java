@@ -14,7 +14,7 @@ import java.util.Stack;
 public class N207 {
 
 	public static void main(String[] args) {
-		System.out.println(new N207().canFinish(2, new int[][]{{1,0}}));
+		System.out.println(new N207().canFinishX(3, new int[][]{{1,0},{2,0}}));
 	}
 
 	/*
@@ -97,12 +97,12 @@ There are a total of 2 courses to take. To take course 1 you should have finishe
 		// use the map to store what courses depend on a course 
 		HashMap<Integer,ArrayList<Integer>> map = new HashMap<Integer,ArrayList<Integer>>();
 		for(int[] a: prerequisites){
-			if(map.containsKey(a[1])){
-				map.get(a[1]).add(a[0]);
+			if(map.containsKey(a[0])){
+				map.get(a[1]).add(a[1]);
 			}else{
 				ArrayList<Integer> l = new ArrayList<Integer>();
-				l.add(a[0]);
-				map.put(a[1], l);
+				l.add(a[1]);
+				map.put(a[0], l);
 			}
 		}
 

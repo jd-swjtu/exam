@@ -95,7 +95,7 @@ public class RomanNumber {
 
 	public List<String> generateParenthesis(int n) {
 		List<String> results = new ArrayList<String>();
-		this.go(1, 0, n, "(", results);
+		this.go(0, 0, n, "", results);
 		//this.ggo(n,  n, "", results);
 		return results;
 	}
@@ -120,20 +120,13 @@ public class RomanNumber {
 			results.add(s);
 			return;
 		}
-
-		if(r < l) {
-			if(l < t) {
-				go(l+1, r, t, s + "(", results);
-				go(l, r+1, t, s + ")", results);
-			} else {
-				go(l, r+1, t, s + ")", results);
-			}
-		} else {
-			if(l < t) {
-				go(l+1, r, t, s + "(", results);
-			} else {
-				go(l, r+1, t, s + ")", results);
-			}
+		
+		if(l<t) {
+			go(l+1, r, t, s + "(", results);
+		}
+		
+		if(r<t && r<l) {
+			go(l, r+1, t, s + ")", results);
 		}
 	}
 

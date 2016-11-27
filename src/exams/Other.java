@@ -1,8 +1,17 @@
 package exams;
 
+import java.io.BufferedReader;
+import java.io.StringReader;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
+import com.google.common.collect.Sets;
+
 public class Other {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		new Other().printDiagonals2(new int[][]{
 			{1,2,3,10},
 			{4,5,6, 11},
@@ -19,6 +28,11 @@ public class Other {
 		System.out.println(isPalid("aba"));*/
 		
 		//System.out.println(new Other().fib4(1,1, 5));
+		
+		new Other().category("d1:i1, i2, i3\n"
+				+ "d2: i2, i3, i4\n"
+				+ "d3: i4, i5\n"
+				+ "d4: i6, i7\n");
 	}
 
 	public static void printDiamond(int m) {
@@ -185,6 +199,44 @@ public class Other {
 		}
 		return true;
 	}
+	
+	public void category(String str) throws Exception {
+		BufferedReader br = new BufferedReader(new StringReader(str));
+		String line = null;
+		
+		Map<String,Set<String>> dish = new HashMap<String,Set<String>>();
+		while((line=br.readLine()) != null) {
+			String[] s1 = line.trim().split(":");
+			
+			Set<String> ing = new HashSet<String>();
+			for(String s: s1[1].split(",")) {
+				ing.add(s.trim());
+			}
+			dish.put(s1[0].trim(), ing);
+		}
+		br.close();
+		
+		String[] keys = new String[dish.size()];
+		dish.keySet().toArray(keys);
+		
+		for(int i=0; i<keys.length; i++) {
+			String k1 = keys[i];
+			for(int j=i+1; j<keys.length; j++) {
+				String k2 = keys[j];
+				
+				if(Sets.intersection(dish.get(k1), dish.get(k2)).size() > 0)
+				//if(hasInt(dish.get(k1), dish.get(k2)))
+					System.out.println("(" + k1 + ", " + k2 + ")");
+			}
+		}
+	}
+	/*
+	private boolean hasInt(Set<String> s1, Set<String> s2) {
+		for(String ss1: s1) {
+			if(s2.contains(ss1)) return true;
+		}
+		return false;
+	}*/
 }
 
 class Diamond {
