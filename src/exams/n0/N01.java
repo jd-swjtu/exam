@@ -3,10 +3,10 @@ package exams.n0;
 import java.util.HashMap;
 import java.util.Map;
 
-public class N1 {
+public class N01 {
 
 	public static void main(String[] args) {
-		N1 n1 = new N1();
+		N01 n1 = new N01();
 		int[] ret = n1.twoSum(new int[]{1, 3,4,5,7,2,4,6}, 10);
 		System.out.println(ret[0] + " : " + ret[1]);
 

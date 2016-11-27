@@ -2,10 +2,10 @@ package exams.n0;
 
 import exam.LeetCode;
 
-public class N5 {
+public class N05 {
 
 	public static void main(String[] args) {
-		System.out.println(new N5().longestPalindrome("cccxccxccx"));
+		System.out.println(new N05().longestPalindrome("cccxccxccx"));
 	}
 
 	@LeetCode(value=5, c="a")

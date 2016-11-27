@@ -1,9 +1,9 @@
 package exams.n0;
 
-public class N8 {
+public class N08 {
 
 	public static void main(String[] args) {
-		System.out.println(new N8().atof("123.0001"));
+		System.out.println(new N08().atof("123.0001"));
 	}
 
 	public float atof(String s) {

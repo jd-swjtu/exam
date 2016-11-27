@@ -2,11 +2,11 @@ package exams.n0;
 
 import exams.utils.ListNode;
 
-public class N2 {
+public class N02 {
 
 	public static void main(String[] args) {
-		System.out.println(new N2().addTwoNumbers(ListNode.create("1235"),null));
-		System.out.println(new N2().addTwoNumbers(ListNode.create("1235"),ListNode.create("66")));
+		System.out.println(new N02().addTwoNumbers(ListNode.create("1235"),null));
+		System.out.println(new N02().addTwoNumbers(ListNode.create("1235"),ListNode.create("66")));
 	}
 
 	public ListNode addTwoNumbers(ListNode l1, ListNode l2) {

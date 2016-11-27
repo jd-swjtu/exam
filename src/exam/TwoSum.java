@@ -22,8 +22,9 @@ public class TwoSum {
 
 		//System.out.println(new TwoSum().atoi("9223372036854775809"));
 
-		int[] a = new int[]{ 1, 12, 34, 56, 23, 12};//7, 2, 5, 3, 2, 1}; //{5,4,3,2,1};// {1,2,3,4,5}; //
-		//new TwoSum().nextPermutation(a);
+		int[] a = new int[]{ 7, 2, 5, 3, 2, 1}; //{5,4,3,2,1};// {1,2,3,4,5}; //
+		new TwoSum().nextPermutation(a);
+		
 		new TwoSum().quicksort(a, 0, a.length-1);
 		for(int i=0; i<a.length; i++)
 			System.out.print(a[i] + " ");
@@ -338,8 +339,9 @@ Notes: It is intended for this problem to be specified vaguely (ie, no given inp
 			nums[j] = nums[i-1];
 			nums[i-1] = vv;
 		}
+		Arrays.sort(nums, i, nums.length);
 		//sort 
-		for(int j=i; j<nums.length - 1; j++) {
+		/*for(int j=i; j<nums.length - 1; j++) {
 			int vv = nums[j];
 			int l = 0;
 			for(int k = j+1; k<nums.length ; k++) {
@@ -353,7 +355,7 @@ Notes: It is intended for this problem to be specified vaguely (ie, no given inp
 				nums[j] = nums[l];
 				nums[l] = vv;
 			}
-		}
+		}*/
 	}
 
 	/*

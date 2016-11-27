@@ -3,10 +3,10 @@ package exams.n0;
 import java.util.HashMap;
 import java.util.Map;
 
-public class N3 {
+public class N03 {
 
 	public static void main(String[] args) {
-		System.out.println(new N3().longString("axxab"));
+		System.out.println(new N03().longString("axxab"));
 	}
 
 	public int longString(String ss) {
