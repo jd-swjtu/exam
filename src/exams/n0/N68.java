@@ -8,7 +8,7 @@ public class N68 {
 	public static void main(String[] args) {
 		System.out.println(new N68().fullJustify(new String[]{
 				"This", "is", "an", "example", "of", "text", "justification."
-		}, 16));
+		}, 15));
 		
 		System.out.println(new N68().fullJustify(new String[]{
 				""
@@ -16,7 +16,7 @@ public class N68 {
 		
 		System.out.println(new N68().fullJustify(new String[]{
 		"What","must","be","shall","be."
-		},	12));
+		},	10));
 	}
 
 	/*
@@ -86,7 +86,7 @@ Return the formatted lines as:
 				}
 			}
 		}
-		int l = maxWidth - sbf.length();
+		int l = maxWidth - sbf.length() + 1; //+1 because of first "#"
 		while(l>0) {
 			sbf.append(" ");
 			l--;

@@ -23,6 +23,7 @@ Could you do it in-place without allocating extra space?
 	
 	public void reverseWords(char[] s) {
 		int l = 0;
+		reverse(s, 0, s.length-1);
 		for(int i=0; i<s.length; i++) {
 			if(s[i] == ' ') {
 				reverse(s, l, i-1);
@@ -30,7 +31,6 @@ Could you do it in-place without allocating extra space?
 			}
 		}
 		reverse(s, l, s.length-1);
-		reverse(s, 0, s.length-1);
 	}
 	
 	private void reverse(char[] s, int l, int r) {

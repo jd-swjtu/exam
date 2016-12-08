@@ -3,7 +3,8 @@ package exams.n0;
 public class N50 {
 
 	public static void main(String[] args) {
-		System.out.println(new N50().myPow(2, -20));
+		System.out.println(Integer.MIN_VALUE);
+		System.out.println(new N50().myPow(2,	-2147483647));
 	}
 
 	public double myPow(double x, int n) {
@@ -17,7 +18,7 @@ public class N50 {
 
 		boolean negative = false;
 		if(n < 0) {
-			n = -1 * n;
+			n = -n;
 			negative = true;
 		}
 		
@@ -33,4 +34,25 @@ public class N50 {
 		
 		return result; 
 	}
+	
+	public double power(double x, int n) {
+        if (n == 0)
+            return 1;
+ 
+        double v = power(x, n / 2);
+ 
+        if (n % 2 == 0) {
+            return v * v;
+        } else {
+            return v * v * x;
+        }
+    }
+ 
+    public double myPowx(double x, int n) {
+        if (n < 0) {
+            return 1 / power(x, -1 * n);
+        } else {
+            return power(x, n);
+        }
+    }
 }

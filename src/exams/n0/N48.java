@@ -1,5 +1,7 @@
 package exams.n0;
 
+import java.util.Arrays;
+
 public class N48 {
 
 	public static void main(String[] args) {
@@ -42,10 +44,13 @@ public class N48 {
 		int[][] r = new int[m][n];
 		for(int i=0; i<n; i++) {
 			for(int j=0; j<m; j++) {
-				r[n-j-1][i] = matrix[i][j];
+				r[m-j-1][i] = matrix[i][j];
 			}
 		}
+		for(int i=0; i<m; i++)
+			System.out.println(Arrays.toString(r[i]));
 		
+		if(m == n)
 		for(int i=0; i<n; i++) {
 			for(int j=0; j<m; j++) {
 				matrix[i][j] = r[i][j];
