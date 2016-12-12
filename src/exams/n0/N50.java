@@ -4,7 +4,7 @@ public class N50 {
 
 	public static void main(String[] args) {
 		System.out.println(Integer.MIN_VALUE);
-		System.out.println(new N50().myPow(2,	-2147483647));
+		System.out.println(new N50().myPow(-2,	-2147483647));
 	}
 
 	public double myPow(double x, int n) {

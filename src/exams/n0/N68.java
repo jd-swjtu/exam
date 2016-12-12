@@ -77,7 +77,7 @@ Return the formatted lines as:
 		for(int i=0; i<count; i++) {
 			sbf.append(words[i + start]);
 			
-			if(i < count - 1) {
+			if(i < count - 1 || count == 1) {
 				for(int k=0; k<avg; k++)
 					sbf.append(" ");
 				if(extra > 0) {
@@ -86,11 +86,11 @@ Return the formatted lines as:
 				}
 			}
 		}
-		int l = maxWidth - sbf.length() + 1; //+1 because of first "#"
+		/*int l = maxWidth - sbf.length() + 1; //+1 because of first "#"
 		while(l>0) {
 			sbf.append(" ");
 			l--;
-		}
+		}*/
 		sbf.append("#");
 		
 		return sbf.toString();

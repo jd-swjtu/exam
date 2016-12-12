@@ -31,11 +31,8 @@ Return
 		results.add(new ArrayList<Integer>(Arrays.asList(1)));
 		if(numRows == 1) return results;
 
-		results.add(new ArrayList<Integer>(Arrays.asList(1,1)));
-		if(numRows == 2) return results;
-
-		for(int i=1; i<numRows-1; i++) {
-			List<Integer> prev = results.get(i);
+		for(int i=1; i<numRows; i++) {
+			List<Integer> prev = results.get(results.size()-1);
 			List<Integer> tmp = new ArrayList<Integer>();
 			tmp.add(1);
 			for(int j=0; j<prev.size()-1; j++) {
