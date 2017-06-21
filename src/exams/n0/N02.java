@@ -55,7 +55,7 @@ public class N02 {
 			p.next = new ListNode(c);
 			p = p.next;
 		}
-
+		
 		return h;
 	}
 }

@@ -34,7 +34,7 @@ public class Main {
 			System.out.println(questions.get(key));
 		}*/
 		
-		read("AA");
+		read("GO");
 	}
 
 	public static Map<String,String> scan() throws Exception {

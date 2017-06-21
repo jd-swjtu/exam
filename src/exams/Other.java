@@ -11,8 +11,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.google.common.collect.Sets;
-
 import exams.utils.TreeNode;
 
 public class Other {
@@ -270,7 +268,7 @@ public class Other {
 	public static void printDiamond2(int m) {
 		int row = m;
 		int col = m%2==0?m-1:m;
-		int[][] matrix = new int[row][col];
+		//int[][] matrix = new int[row][col];
 
 		for(int i=0; i<row; i++) {
 			int x = i>=row/2?(row-i-1):i;
@@ -431,19 +429,19 @@ public class Other {
 			for(int j=i+1; j<keys.length; j++) {
 				String k2 = keys[j];
 
-				if(Sets.intersection(dish.get(k1), dish.get(k2)).size() > 0)
-					//if(hasInt(dish.get(k1), dish.get(k2)))
+				//if(Sets.intersection(dish.get(k1), dish.get(k2)).size() > 0)
+				if(hasInt(dish.get(k1), dish.get(k2)))
 					System.out.println("(" + k1 + ", " + k2 + ")");
 			}
 		}
 	}
-	/*
+
 	private boolean hasInt(Set<String> s1, Set<String> s2) {
 		for(String ss1: s1) {
 			if(s2.contains(ss1)) return true;
 		}
 		return false;
-	}*/
+	}
 }
 
 class Diamond {
