@@ -51,5 +51,6 @@ public class N543 {
 3   8 13 17 | 27  29|34  38
 		 */
 		System.out.println(new N543().diameterOfBinaryTree(TreeNode.deserialize("20,10,30,5,15,25,35,3,8,13,17,27,29,34,38")));
+		System.out.println(new N543().diameterOfBinaryTree(TreeNode.deserialize("20,10,30,5,null,null,null,3,null")));
 	}
 }
