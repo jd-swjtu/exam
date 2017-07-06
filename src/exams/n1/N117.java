@@ -47,7 +47,6 @@ public class N117 {
 					r.next = p.right;
 					if (p.next != null) {
 						r.next.next = (p.next.left != null)?p.next.left:p.next.right;
-						r = r.next;
 					}
 				}
 			}
@@ -78,7 +77,7 @@ public class N117 {
 	}
 
 	public static void main(String[] args) {
-		TreeNode root = TreeNode.deserialize("1,2,3,4,5,null,7,null,null,8,9,null,10");
+		TreeNode root = TreeNode.deserialize("1,2,3,4,5,null,7,null,12,8,9,null,10");
 		N117 n117 = new N117();
 		n117.connect(root);
 		System.out.println(root.next());
