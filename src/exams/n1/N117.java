@@ -76,7 +76,7 @@ public class N117 {
 		System.out.println("Done");
 	}
 
-	public void connect(TreeNode root) {
+	public void connect2(TreeNode root) {
 		if (root == null)
 			return;
 
@@ -127,13 +127,50 @@ public class N117 {
 			} else
 				//next level no child now
 				break;
-        }
+        	}
+	}
+
+	public void connect(TreeNode root) {
+		if (root == null)
+			return;
+
+		TreeNode p = null, h = null;
+		TreeNode q = root;
+
+		while ( q != null ) {
+			if (q.left != null) {
+				if(p != null) {
+					p.next = q.left;
+				}
+				p = q.left;
+				if(h == null) {
+					h = p;
+				}
+			}
+
+			if (q.right != null) {
+				if(p != null) {
+					p.next = q.right;
+				}
+				p = q.right;
+				if(h == null) {
+					h = p;
+				}
+			}
+
+			q = q.next;
+			if (q == null) {
+				q = h;
+				h = null;
+				p = null;
+			}
+		}
 	}
 
 	public static void main(String[] args) {
 		//TreeNode root = TreeNode.deserialize("1,2,3,4,5,6,7,8,9,null,null,10");
-		TreeNode root = TreeNode.deserialize("20,10,30,5,15,25,35,3,8,13,17,27,29,34,38");
-		//TreeNode root = TreeNode.deserialize("1,2,3,4,5,null,7,null,12,8,9,null,10");
+		//TreeNode root = TreeNode.deserialize("20,10,30,5,15,25,35,3,8,13,17,27,29,34,38");
+		TreeNode root = TreeNode.deserialize("1,2,3,4,5,null,7,null,12,8,9,null,10");
 		N117 n117 = new N117();
 		n117.connect(root);
 		System.out.println(root.next());
