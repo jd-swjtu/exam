@@ -60,7 +60,7 @@ public class Main {
 		BufferedReader br = new BufferedReader(new FileReader(new File("./cat.txt")));
 		String line = null;
 		String cat = null;
-		Pattern ptrn = Pattern.compile("^(\\d+)\\s+(.+)\\s+([0-9.]+)%\\s+.+$");
+		Pattern ptrn = Pattern.compile("^(\\d+)\\s+(.+\\s+[0-9.]+%\\s+.+?)\\s*$");
 		while((line = br.readLine()) != null) {
 			if(line.startsWith("[") && line.endsWith("]")) {
 				cat = line.substring(1, line.length() - 1);
