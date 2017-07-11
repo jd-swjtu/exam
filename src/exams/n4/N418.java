@@ -54,6 +54,7 @@ had--
 
 The character '-' signifies an empty space on the screen.
  */
+//TODO: TLE
 public class N418 {
 	public int wordsTyping(String[] sentence, int rows, int cols) {
 		int times = 0;
