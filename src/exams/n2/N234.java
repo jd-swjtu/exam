@@ -15,10 +15,10 @@ public class N234 {
 		if (head.next == null) return true;
 		
 		ListNode p = head;
-		ListNode q = head.next;
+		ListNode q = head;
 		ListNode h = null;
 		
-		while(q.next != null && q.next.next != null) {
+		while(q != null && q.next != null) {
 			q = q.next.next;
 			
 			ListNode t = p;
@@ -28,16 +28,16 @@ public class N234 {
 			t.next = h;
 			h = t;
 		}
-		//p is the end of left half
-		if(q.next != null) {
-			//number of node is odd, ignore the mid node, q is head of right side
-			q = p.next.next;
-		} else {
+		if(q != null) {
+			//number of node is odd, p is middle node
 			q = p.next;
+		} else {
+			//number of node is odd, p is head of right half
+			q = p;
 		}
-		//Add the last node of left half
-		p.next = h;
-		h = p;
+		
+		//System.out.println(q);
+		//System.out.println(h);
 		
 		while(h != null) {
 			if(h.val != q.val) {
@@ -57,5 +57,4 @@ public class N234 {
 		System.out.println(new N234().isPalindrome(ListNode.create("123454321").reverse()));
 		System.out.println(new N234().isPalindrome(ListNode.create("1234554321").reverse()));
 	}
-
 }
