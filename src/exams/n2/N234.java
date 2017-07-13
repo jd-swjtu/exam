@@ -10,6 +10,8 @@ Could you do it in O(n) time and O(1) space?
  */
 public class N234 {
 	private ListNode left;
+	int max = 0;
+	int i=0; //to control compare times - max/2
 	
 	//call helper until the end, then start to compare(it will return to previous stack, 
 	//so the right will go backward, and use left=left.next to make left go forward)
@@ -21,10 +23,15 @@ public class N234 {
 	}
 	
 	public boolean helper(ListNode right) {
-		if(right == null) return true;
+		if(right == null) {
+			max = i;
+			return true;
+		}
 		
+		i++;
 		boolean ret = helper(right.next);
-		
+		i--;
+		if(i < max/2) return ret;
 		if (ret && right.val != left.val) return false;
 		
 		left = left.next;
