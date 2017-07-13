@@ -9,6 +9,27 @@ Follow up:
 Could you do it in O(n) time and O(1) space?
  */
 public class N234 {
+	private ListNode left;
+	
+	//call helper until the end, then start to compare(it will return to previous stack, 
+	//so the right will go backward, and use left=left.next to make left go forward)
+	//The problem is that it compared all items twice
+	public boolean isPalindrome2(ListNode head) {
+		if (head == null || head.next == null) return true;
+		left = head;
+		return helper(head);
+	}
+	
+	public boolean helper(ListNode right) {
+		if(right == null) return true;
+		
+		boolean ret = helper(right.next);
+		
+		if (ret && right.val != left.val) return false;
+		
+		left = left.next;
+		return true;
+	}
 
 	public boolean isPalindrome(ListNode head) {
 		if(head == null) return false;
@@ -32,7 +53,7 @@ public class N234 {
 			//number of node is odd, p is middle node
 			q = p.next;
 		} else {
-			//number of node is odd, p is head of right half
+			//number of node is even, p is head of right half
 			q = p;
 		}
 		
@@ -56,5 +77,6 @@ public class N234 {
 		System.out.println(new N234().isPalindrome(ListNode.create("11").reverse()));
 		System.out.println(new N234().isPalindrome(ListNode.create("123454321").reverse()));
 		System.out.println(new N234().isPalindrome(ListNode.create("1234554321").reverse()));
+		System.out.println(new N234().isPalindrome2(ListNode.create("1234554321").reverse()));
 	}
 }
