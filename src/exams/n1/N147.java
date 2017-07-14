@@ -28,7 +28,7 @@ public class N147 {
         ListNode p = head.next;
         
         p = insertionSortList(p);
-        head.next = null;
+       // head.next = null;
 
         return sort(head, p);
     }
@@ -43,7 +43,7 @@ public class N147 {
         	ListNode q = p;
         	p = p.next;
         	
-        	q.next = null;
+        	//q.next = null;
         	h = this.sort(q, h);
         }
         return h; 
