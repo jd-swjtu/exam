@@ -9,6 +9,7 @@ public class TreeNode {
 	public int val;
 	public TreeNode left;
 	public TreeNode right;
+	public TreeNode next;
 	
 	public TreeNode(int x) { val = x; }
 	
@@ -68,6 +69,35 @@ public class TreeNode {
 				q.add(node.right);
 			}
 		}
+		return sbf.toString();
+	}
+	
+	public String next() {
+		StringBuffer sbf = new StringBuffer();
+		TreeNode r = this;
+		
+		TreeNode c = null;
+		while (true) {
+			while(r != null) {
+				sbf.append(r.val).append("->");
+				if (c == null && r.left != null) {
+					c = r.left;
+				}
+				if (c == null && r.right != null) {
+					c = r.right;
+				}
+				
+				r = r.next;
+			}
+			sbf.append("NULL\n");
+			if( c == null) {
+				break;
+			}
+			r = c;
+			c = null;
+		}
+		
+		
 		return sbf.toString();
 	}
 }

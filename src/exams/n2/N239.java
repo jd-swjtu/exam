@@ -1,15 +1,13 @@
 package exams.n2;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 
 public class N239 {
 
 	public static void main(String[] args) {
-		int[] results = new N239().maxSlidingWindow(new int[]{1,3,-1,-3,5,3,6,7}, 3);
-		for(int i=0; i<results.length; i++) {
-			System.out.print(results[i] + ",");
-		}
-		System.out.println();
+		System.out.println(Arrays.toString(new N239().maxSlidingWindow(new int[]{1,3,-1,-3,5,3,6,7}, 3)));
+		System.out.println(Arrays.toString(new N239().maxSlidingWindow(new int[]{1,2,3,1,1,1,1}, 3)));
 	}
 
 	public int[] maxSlidingWindow(int[] nums, int k) {

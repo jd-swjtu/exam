@@ -23,6 +23,15 @@ public class N396 {
 			max = Math.max(max, t1);
 			t0 = t1;
 		}
+		
+		//another order
+	/*	
+	 	for(int i=1; i<n; i++) {
+			int t1 = t0 - total + n * A[n-i];
+
+			max = Math.max(max, t1);
+			t0 = t1;
+		}*/
 
 		return max;
 	}

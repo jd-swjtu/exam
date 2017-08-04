@@ -14,7 +14,7 @@ import java.util.Stack;
 public class N207 {
 
 	public static void main(String[] args) {
-		System.out.println(new N207().canFinishX(3, new int[][]{{1,0},{2,0}}));
+		System.out.println(new N207().canFinishX(3, new int[][]{{1,0},{2,0},{0,1}}));
 	}
 
 	/*
@@ -98,7 +98,7 @@ There are a total of 2 courses to take. To take course 1 you should have finishe
 		HashMap<Integer,ArrayList<Integer>> map = new HashMap<Integer,ArrayList<Integer>>();
 		for(int[] a: prerequisites){
 			if(map.containsKey(a[0])){
-				map.get(a[1]).add(a[1]);
+				map.get(a[0]).add(a[1]);
 			}else{
 				ArrayList<Integer> l = new ArrayList<Integer>();
 				l.add(a[1]);

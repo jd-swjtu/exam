@@ -17,7 +17,6 @@ Subscribe to see which companies asked this question
 
 	public int climbStairs(int n) {
 		int[] dp = new int[n>2?n+1:3];
-		dp[0] = 0;
 		dp[1] = 1;
 		dp[2] = 2;
 

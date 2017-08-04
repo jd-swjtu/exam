@@ -9,16 +9,16 @@ public class N79 {
 			{'S','F','C','S'},
 			{'A','D','E','E'}
 		};
-		
+
 		char[][] board1 = new char[][] {
 			{'A','B','C','E'},
 			{'S','F','E','S'},
 			{'A','D','E','E'}
 		};
-		
-		
-				System.out.println(new N79().exist(board1, "ABCESEEEFSAD"));
-		//System.out.println(new N79().exist(board, "FCSEED"));
+
+
+		System.out.println(new N79().exist(board1, "ABCESEEEFSAD"));
+		System.out.println(new N79().exist(board, "FCSEEDASA"));
 		//System.out.println(new N79().exist(new char[][]{{'a'}}, "a"));
 	}
 
@@ -63,11 +63,11 @@ word = "ABCB", -> returns false.
 		if(visited[x][y] || ch != board[x][y]) return false;
 		visited[x][y] = true;
 
-		if(search(board, x+1, y, r, c, word, s+1, visited)) return true;
-		if(search(board, x-1, y, r, c, word, s+1, visited)) return true;
-		if(search(board, x, y+1, r, c, word, s+1, visited)) return true;
-		if(search(board, x, y-1, r, c, word, s+1, visited)) return true;
-		
+		if(search(board, x+1, y, r, c, word, s+1, visited) ||
+				search(board, x-1, y, r, c, word, s+1, visited) ||
+				search(board, x, y+1, r, c, word, s+1, visited) ||
+				search(board, x, y-1, r, c, word, s+1, visited)) return true;
+
 		visited[x][y] = false;
 		return false;
 	}
