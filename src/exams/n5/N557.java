@@ -13,7 +13,6 @@ Note: In the string, each word is separated by single space and there will not b
 public class N557 {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		System.out.println("#" + new N557().reverseWords("Let's take LeetCode contest") + "#");
 	}
 
