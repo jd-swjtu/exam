@@ -12,7 +12,7 @@ Length of the given string and k will in the range [1, 10000]
 public class N541 {
 
 	public static void main(String[] args) {
-		System.out.println(new N541().reverseStr("abcdefghijk", 4));
+		System.out.println(new N541().reverseStr("abcdefghijk", 2));
 	}
 	
 	private void reverse(char[] str, int s, int e) {
@@ -25,16 +25,17 @@ public class N541 {
 			e--;
 		}
 	}
-
+	
 	public String reverseStr(String s, int k) {
 		int len = s.length();
 		char[] str = s.toCharArray();
-		for (int i = 0; i < len/(2*k)*2*k+k; i += 2 * k) {
-			if( i+k-1 < len)
-				this.reverse(str, i, i + k - 1);
-			else
-				this.reverse(str, i, len - 1);
+		int i=0;
+		for (; i < len/(2*k); i += 1) {
+				this.reverse(str, 2*k*i, 2*k*i+k-1);
 		}
+		int left = len % (2*k);
+		if(left > 0)
+			this.reverse(str, i*2*k, i*2*k + (left>k?k:left) - 1);
 		return new String(str);
 	}
 }
