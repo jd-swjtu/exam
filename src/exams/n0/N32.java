@@ -17,15 +17,6 @@ public class N32 {
 		System.out.println(new N32().longestValidParentheses(")()()(())"));
 	}
 	
-	class Item {
-		int l;
-		char c;
-		
-		Item(int l, char c) {
-			this.l = l;
-			this.c = c;
-		}
-	}
 
 	public int longestValidParentheses(String s) {
 		if(s == null || s.length() == 0) return 0;
@@ -36,21 +27,21 @@ public class N32 {
         dp[0] = 0;
         int max = 0;
         
-        Stack<Item> stack = new Stack<>();
+        Stack<Integer> stack = new Stack<>();
         for(int i=0; i<len; i++) {
         	char c = str[i];
         	if (c == ')') {
         		if (stack.size() == 0) {
         			dp[i+1] = 0;
         		} else {
-        			Item item = stack.pop();
-        			dp[i+1] = dp[item.l] + (i-item.l) + 1;
+        			int l = stack.pop();
+        			dp[i+1] = dp[l] + (i-l) + 1;
         			if (dp[i+1] > max)
         				max = dp[i+1];
         		}
         	} else {
         		dp[i+1] = 0;
-        		stack.push(new Item(i, c));
+        		stack.push(i);
         	}
         }
         System.out.println(Arrays.toString(dp));
