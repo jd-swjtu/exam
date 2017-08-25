@@ -34,7 +34,7 @@ public class N247 {
         Iterator<String> it = results.iterator();
         while(it.hasNext()) {
         	String s = it.next();
-        	if(s.startsWith("0")) it.remove();
+        	if(s.length() > 1 && s.startsWith("0")) it.remove();
         }
         
         return results;
