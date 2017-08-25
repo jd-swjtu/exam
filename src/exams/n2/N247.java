@@ -26,7 +26,7 @@ public class N247 {
         List<String> results = new ArrayList<String>();
         
         char[] a = new char[]{'0', '1', '8'};
-        char[] b = new char[]{'0', '1', '8', '6', '9'};
+        char[] b = new char[]{'0', '1', '6', '8', '9'};
         
         if(n < 0) return results;
         //181, 818, 619, 689, 916,986
