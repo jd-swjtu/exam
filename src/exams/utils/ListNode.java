@@ -13,7 +13,7 @@ public class ListNode {
 		ListNode p = header;
 
 		for(int i=0; i<len; i++) {
-			ListNode q = new ListNode(Integer.valueOf(value.charAt(i)) - '0');
+			ListNode q = new ListNode(value.charAt(i) - '0');
 			
 			q.next = p.next;
 			p.next = q;
@@ -68,7 +68,7 @@ public class ListNode {
 	}
 	
 	public static void main(String[] args) {
-		System.out.println(ListNode.create("1234").reverse());
+		System.out.println(ListNode.create("1234").reverse().value());
 	}
 } 
 

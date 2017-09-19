@@ -34,7 +34,7 @@ public class Main {
 			System.out.println(questions.get(key));
 		}*/
 		
-		read("GO");
+		read(null);
 	}
 
 	public static Map<String,String> scan() throws Exception {
@@ -60,6 +60,7 @@ public class Main {
 		BufferedReader br = new BufferedReader(new FileReader(new File("./cat.txt")));
 		String line = null;
 		String cat = null;
+		int count = 0;
 		Pattern ptrn = Pattern.compile("^(\\d+)\\s+(.+\\s+[0-9.]+%\\s+.+?)\\s*$");
 		while((line = br.readLine()) != null) {
 			if(line.startsWith("[") && line.endsWith("]")) {
@@ -71,13 +72,18 @@ public class Main {
 				Matcher m = ptrn.matcher(line);
 				if(m.find()) {
 					if(pCat != null) {
-						if(pCat.equals(cat))
+						if(pCat.equals(cat)) {
 							System.out.println(cat + " " + m.group(1) + " " + m.group(2) + " = " + questions.getOrDefault(m.group(1), ""));
-					} else
-					System.out.println(cat + " " + m.group(1) + " " + m.group(2) + " = " + questions.getOrDefault(m.group(1), ""));
+							count++;
+						}
+					} else {
+						System.out.println(cat + " " + m.group(1) + " " + m.group(2) + " = " + questions.getOrDefault(m.group(1), ""));
+						count++;
+					}
 				}
 			}
 		}
+		System.out.println("Total " + count);
 		br.close();
 	}
 }

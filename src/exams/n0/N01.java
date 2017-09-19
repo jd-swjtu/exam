@@ -7,7 +7,7 @@ public class N01 {
 
 	public static void main(String[] args) {
 		N01 n1 = new N01();
-		int[] ret = n1.twoSum(new int[]{1, 3,4,5,7,2,4,6}, 10);
+		int[] ret = n1.twoSum2(new int[]{1, 5,3,4,7,2,4,6}, 10);
 		System.out.println(ret[0] + " : " + ret[1]);
 
 	}
@@ -58,7 +58,7 @@ return [0, 1].
 		i=0;
 		for(int num: nums) {
 			int anum = target - num;
-			if(numsMap.containsKey(anum)) {
+			if(numsMap.containsKey(anum) && numsMap.get(anum) != i) {
 				return new int[]{i, numsMap.get(anum)};
 			}
 			i++;

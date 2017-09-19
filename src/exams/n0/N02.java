@@ -7,7 +7,8 @@ public class N02 {
 	public static void main(String[] args) {
 		System.out.println(new N02().addTwoNumbers(ListNode.create("1235"),null));
 		System.out.println(new N02().addTwoNumbers(ListNode.create("1235"),ListNode.create("66")));
-		System.out.println(new N02().addTwoNumbers1(ListNode.create("1235"),ListNode.create("66")));
+		System.out.println(new N02().addTwoNumbers1(ListNode.create("23"),ListNode.create("76")));
+		System.out.println(new N02().addTwoNumbers(ListNode.create("22"),ListNode.create("76")));
 	}
 
 	public ListNode addTwoNumbers(ListNode l1, ListNode l2) {

@@ -1,5 +1,8 @@
 package exams.n1;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /*
  Given a string S and a string T, count the number of distinct subsequences of S which equals T.
 
@@ -13,19 +16,19 @@ Return 3.
 public class N115 {
 
 	public static void main(String[] args) {
-		System.out.println(new N115().numDistinct("rabbbit", "rabbit"));
-		System.out.println(new N115().numDistinct("rabbit", "rabbit"));
+		//System.out.println(new N115().numDistinct("rabbbit", "rabbit"));
+		//System.out.println(new N115().numDistinct("rabbit", "rabbit"));
 		System.out.println(new N115().numDistinct("rabbbiit", "rabbit"));
 	}
-
+	
 	public int numDistinct(String s, String t) {
-       return this.numDistinct(s.toCharArray(), 0, t.toCharArray(), 0);
+        return this.numDistinct(s.toCharArray(), 0, t.toCharArray(), 0);
     }
 
 	public int numDistinct(char[] s, int si, char[] t, int ti) {
 		if(ti == t.length) return 1;
 		if(si == s.length) return 0;
-
+		
 		int total = 0;
 		if (t[ti] == s[si]) {
 			total += this.numDistinct(s, si + 1, t, ti + 1);
