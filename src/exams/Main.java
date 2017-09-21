@@ -83,7 +83,7 @@ public class Main {
 				}
 			}
 		}
-		System.out.println("Total " + count);
+		System.out.println("Total " + count + ", actual " + questions.size());
 		br.close();
 	}
 }
