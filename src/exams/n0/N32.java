@@ -14,9 +14,28 @@ Another example is ")()())", where the longest valid parentheses substring is "(
 public class N32 {
 
 	public static void main(String[] args) {
-		System.out.println(new N32().longestValidParentheses(")()()(())"));
+		System.out.println(new N32().longestValidParentheses(")()()((())"));
+		
+		System.out.println(new N32().longestValidParentheses1(")()()((())"));
 	}
 	
+	public int longestValidParentheses1(String s) {
+        Stack<Integer> stack = new Stack<Integer>();
+        int max=0;
+        int left = -1;
+        for(int j=0;j<s.length();j++){
+            if(s.charAt(j)=='(') stack.push(j);            
+            else {
+                if (stack.isEmpty()) left=j;
+                else{
+                    stack.pop();
+                    if(stack.isEmpty()) max=Math.max(max,j-left);
+                    else max=Math.max(max,j-stack.peek());
+                }
+            }
+        }
+        return max;
+    }
 
 	public int longestValidParentheses(String s) {
 		if(s == null || s.length() == 0) return 0;

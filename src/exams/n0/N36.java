@@ -1,11 +1,51 @@
 package exams.n0;
 
+import java.util.Arrays;
+import java.util.List;
+
+/*
+ Valid Sudoku
+ */
 public class N36 {
 
 	public static void main(String[] args) {
+char[][] board = new char[][] {
+	{'5', '3', '.', '.', '7', '.', '.', '.', '.'},
+	{'6', '.', '.', '1', '9', '5', '.', '.', '.'},
+	{'.', '9', '8', '.', '.', '.', '.', '6', '.'},
+	{'8', '.', '.', '.', '6', '.', '.', '.', '3'},
+	{'4', '.', '.', '8', '.', '3', '.', '.', '1'},
+	{'7', '.', '.', '.', '2', '.', '.', '.', '6'},
+	{'.', '6', '.', '.', '.', '.', '2', '8', '.'},
+	{'.', '.', '.', '4', '1', '9', '.', '.', '5'},
+	{'.', '.', '.', '.', '8', '.', '.', '7', '9'},
+};
 
+		System.out.println(new N36().solve(board));
+		for(int i=0; i<9; i++) {
+			System.out.println(Arrays.toString(board[i]));
+		}
 	}
-
+	
+	public boolean solve(char[][] board) {
+        for(int i=0; i<9; i++) {
+        	for(int j=0; j<9; j++) {
+        		char c = board[i][j];
+        		if(c == '.') {
+        			for(char cc='1'; cc <= '9'; cc++) {
+        				board[i][j]=cc;
+        				if(validSudoku(board)) {
+        					if(solve(board)) return true;
+        				}
+        				board[i][j]='.';
+        			}
+        			return false;
+        		}
+        	}
+        }
+        return true;
+    }
+	
 	public boolean validSudoku(char[][] data) {
 		for(int i=0; i<9; i++) {
 			int[] a = new int[9];

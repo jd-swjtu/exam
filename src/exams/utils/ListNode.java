@@ -67,8 +67,28 @@ public class ListNode {
 		return v;
 	}
 	
+	public ListNode pairSwap() {
+		ListNode dummy = new ListNode(0);
+		ListNode p = dummy;
+		ListNode q = this;
+		while(q != null && q.next != null) {
+			ListNode t = q.next.next;
+			
+			p.next = q.next;
+			q.next.next = q;
+			
+			p = p.next.next;
+			p.next = null;
+
+			q = t;
+		}
+		if(q != null)
+			p.next = q;
+		return dummy.next;
+	}
+	
 	public static void main(String[] args) {
-		System.out.println(ListNode.create("1234").reverse().value());
+		System.out.println(ListNode.create("12345").pairSwap());
 	}
 } 
 

@@ -134,35 +134,26 @@ public class N117 {
 		if (root == null)
 			return;
 
-		TreeNode p = null, h = null;
+		TreeNode h = new TreeNode(0), p=h;
 		TreeNode q = root;
 
 		while ( q != null ) {
 			if (q.left != null) {
-				if(p != null) {
-					p.next = q.left;
-				}
-				p = q.left;
-				if(h == null) {
-					h = p;
-				}
+				p.next = q.left;
+				p = p.next;
 			}
 
 			if (q.right != null) {
-				if(p != null) {
-					p.next = q.right;
-				}
-				p = q.right;
-				if(h == null) {
-					h = p;
-				}
+				p.next = q.right;
+				p = p.next;
 			}
 
 			q = q.next;
 			if (q == null) {
-				q = h;
-				h = null;
-				p = null;
+				//Next level
+				q = h.next;
+				h.next = null;
+				p = h;
 			}
 		}
 	}

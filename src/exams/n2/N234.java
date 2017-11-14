@@ -78,6 +78,22 @@ public class N234 {
 		
         return true;
     }
+	public boolean isPalindrome3(ListNode l) {
+		ListNode p = l;
+		ListNode q = l;
+		
+		while(p != null && p.next != null) {
+			p = p.next.next;
+			q = q.next;
+		}
+		
+		if(p == null) {
+			System.out.println("E" + q.val);
+		} else {
+			System.out.println(q.next.val);
+		}
+		return true;
+	}
 	
 	public static void main(String[] args) {
 		System.out.println(new N234().isPalindrome(ListNode.create("1").reverse()));
@@ -85,5 +101,6 @@ public class N234 {
 		System.out.println(new N234().isPalindrome(ListNode.create("123454321").reverse()));
 		System.out.println(new N234().isPalindrome(ListNode.create("1234554321").reverse()));
 		System.out.println(new N234().isPalindrome2(ListNode.create("1234554321").reverse()));
+		System.out.println(new N234().isPalindrome3(ListNode.create("1221").reverse()));
 	}
 }

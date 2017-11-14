@@ -275,6 +275,7 @@ public class Tree {
 		}
 	}
 
+	@LeetCode(95)
 	public List<TreeNode> generateTrees(int n) {
 		return genBST(1, n);
 	}

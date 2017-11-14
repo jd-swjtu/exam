@@ -50,4 +50,24 @@ Given target = 3, return true.
 
 		return false;
 	}
+	
+	public boolean searchMatrix1(int[][] m, int t) {
+		int w = m[0].length;
+		int h = m.length;
+		
+		int j =  w - 1;
+		int i = 0;
+		
+		while(i<h && j>=0) {
+			if (m[i][j] == t) {
+				return true;
+			} else if (m[i][j] < t) {
+				i++;
+			} else {
+				j--;
+			}
+		}
+		return false;
+		
+	}
 }
