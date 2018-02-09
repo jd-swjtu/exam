@@ -14,9 +14,9 @@ Another example is ")()())", where the longest valid parentheses substring is "(
 public class N32 {
 
 	public static void main(String[] args) {
-		System.out.println(new N32().longestValidParentheses(")()()((())"));
+		System.out.println(new N32().longestValidParentheses("()()((()))"));
 		
-		System.out.println(new N32().longestValidParentheses1(")()()((())"));
+		System.out.println(new N32().longestValidParentheses1("()()((()))"));
 	}
 	
 	public int longestValidParentheses1(String s) {
@@ -24,7 +24,10 @@ public class N32 {
         int max=0;
         int left = -1;
         for(int j=0;j<s.length();j++){
-            if(s.charAt(j)=='(') stack.push(j);            
+            if(s.charAt(j)=='(') {
+            	stack.push(j);        
+            	if(left == -1) left = j;
+            }
             else {
                 if (stack.isEmpty()) left=j;
                 else{
@@ -51,15 +54,15 @@ public class N32 {
         	char c = str[i];
         	if (c == ')') {
         		if (stack.size() == 0) {
-        			dp[i+1] = 0;
+        			//dp[i+1] = 0;
         		} else {
         			int l = stack.pop();
-        			dp[i+1] = dp[l] + (i-l) + 1;
+        			dp[i+1] = dp[l] + (i-l+1);
         			if (dp[i+1] > max)
         				max = dp[i+1];
         		}
         	} else {
-        		dp[i+1] = 0;
+        		//dp[i+1] = 0;
         		stack.push(i);
         	}
         }

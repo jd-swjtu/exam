@@ -64,7 +64,7 @@ public class N25 {
 	        return new_head;
 	    }
 		
-	
+	//last will not be reversed
 	ListNode reverse(ListNode first, ListNode last) {
         ListNode prev = last;
         

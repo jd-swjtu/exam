@@ -16,7 +16,7 @@ Your algorithm should use only constant space. You may not modify the values in 
 public class N24 {
 
 	public static void main(String[] args) {
-		System.out.println(new N24().swapPairs(ListNode.create("5")));
+		System.out.println(new N24().swapPairs(ListNode.create("54321")));
 	}
 
 	public ListNode swapPairs(ListNode head) {

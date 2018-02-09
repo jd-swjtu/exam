@@ -17,35 +17,29 @@ public class N340 {
 		if (s == null || s.length() == 0 || k <= 0) return 0;
 		
 		Map<Character,Integer> map = new HashMap<>();
-		LinkedList<Character> list = new LinkedList<>();
 		
 		int max = 0;
+		int left=0;
 		for(int i=0;i<s.length(); i++) {
+			
 			Character c = s.charAt(i);
 
-			if (!map.keySet().contains(c)) {
-				while ( map.keySet().size() == k) {
-					//move the first one
-					Character cc = list.removeFirst();
-					int nr = map.get(cc);
-					if (nr - 1 == 0) {
-						map.remove(cc);
-						break;
-					} else {
-						map.put(cc, nr - 1);
-					}
+			map.put(c, map.getOrDefault(c, 0) + 1);
+			
+			while ( map.keySet().size() > k) {
+				//del from the first
+				char cc = s.charAt(left++);
+				int nr = map.get(cc);
+				if (nr - 1 == 0) {
+					map.remove(cc);
+					break;
+				} else {
+					map.put(cc, nr - 1);
 				}
-				map.put(c, 1);
-				list.addLast(c);
-			} else {
-				map.put(c, map.getOrDefault(c, 0) + 1);
-				list.addLast(c);
 			}
 			
-			if (map.keySet().size() == k) {
-				if(list.size() > max) {
-					max = list.size();
-				}
+			if(map.keySet().size() == k) {
+				max = Math.max(max, i-left+1);
 			}
 		}
 		
@@ -53,7 +47,7 @@ public class N340 {
     }
 
 	public static void main(String[] args) {
-		System.out.println(new N340().lengthOfLongestSubstringKDistinct("eceba",  2));
+		System.out.println(new N340().lengthOfLongestSubstringKDistinct("ecbeeebbaaa",  3));
 	}
 
 }

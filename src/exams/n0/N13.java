@@ -27,7 +27,7 @@ public class N13 {
 		mapping.put('I', 1);
 	
 		int value = 0;
-		for(int i=0; i<s.length(); i++) {
+		/*for(int i=0; i<s.length(); i++) {
 			int cv = mapping.get(s.charAt(i));
 			value += cv;
 			if(i+1<s.length()) {
@@ -36,6 +36,16 @@ public class N13 {
 					value -= cv + cv;
 				}
 			}
+		}
+		*/
+		
+		int pv = mapping.get(s.charAt(s.length()-1));
+		value = pv;
+		for(int i=s.length()-2; i>=0; i--) {
+			int cv = mapping.get(s.charAt(i));
+			value += (cv<pv)?-cv:cv;
+			
+			pv = cv;
 		}
 		return value;
 	}

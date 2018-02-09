@@ -32,13 +32,13 @@ public class N33 {
 
 			if(nums[m] == target) return m;
 
-			if(nums[s] <= nums[m]) {
+			if(nums[s] <= nums[m]) {//left is ascending order
 				if(target >= nums[s] && target < nums[m]) {
 					e = m - 1;
 				} else {
 					s = m + 1;
 				}
-			} else {
+			} else {//right is ascending order
 				if(target > nums[m] && target <= nums[e]) {
 					s = m + 1;
 				} else {

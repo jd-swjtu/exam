@@ -1,5 +1,7 @@
 package exams.n0;
 
+import java.util.Arrays;
+
 /*
  Remove Element
 
@@ -20,8 +22,27 @@ public class N27 {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-
+System.out.println(new N27().removeElement2(new int[]{3,3,4}, 3));
 	}
+	
+	public int removeElement2(int[] nums, int val) {
+        int j = nums.length-1;
+        int i = 0;
+        while(i<j) {
+            while(i<j && nums[j] == val) j--;
+            while(i<j && nums[i] != val) i++;
+            
+            if(i<j) {
+                nums[i] = nums[j];
+                j--;
+                i++;
+            }
+        }
+        
+        System.out.println(Arrays.toString(nums));
+        while(j>=0 && nums[j] == val) j--;
+        return j+1;
+    }
 
 	public int removeElement(int[] nums, int val) {
 		int len = nums.length;

@@ -13,7 +13,7 @@ Your algorithm should run in O(n) time and uses constant space.
 public class N41 {
 
 	public static void main(String[] args) {
-		System.out.println(new N41().firstMissingPositive(new int[]{1,2,3}));
+		System.out.println(new N41().firstMissingPositive(new int[]{2,2,3}));
 	}
 
 public int firstMissingPositive(int[] nums) {

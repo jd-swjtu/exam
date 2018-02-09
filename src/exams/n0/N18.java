@@ -27,6 +27,8 @@ public class N18 {
 		//System.out.println(new N18().fourSum(new int[]{-1,-5,-5,-3,2,5,0,4}, -7));
 	}
 
+	
+	
 	public List<List<Integer>> fourSum(int[] nums, int target) {
 		List<List<Integer>> results = new ArrayList<>();
         if(nums.length < 4) return results;

@@ -21,7 +21,7 @@ For example, given n = 3, a solution set is:
 public class N22 {
 
 	public static void main(String[] args) {
-		System.out.println(new N22().generateParenthesis(4));
+		System.out.println(new N22().generateParenthesis(3));
 	}
 
 	public List<String> generateParenthesis(int n) {

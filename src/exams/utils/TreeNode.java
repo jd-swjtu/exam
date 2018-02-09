@@ -2,6 +2,7 @@ package exams.utils;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -467,6 +468,19 @@ public class TreeNode {
 		return result;
 	}
 	
+	private void preorder(TreeNode n, List<Integer> result) {
+		if(n == null) return;
+		
+		result.add(n.val);
+		preorder(n.left, result);
+		preorder(n.right, result);
+	}
+	public List<Integer> preorder() {
+		List<Integer> result = new ArrayList<>();
+		this.preorder(this, result);
+		return result;
+	}
+	
 	private int _levels(TreeNode root) {
 		if (root == null) return 0;
 		return Math.max(this._levels(root.left), this._levels(root.right))+1;
@@ -491,6 +505,123 @@ public class TreeNode {
         return toBst(nums, 0, l-1); 
     }
 	
+	public static TreeNode buildTree(int[] preorder, int[] inorder) {
+		return buildTree(preorder, 0, preorder.length-1, inorder, 0, inorder.length-1);
+	}
+	
+	private static TreeNode buildTree(int[] preorder, int ps, int pe, int[] inorder, int is, int ie) {
+		if(ps > pe) return null;
+		TreeNode root = new TreeNode(preorder[ps]);
+		//Find index in inorder
+		int mid = is;
+		for(int i=is; i<=ie; i++) {
+			if(inorder[i] == preorder[ps]) {
+				mid = i;
+				break;
+			}
+		}
+		int leftlen = mid - is;
+		root.left = buildTree(preorder, ps+1, ps+leftlen, inorder, is, mid-1);
+		root.right = buildTree(preorder, ps+leftlen+1, pe, inorder, mid+1, ie);
+		
+        return root;
+    }
+	
+	public static TreeNode optBST(int w[], int v[]) {
+		int len = w.length;
+		if(len == 0 || len != v.length) return null;
+		
+		//i,j - the min cost to access node i to j
+		int[][] m = new int[len][len];
+		//the root node when getting the min cost for i to j
+		int[][] vertex = new int[len][len];
+		
+		for(int i=0; i<len; i++) {
+			m[i][i]=w[i];
+			vertex[i][i]=i;
+		}
+		
+		//j - nodes counts from 0
+		for(int j=1; j<len; j++) {
+			for(int i=0; i<len && i+j < len; i++) {
+				//i,i+j
+				int base = 0;
+				for(int k=i; k<=j+i; k++) {
+					base += w[k];
+				}
+				
+				int cm = Integer.MAX_VALUE;
+				int cv = 0;
+				
+				for(int k=i; k<=j+i; k++) {
+					int extra = 0;
+					//left: i,k-1
+					if(k-1>=i) {
+						extra += m[i][k-1];
+					}
+					//right: k, j+i
+					if(k+1 <= j+i) {
+						extra += m[k+1][j+i];
+					}
+					
+					if(base + extra < cm) {
+						cm = base + extra;
+						cv = k;
+					}
+				}
+				
+				m[i][i+j] = cm;
+				vertex[i][i+j]=cv;
+			}
+		}
+		
+		for(int i=0; i<len; i++) {
+			System.out.println(Arrays.toString(m[i]));
+		}
+		System.out.println("===");
+		for(int i=0; i<len; i++) {
+			System.out.println(Arrays.toString(vertex[i]));
+		}
+		
+		return getTree(vertex, v, 0, len-1);
+	}
+	private static TreeNode getTree(int[][] v, int[] vv, int s, int e) {
+		int start = v[s][e];
+		if(start < s || start >e) return null;
+		
+		TreeNode root = new TreeNode(vv[start]);
+		if(start-1 >= s) {
+			root.left = getTree(v, vv, s, start-1);
+		}
+		if(start+1 <= e) {
+			root.right = getTree(v, vv, start+1, e);
+		}
+		return root;
+	}
+	
+	public void flatten() {
+		this.flatten(this);
+	}
+	
+	public void flatten(TreeNode root) {
+        if(root == null) return;
+        TreeNode l = root.left;
+        TreeNode r = root.right;
+        
+        flatten(l);
+        flatten(r);
+        
+        if(l != null) {
+        	root.right = l;
+        	root.left = null;
+        	
+        	while(root.right != null) {
+        		root = root.right;
+        	}
+        	root.right = r;
+        }
+    }
+	
 	public static void main(String[] args) {
 		TreeNode root = TreeNode.deserialize(//"10,20,30,40,50,null,null,null,null,60,70,null,null,null,80");
 				"20,10,30,5,15,27,35,3,8,13,17,25,29,34,38,null,4"
@@ -509,8 +640,17 @@ public class TreeNode {
 		System.out.println(TreeNode.deserialize("1,2,2,1").isMirror());
 		System.out.println(TreeNode.deserialize("1,2,3,4,5").mirror().serialize());*/
 		
-		System.out.println(root.deleteBST(20).inorder());
+		/*System.out.println(root.deleteBST(20).inorder());
 		System.out.println(TreeNode.deserialize("1,2,3,null,null,4,null,null,5").maxLevels());
-		System.out.println(TreeNode.sortedArrayToBST(new int[]{1,2,3,4,5,6,7}).levelView());
+		System.out.println(TreeNode.sortedArrayToBST(new int[]{1,2,3,4,5,6,7}).preorder());
+		System.out.println(TreeNode.buildTree(new int[]{4, 2, 1, 3, 6, 5,7}, new int[]{1,2,3,4,5,6,7}).inorder());*/
+		System.out.println(TreeNode.optBST(new int[]{4,3,6,2}, new int[]{12,15,20,25}).inorder());
+		
+		root.flatten();
+		while(root != null) {
+			System.out.println(root.val);
+			root = root.right;
+		}
+				
 	}
 }

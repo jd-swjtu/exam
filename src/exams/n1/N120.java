@@ -13,7 +13,7 @@ public class N120 {
 		t.add(Arrays.asList(6,5,7));
 		t.add(Arrays.asList(4,1,8,3));
 		
-		System.out.println(new N120().minimumTotal(t));
+		System.out.println(new N120().minimumTotal1(t));
 		
 	}
 
@@ -29,6 +29,20 @@ public class N120 {
 			  v.set(j, Math.min(v.get(j), v.get(j+1)) + c.get(j));
 		}
 		return v.get(0);
+        
+    }
+	
+	public int minimumTotal1(List<List<Integer>> triangle) {
+		int n = triangle.size();
+		int[] dp = new int[n+1];
+		
+	
+		for(int i=n-1; i>=0; i--) {
+			List<Integer> c = triangle.get(i);
+			for(int j=0;j<c.size();j++)
+				dp[j] = Math.min(dp[j], dp[j+1]) + c.get(j);
+		}
+		return dp[0];
         
     }
 }

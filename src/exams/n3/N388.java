@@ -58,12 +58,51 @@ public class N388 {
 		}
 	}
 	
+	public int lengthLongestPath2(String input) {
+		if (input == null || input.startsWith("\n")) return 0;
+		
+		int max = 0;
+		Stack<Integer> s = new Stack<>();
+		s.push(0);
+		for(String line: input.split("\n")) {
+			int p = 0;
+
+			int level = 0;
+			while (line.startsWith("\t")) {
+				level++;
+				line = line.substring("\n".length());
+			}
+
+				while (s.size() > level+1) {
+					s.pop();
+				}
+
+
+				p = s.peek();
+			
+
+			int len = line.length();
+			int dot = line.indexOf(".");
+			if (dot < len && dot >= 0) {
+				// This is a file
+				int xlen = len + p;
+				if (xlen > max)
+					max = xlen;
+			} else {
+				// this is a folder
+				s.push(len+p);
+			}
+		}
+		return max;
+	}
+	
 	public int lengthLongestPath(String input) {
 		if (input == null || input.startsWith("\n")) return 0;
 		
 		int max = 0;
 
 		Stack<Item> s = new Stack<>();
+		s.push(new Item("*", 0));
 		for (String line : input.split("\n")) {
 			Item p = null;
 
@@ -73,15 +112,15 @@ public class N388 {
 				line = line.substring("\n".length());
 			}
 
-			if (level != 0) {
-				while (s.size() > (level - 1)) {
+			//if (level != 0) {
+				while (s.size() > (level + 1)) {
 					s.pop();
 				}
-			}
+			//}
 
-			if (!s.isEmpty()) {
+			//if (!s.isEmpty()) {
 				p = s.peek();
-			}
+			//}
 
 			int len = line.length();
 			int dot = line.indexOf(".");
@@ -94,7 +133,7 @@ public class N388 {
 					max = xlen;
 			} else {
 				// this is a folder
-				Item x = new Item(line, len);
+				Item x = new Item(p.name + "-" + line, len);
 				if (p != null) {
 					x.totalLen = p.totalLen + len;
 				}
@@ -106,7 +145,8 @@ public class N388 {
 	}
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		System.out.println(new N388().lengthLongestPath("dir\n\tsubdir1\n\t\tfile1.ext\n\t\tsubsubdir1\n\tsubdir2\n\t\tsubsubdir2\n\t\t\tfile2.ext"));
+		System.out.println(new N388().lengthLongestPath("qqqqqqqqqqqqqqq.txt\ndir\n\tsubdir1\n\t\tfile1.ext\n\t\tsubsubdir1\n\tsubdir2\n\t\tsubsubdir2\n\t\t\tfile2.ext"));
+		System.out.println(new N388().lengthLongestPath2("qqqqqqqqqqqqqqq.txt\ndir\n\tsubdir1\n\t\tfile1.ext\n\t\tsubsubdir1\n\tsubdir2\n\t\tsubsubdir2\n\t\t\tfile2.ext"));
 	}
 
 }

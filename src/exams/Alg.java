@@ -6,8 +6,8 @@ public class Alg {
 
 	public static void main(String[] args) {
 		Alg alg = new Alg();
-		//alg.quicksort(new int[]{3, 2, 1}, 0, 2);
-		alg.quicksort(new int[]{1, 5, 3,7,9,2,4,10}, 0, 7);
+		//alg.quicksort(new int[]{3, 2, 1}, 0, 1);
+		alg.quicksort(new int[]{7,6,5,4,3,2,1,0}, 0, 7);
 		//alg.selectSort(new int[]{1, 5, 3,7,9,2,4,10});
 	}
 
@@ -24,14 +24,35 @@ public class Alg {
 	    }
 	}
 	
-	int partition(int arr[], int left, int right) {
+	int partition(int arr[], int i, int j) {
+		int pivot = arr[j];
+		int p = i;
+		for(int k=i; k<=j-1; k++) {
+			if(arr[k] <= pivot) {
+				int tmp = arr[p];
+				arr[p] = arr[k];
+				arr[k] = tmp;
+				p++;
+			}
+		}
+		
+		arr[j] = arr[p];
+		arr[p] = pivot;
+		System.out.println(Arrays.toString(arr));
+		return p;
+	}
+	
+	int partition1(int arr[], int left, int right) {
 		int i = left, j = right;
 		int tmp;
-		int pivot = arr[(left + right) / 2];
+		//Why return i, because pivot is close to left
+		int pivot = arr[(left + right) / 2]; //(left+right+1)/2
+		//System.out.println(pivot);
 
 		while (i < j) {
 			while (arr[i] < pivot)
 				i++;
+			
 			while (arr[j] > pivot)
 				j--;
 			if (i <= j) {
@@ -43,9 +64,9 @@ public class Alg {
 			}
 		}
 		
-		System.out.println("Sorting: " + Arrays.toString(arr));
+		System.out.println("Sorting: " + left + ":" + i + " " + j + ":" + right + " " + Arrays.toString(arr));
 
-		return i;
+		return i; //j
 	}
 
 	void quicksort(int arr[], int left, int right) {
@@ -53,8 +74,8 @@ public class Alg {
 			return;
 		
 		int index = partition(arr, left, right);
-		quicksort(arr, left, index - 1);
-		quicksort(arr, index, right);
+		quicksort(arr, left, index - 1 /*j: index*/);
+		quicksort(arr, index /*j: index + 1*/ , right);
 	}
 	
 	public void quickSort(int[] arr, int low, int high){

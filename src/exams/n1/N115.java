@@ -19,6 +19,7 @@ public class N115 {
 		//System.out.println(new N115().numDistinct("rabbbit", "rabbit"));
 		//System.out.println(new N115().numDistinct("rabbit", "rabbit"));
 		System.out.println(new N115().numDistinct("rabbbiit", "rabbit"));
+		System.out.println(new N115().numDistinct("rabbbiit", ""));
 	}
 	
 	public int numDistinct(String s, String t) {
