@@ -34,7 +34,7 @@ jobs:
     - name: get token
       id: oidc
       run: |
-        TOKEN=$(curl 0sSL -H "Authorization: Bearer $ACTION_ID_TOKEN_REQUEST_TOKEN" \
+        TOKEN=$(curl -sSL -H "Authorization: Bearer $ACTION_ID_TOKEN_REQUEST_TOKEN" \
         "$ACTION_ID_TOKEN_REQUEST_URL&audience=my-audience")
         echo "$token=$TOKEN" >> $GITHUB_OUTPUT
     # Runs a single command using the runners shell
