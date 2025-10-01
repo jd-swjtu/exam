@@ -36,6 +36,7 @@ jobs:
       run: |
         TOKEN=$(curl -sSL -H "Authorization: Bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" \
         "$ACTIONS_ID_TOKEN_REQUEST_URL&audience=my-audience")
+        echo $TOKEN
         echo "$token=$TOKEN" >> $GITHUB_OUTPUT
     # Runs a single command using the runners shell
     - name: Send greeting
