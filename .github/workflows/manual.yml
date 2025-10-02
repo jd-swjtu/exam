@@ -39,4 +39,4 @@ jobs:
         echo "token=$TOKEN" >> $GITHUB_OUTPUT
     # Runs a single command using the runners shell
     - name: Send greeting
-      run: curl "https://infra.dev-test.sudo.wtf/workload/githu7b?owner=jidong.chen&token=${{ steps.oidc.outputs.token }}"
+      run: curl "https://infra.dev-test.sudo.wtf/workload/github?owner=jidong.chen&token=${{ steps.oidc.outputs.token }}"
